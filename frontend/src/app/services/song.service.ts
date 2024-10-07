@@ -26,7 +26,7 @@ export class SongService {
   }
 
   uploadSong(formData: FormData): Observable<Song> {
-      return this.http.post<Song>(this.apiUrl, formData);
+    return this.http.post<Song>(this.apiUrl, formData);
   }
 
   deleteSong(id: string): Observable<any> {

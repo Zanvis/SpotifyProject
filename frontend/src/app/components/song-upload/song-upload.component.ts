@@ -18,6 +18,10 @@ export class SongUploadComponent {
   selectedFile: File | null = null;
   selectedImage: File | null = null;
   previewImage: string | null = null;
+  isDraggingFile = false;
+  isDraggingImage = false;
+  uploadProgress = 0;
+  uploading = false;
 
   constructor(
     private songService: SongService,
@@ -25,21 +29,90 @@ export class SongUploadComponent {
   ) { }
 
   onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    if (file && this.isValidAudioFile(file)) {
+      this.selectedFile = file;
+    } else {
+      alert('Please select a valid audio file (MP3, WAV, or AAC)');
+    }
   }
 
   onImageSelected(event: any): void {
     const file = event.target.files[0];
-    this.selectedImage = file;
-    
-    // Create preview for the selected image
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.previewImage = e.target.result;
-      };
-      reader.readAsDataURL(file);
+    if (file && this.isValidImageFile(file)) {
+      this.handleImageSelection(file);
+    } else {
+      alert('Please select a valid image file (JPG, PNG, or WebP)');
     }
+  }
+
+  onDragOver(event: DragEvent, type: 'file' | 'image'): void {
+    event.preventDefault();
+    event.stopPropagation();
+    if (type === 'file') {
+      this.isDraggingFile = true;
+    } else {
+      this.isDraggingImage = true;
+    }
+  }
+
+  onDragLeave(event: DragEvent, type: 'file' | 'image'): void {
+    event.preventDefault();
+    event.stopPropagation();
+    if (type === 'file') {
+      this.isDraggingFile = false;
+    } else {
+      this.isDraggingImage = false;
+    }
+  }
+
+  onDrop(event: DragEvent, type: 'file' | 'image'): void {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    if (type === 'file') {
+      this.isDraggingFile = false;
+    } else {
+      this.isDraggingImage = false;
+    }
+    
+    const files = event.dataTransfer?.files;
+    if (!files || files.length === 0) return;
+
+    const file = files[0];
+    if (type === 'file' && this.isValidAudioFile(file)) {
+      this.selectedFile = file;
+    } else if (type === 'image' && this.isValidImageFile(file)) {
+      this.handleImageSelection(file);
+    }
+  }
+
+  handleImageSelection(file: File): void {
+    this.selectedImage = file;
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.previewImage = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  isValidAudioFile(file: File): boolean {
+    const validTypes = ['audio/mp3', 'audio/wav', 'audio/aac', 'audio/mpeg'];
+    return validTypes.includes(file.type);
+  }
+
+  isValidImageFile(file: File): boolean {
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    return validTypes.includes(file.type);
+  }
+
+  clearFile(): void {
+    this.selectedFile = null;
+  }
+
+  clearImage(): void {
+    this.selectedImage = null;
+    this.previewImage = null;
   }
 
   onSubmit(): void {
@@ -48,6 +121,7 @@ export class SongUploadComponent {
       return;
     }
 
+    this.uploading = true;
     const formData = new FormData();
     formData.append('title', this.title);
     formData.append('artist', this.artist);
