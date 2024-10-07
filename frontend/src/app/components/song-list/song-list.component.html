@@ -1,0 +1,23 @@
+<div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4">Your Music</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div *ngFor="let song of songs" 
+            class="bg-gray-800 p-4 rounded-lg">
+            <img [src]="'http://localhost:3000/' + song.imageUrl" 
+                alt="Album cover" 
+                class="w-full h-48 object-cover mb-2 rounded">
+            <h3 class="text-lg font-semibold">{{song.title}}</h3>
+            <p class="text-gray-400">{{song.artist}}</p>
+            <p class="text-gray-500">{{song.album}}</p>
+            <audio controls class="mt-2 w-full">
+                <source [src]="'http://localhost:3000/' + song.filePath" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <button (click)="deleteSong(song._id)" 
+                    class="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
