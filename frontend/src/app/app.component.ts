@@ -4,11 +4,12 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { AudioPlayerComponent } from './components/audio-player/audio-player.component';
 import { SongListComponent } from './components/song-list/song-list.component';
 import { SongUploadComponent } from './components/song-upload/song-upload.component';
+import { TeamComponent } from './components/team/team.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, AudioPlayerComponent, SongListComponent, SongUploadComponent],
+  imports: [RouterOutlet, RouterLink, CommonModule, AudioPlayerComponent, SongListComponent, SongUploadComponent, TeamComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
