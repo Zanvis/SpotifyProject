@@ -13,7 +13,12 @@ const port = 3000;
 const uploadDir = 'uploads';
 
 // Middleware
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+    origin: ['https://webtest-six-xi.vercel.app', 'http://localhost:4200'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.use(express.static('public'));
