@@ -18,7 +18,7 @@ if (!fs.existsSync(uploadDir)) {
 // Middleware
 // app.use(cors());
 app.use(cors({
-    origin: ['https://webtest-six-xi.vercel.app', 'http://localhost:4200'],
+    origin: ['https://soundsphere-project.vercel.app', 'http://localhost:4200'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
