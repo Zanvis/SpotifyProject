@@ -17,7 +17,8 @@ import { LandingComponent } from './components/landing/landing.component';
 export class AppComponent {
   title = 'frontend';
   isMenuOpen = false;
-
+  currentYear = new Date().getFullYear();
+  
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
