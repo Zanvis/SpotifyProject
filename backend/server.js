@@ -112,17 +112,12 @@ app.post('/api/songs', upload.fields([
             return res.status(400).json({ message: 'No audio file uploaded' });
         }
 
-        // Calculate audio duration
-        const metadata = await mm.parseFile(req.files['songFile'][0].path);
-        const duration = metadata.format.duration;
-
         const song = new Song({
             title: req.body.title,
             artist: req.body.artist,
             album: req.body.album,
             filePath: req.files['songFile'][0].path,
-            imageUrl: req.files['imageFile'] ? req.files['imageFile'][0].path : undefined,
-            duration: duration
+            imageUrl: req.files['imageFile'] ? req.files['imageFile'][0].path : undefined
         });
 
         const newSong = await song.save();
