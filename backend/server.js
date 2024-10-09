@@ -6,6 +6,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
+const mm = require('music-metadata');
 
 const app = express();
 const port = 3000;
@@ -111,12 +112,17 @@ app.post('/api/songs', upload.fields([
             return res.status(400).json({ message: 'No audio file uploaded' });
         }
 
+        // Calculate audio duration
+        const metadata = await mm.parseFile(req.files['songFile'][0].path);
+        const duration = metadata.format.duration;
+
         const song = new Song({
             title: req.body.title,
             artist: req.body.artist,
             album: req.body.album,
             filePath: req.files['songFile'][0].path,
-            imageUrl: req.files['imageFile'] ? req.files['imageFile'][0].path : undefined
+            imageUrl: req.files['imageFile'] ? req.files['imageFile'][0].path : undefined,
+            duration: duration
         });
 
         const newSong = await song.save();
