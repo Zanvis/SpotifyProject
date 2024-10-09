@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
@@ -11,7 +12,9 @@ const port = 3000;
 
 // Ensure uploads directory exists
 const uploadDir = 'uploads';
-
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
 // Middleware
 // app.use(cors());
 app.use(cors({
