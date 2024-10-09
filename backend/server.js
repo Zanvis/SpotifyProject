@@ -18,7 +18,7 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.use(express.static('public'));
 app.use(cors({
-    origin: ['https://music-project-ecru.vercel.app', 'localhost:4200']
+    origin: ['https://music-project-eta.vercel.app/', 'localhost:4200']
 }));
 // MongoDB connection
 const uri = process.env.MONGODB_URI;
