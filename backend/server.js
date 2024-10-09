@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 const port = 3000;
@@ -18,7 +19,7 @@ app.use('/uploads', express.static('uploads'));
 app.use(express.static('public'));
 
 // MongoDB connection
-const uri = "mongodb+srv://Zanvis:I78VwY95nCGhf0MW@music.cprdz.mongodb.net/?retryWrites=true&w=majority&appName=Music";
+const uri = process.env.MONGODB_URI;
 
 mongoose.connect(uri)
     .then(() => console.log('Connected to MongoDB'))
