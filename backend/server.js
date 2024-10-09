@@ -18,7 +18,7 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.use(express.static('public'));
 app.use(cors({
-    origin: ['https://webtest-six-xi.vercel.app/', 'localhost:4200']
+    origin: ['https://webtest-six-xi.vercel.app', 'localhost:4200']
 }));
 // MongoDB connection
 const uri = process.env.MONGODB_URI;
