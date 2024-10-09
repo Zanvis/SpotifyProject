@@ -142,27 +142,13 @@ app.put('/api/songs/:id', async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
-
-// Delete a song
-// app.delete('/api/songs/:id', async (req, res) => {
-//     try {
-//         const song = await Song.findById(req.params.id);
-//         if (song) {
-//             await song.remove();
-//             res.json({ message: 'Song deleted' });
-//         } else {
-//         res.status(404).json({ message: 'Song not found' });
-//         }
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// });
+W
 // Delete a song
 app.delete('/api/songs/:id', async (req, res) => {
     try {
         const song = await Song.findById(req.params.id);
         if (song) {
-            await Song.deleteOne({ _id: req.params.id });  // Updated line
+            await Song.deleteOne({ _id: req.params.id });
             res.json({ message: 'Song deleted' });
         } else {
             res.status(404).json({ message: 'Song not found' });
