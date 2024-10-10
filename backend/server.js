@@ -19,8 +19,9 @@ if (!fs.existsSync(uploadDir)) {
 // Middleware
 // app.use(cors());
 app.use(cors({
-    origin: ['https://soundsphere-project.vercel.app', 'http://localhost:4200'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    // origin: ['https://soundsphere-project.vercel.app', 'http://localhost:4200'],
+    origin: ['https://soundsphere-project.vercel.app'],
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
