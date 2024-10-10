@@ -20,23 +20,32 @@ export class SongListComponent implements OnInit {
     this.loadSongs();
   }
 
+  // loadSongs(): void {
+  //   this.songService.getSongs().subscribe({
+  //     next: (songs: Song[]) => {
+  //       this.songs = songs.map(song => ({
+  //         ...song,
+  //         duration: this.ensureValidDuration(song.duration)
+  //       }));
+  //     },
+  //     error: (error: any) => {
+  //       console.error('Error loading songs:', error);
+  //     },
+  //   });
+  // }
   loadSongs(): void {
     this.songService.getSongs().subscribe({
       next: (songs: Song[]) => {
-        this.songs = songs.map(song => ({
-          ...song,
-          duration: this.ensureValidDuration(song.duration)
-        }));
+        this.songs = songs;
       },
       error: (error: any) => {
         console.error('Error loading songs:', error);
       },
     });
   }
-
-  ensureValidDuration(duration: number | undefined): number {
-    return typeof duration === 'number' && !isNaN(duration) && duration > 0 ? duration : 0;
-  }
+  // ensureValidDuration(duration: number | undefined): number {
+  //   return typeof duration === 'number' && !isNaN(duration) && duration > 0 ? duration : 0;
+  // }
 
   playSong(song: Song): void {
     this.currentSong = song;

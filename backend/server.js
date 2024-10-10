@@ -5,6 +5,7 @@ const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { getAudioDurationInSeconds } = require('get-audio-duration');
 require('dotenv').config();
 
 const app = express();
@@ -102,6 +103,30 @@ app.get('/api/songs/:id', async (req, res) => {
 });
 
 // Upload a new song
+// app.post('/api/songs', upload.fields([
+//     { name: 'songFile', maxCount: 1 },
+//     { name: 'imageFile', maxCount: 1 }
+// ]), async (req, res) => {
+//     try {
+//         if (!req.files['songFile']) {
+//             return res.status(400).json({ message: 'No audio file uploaded' });
+//         }
+
+//         const song = new Song({
+//             title: req.body.title,
+//             artist: req.body.artist,
+//             album: req.body.album,
+//             filePath: req.files['songFile'][0].path,
+//             imageUrl: req.files['imageFile'] ? req.files['imageFile'][0].path : undefined
+//         });
+
+//         const newSong = await song.save();
+//         res.status(201).json(newSong);
+//     } catch (error) {
+//         console.error('Error uploading song:', error);
+//         res.status(400).json({ message: error.message });
+//     }
+// });
 app.post('/api/songs', upload.fields([
     { name: 'songFile', maxCount: 1 },
     { name: 'imageFile', maxCount: 1 }
@@ -111,11 +136,15 @@ app.post('/api/songs', upload.fields([
             return res.status(400).json({ message: 'No audio file uploaded' });
         }
 
+        const audioFilePath = req.files['songFile'][0].path;
+        const duration = await getAudioDurationInSeconds(audioFilePath);
+
         const song = new Song({
             title: req.body.title,
             artist: req.body.artist,
             album: req.body.album,
-            filePath: req.files['songFile'][0].path,
+            duration: Math.round(duration), // Round to nearest second
+            filePath: audioFilePath,
             imageUrl: req.files['imageFile'] ? req.files['imageFile'][0].path : undefined
         });
 
@@ -126,7 +155,6 @@ app.post('/api/songs', upload.fields([
         res.status(400).json({ message: error.message });
     }
 });
-
 // Update a song
 app.put('/api/songs/:id', async (req, res) => {
     try {
