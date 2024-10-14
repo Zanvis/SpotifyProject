@@ -152,8 +152,8 @@ app.get('/api/songs/:id', async (req, res) => {
 
 // Create a new song
 app.post('/api/songs', upload.fields([
-        { name: 'songFile', maxCount: 1 },
-        { name: 'imageFile', maxCount: 1 }
+    { name: 'songFile', maxCount: 1 },
+    { name: 'imageFile', maxCount: 1 }
     ]), async (req, res) => {
     try {
         if (!req.files['songFile']) {
@@ -162,27 +162,33 @@ app.post('/api/songs', upload.fields([
 
         const audioFile = req.files['songFile'][0];
         const imageFile = req.files['imageFile'] ? req.files['imageFile'][0] : null;
+
+        // Get audio metadata from Cloudinary
+        const audioMetadata = await cloudinary.api.resource(audioFile.filename, { 
+            resource_type: 'video',
+            image_metadata: true
+        });
+
+        // Extract duration from metadata
+        let duration = 0;
+        if (audioMetadata.duration) {
+            duration = Math.round(audioMetadata.duration);
+        } else if (audioMetadata.image_metadata && audioMetadata.image_metadata.Duration) {
+            // Parse duration from image_metadata if available
+            const durationStr = audioMetadata.image_metadata.Duration;
+            const [minutes, seconds] = durationStr.split(':').map(Number);
+            duration = minutes * 60 + seconds;
+        }
     
-        // const duration = await getAudioDurationInSeconds(audioFile.path);
-        const audioMetadata = await cloudinary.api.resource(audioFile.filename, { resource_type: 'video' });
-    
-    //     const song = new Song({
-    //     title: req.body.title,
-    //     artist: req.body.artist,
-    //     album: req.body.album,
-    //     duration: Math.round(duration),
-    //     filePath: audioFile.path,
-    //     imageUrl: imageFile ? imageFile.path : undefined
-    // });
         const song = new Song({
             title: req.body.title,
             artist: req.body.artist,
             album: req.body.album,
-            duration: Math.round(audioMetadata.duration || 0),
+            duration: duration,
             filePath: audioFile.path,
             imageUrl: imageFile ? imageFile.path : undefined
         });
-
+    
         const newSong = await song.save();
         res.status(201).json(newSong);
     } catch (error) {
