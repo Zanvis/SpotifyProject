@@ -5,7 +5,7 @@ const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { getAudioDurationInSeconds } = require('get-audio-duration');
+// const { getAudioDurationInSeconds } = require('get-audio-duration');
 require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -163,16 +163,25 @@ app.post('/api/songs', upload.fields([
         const audioFile = req.files['songFile'][0];
         const imageFile = req.files['imageFile'] ? req.files['imageFile'][0] : null;
     
-        const duration = await getAudioDurationInSeconds(audioFile.path);
+        // const duration = await getAudioDurationInSeconds(audioFile.path);
+        const audioMetadata = await cloudinary.api.resource(audioFile.filename, { resource_type: 'video' });
     
+    //     const song = new Song({
+    //     title: req.body.title,
+    //     artist: req.body.artist,
+    //     album: req.body.album,
+    //     duration: Math.round(duration),
+    //     filePath: audioFile.path,
+    //     imageUrl: imageFile ? imageFile.path : undefined
+    // });
         const song = new Song({
-        title: req.body.title,
-        artist: req.body.artist,
-        album: req.body.album,
-        duration: Math.round(duration),
-        filePath: audioFile.path,
-        imageUrl: imageFile ? imageFile.path : undefined
-    });
+            title: req.body.title,
+            artist: req.body.artist,
+            album: req.body.album,
+            duration: Math.round(audioMetadata.duration || 0),
+            filePath: audioFile.path,
+            imageUrl: imageFile ? imageFile.path : undefined
+        });
 
         const newSong = await song.save();
         res.status(201).json(newSong);
