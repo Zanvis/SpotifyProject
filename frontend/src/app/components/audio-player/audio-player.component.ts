@@ -2,6 +2,12 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Song } from '../../services/song.service';
 
+enum LoopMode {
+  NoLoop,
+  LoopTrack,
+  LoopPlaylist
+}
+
 @Component({
   selector: 'app-audio-player',
   standalone: true,
@@ -24,6 +30,7 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
   duration = 0;
   volume = 1;
   currentSongIndex = 0;
+  loopMode: LoopMode = LoopMode.NoLoop;
 
   constructor() { }
 
@@ -87,7 +94,17 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
   }
 
   onEnded(): void {
-    this.next();
+    switch (this.loopMode) {
+      case LoopMode.NoLoop:
+        this.next();
+        break;
+      case LoopMode.LoopTrack:
+        this.loadAndPlaySong();
+        break;
+      case LoopMode.LoopPlaylist:
+        this.next();
+        break;
+    }
   }
 
   toggleMute(): void {
@@ -130,5 +147,34 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
     } else {
       this.songEnded.emit();
     }
+  }
+
+  toggleLoop(): void {
+    switch (this.loopMode) {
+      case LoopMode.NoLoop:
+        this.loopMode = LoopMode.LoopTrack;
+        break;
+      case LoopMode.LoopTrack:
+        this.loopMode = LoopMode.LoopPlaylist;
+        break;
+      case LoopMode.LoopPlaylist:
+        this.loopMode = LoopMode.NoLoop;
+        break;
+    }
+  }
+
+  getLoopIconPath(): string {
+    switch (this.loopMode) {
+      case LoopMode.NoLoop:
+        return 'M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3';
+      case LoopMode.LoopTrack:
+        return 'M16 15v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4m14-2l-2-2m0 0l-2 2m2-2v4';
+      case LoopMode.LoopPlaylist:
+        return 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15';
+    }
+  }
+
+  getLoopButtonClass(): string {
+    return this.loopMode !== LoopMode.NoLoop ? 'text-green-500 hover:text-green-400' : 'text-gray-400 hover:text-white';
   }
 }
