@@ -2,7 +2,8 @@
     <div class="container mx-auto flex items-center justify-between">
         <div class="flex items-center flex-1">
             <!-- <img src="{{'http://localhost:3000/' + song.imageUrl}}"  -->
-            <img src="{{'https://music-app-backend-h3sd.onrender.com/' + song.imageUrl}}" 
+            <!-- <img src="{{'https://music-app-backend-h3sd.onrender.com/' + song.imageUrl}}"  -->
+            <img [src]="song.imageUrl"
                 alt="Album cover" 
                 class="w-16 h-16 object-cover rounded-md mr-4">
             <div>
@@ -75,8 +76,9 @@
     </div>
 </div>
 <!-- [src]="'http://localhost:3000/' + song.filePath" -->
+<!-- [src]="'https://music-app-backend-h3sd.onrender.com/' + song.filePath" -->
 <audio #audioPlayer 
-    [src]="'https://music-app-backend-h3sd.onrender.com/' + song.filePath"
+    [src]="song.filePath"
     (timeupdate)="onTimeUpdate()"
     (ended)="onEnded()"
     (loadedmetadata)="onLoadedMetadata()">
