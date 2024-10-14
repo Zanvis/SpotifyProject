@@ -22,6 +22,7 @@ export class SongUploadComponent {
   isDraggingImage = false;
   uploadProgress = 0;
   uploading = false;
+  maxFileSize = 10 * 1024 * 1024; // 10MB in bytes
 
   constructor(
     private songService: SongService,
@@ -31,7 +32,11 @@ export class SongUploadComponent {
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file && this.isValidAudioFile(file)) {
-      this.selectedFile = file;
+      if (this.isValidFileSize(file)) {
+        this.selectedFile = file;
+      } else {
+        alert('Audio file size exceeds 10MB limit');
+      }
     } else {
       alert('Please select a valid audio file (MP3, WAV, or AAC)');
     }
@@ -40,7 +45,11 @@ export class SongUploadComponent {
   onImageSelected(event: any): void {
     const file = event.target.files[0];
     if (file && this.isValidImageFile(file)) {
-      this.handleImageSelection(file);
+      if (this.isValidFileSize(file)) {
+        this.handleImageSelection(file);
+      } else {
+        alert('Image file size exceeds 10MB limit');
+      }
     } else {
       alert('Please select a valid image file (JPG, PNG, or WebP)');
     }
@@ -80,10 +89,12 @@ export class SongUploadComponent {
     if (!files || files.length === 0) return;
 
     const file = files[0];
-    if (type === 'file' && this.isValidAudioFile(file)) {
+    if (type === 'file' && this.isValidAudioFile(file) && this.isValidFileSize(file)) {
       this.selectedFile = file;
-    } else if (type === 'image' && this.isValidImageFile(file)) {
+    } else if (type === 'image' && this.isValidImageFile(file) && this.isValidFileSize(file)) {
       this.handleImageSelection(file);
+    } else {
+      alert('Invalid file type or size exceeds 10MB limit');
     }
   }
 
@@ -106,6 +117,10 @@ export class SongUploadComponent {
     return validTypes.includes(file.type);
   }
 
+  isValidFileSize(file: File): boolean {
+    return file.size <= this.maxFileSize;
+  }
+
   clearFile(): void {
     this.selectedFile = null;
   }
@@ -118,6 +133,16 @@ export class SongUploadComponent {
   onSubmit(): void {
     if (!this.selectedFile) {
       alert('Please select a song file');
+      return;
+    }
+
+    if (!this.isValidFileSize(this.selectedFile)) {
+      alert('Audio file size exceeds 10MB limit');
+      return;
+    }
+
+    if (this.selectedImage && !this.isValidFileSize(this.selectedImage)) {
+      alert('Image file size exceeds 10MB limit');
       return;
     }
 
@@ -140,6 +165,9 @@ export class SongUploadComponent {
       error: (error) => {
         console.error('Upload failed', error);
         alert('Upload failed. Please try again.');
+      },
+      complete: () => {
+        this.uploading = false;
       }
     });
   }
