@@ -78,6 +78,7 @@ import { CommonModule } from '@angular/common';
 import { Song, SongService } from '../../services/song.service';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 import { Subscription } from 'rxjs';
+import { Playlist, PlaylistService } from '../../services/playlist.service';
 
 @Component({
   selector: 'app-song-list',
@@ -91,14 +92,26 @@ export class SongListComponent implements OnInit, OnDestroy {
   songs: Song[] = [];
   currentSong: Song | null = null;
   private subscription: Subscription = new Subscription();
-
-  constructor(private songService: SongService, private cdr: ChangeDetectorRef) { }
+  playlists: Playlist[] = [];
+  
+  constructor(
+    private songService: SongService,
+    private playlistService: PlaylistService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.loadSongs();
+    this.loadPlaylists();
     this.subscription.add(
       this.songService.songs$.subscribe(songs => {
         this.songs = songs;
+        this.cdr.markForCheck();
+      })
+    );
+    this.subscription.add(
+      this.playlistService.playlists$.subscribe(playlists => {
+        this.playlists = playlists;
         this.cdr.markForCheck();
       })
     );
@@ -154,7 +167,27 @@ export class SongListComponent implements OnInit, OnDestroy {
       });
     }
   }
+  loadPlaylists(): void {
+    this.playlistService.getPlaylists().subscribe({
+      error: (error: any) => {
+        console.error('Error loading playlists:', error);
+      },
+    });
+  }
 
+  addToPlaylist(song: Song, playlistId: string): void {
+    this.playlistService.addSongToPlaylist(playlistId, song).subscribe({
+      next: (updatedPlaylist) => {
+        this.playlists = this.playlists.map(p => 
+          p._id === updatedPlaylist._id ? updatedPlaylist : p
+        );
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('Error adding song to playlist:', err);
+      }
+    });
+  }
   formatDuration(seconds: number): string {
     if (isNaN(seconds) || seconds <= 0) {
       return '0:00';

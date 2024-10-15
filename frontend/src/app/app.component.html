@@ -6,6 +6,7 @@
       <!-- Desktop Navigation -->
       <div class="hidden md:flex space-x-4">
         <a routerLink="/songs" routerLinkActive="text-blue-500" class="hover:text-gray-300">Songs</a>
+        <a routerLink="/playlists" routerLinkActive="text-blue-500" class="hover:text-gray-300">Playlists</a>
         <a routerLink="/upload" routerLinkActive="text-blue-500" class="hover:text-gray-300">Upload</a>
         <a routerLink="/team" routerLinkActive="text-blue-500" class="hover:text-gray-300">Team</a>
       </div>
@@ -28,6 +29,9 @@
         <a routerLink="/songs" routerLinkActive="text-blue-500" 
           class="hover:text-gray-300 py-2"
           (click)="toggleMenu()">Songs</a>
+        <a routerLink="/playlists" routerLinkActive="text-blue-500" 
+          class="hover:text-gray-300 py-2"
+          (click)="toggleMenu()">Playlists</a>
         <a routerLink="/upload" routerLinkActive="text-blue-500" 
           class="hover:text-gray-300 py-2"
           (click)="toggleMenu()">Upload</a>

@@ -5,8 +5,6 @@
         <div *ngFor="let song of songs" 
             class="bg-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
             <div class="relative group">
-                <!-- <img [src]="'http://localhost:3000/' + song.imageUrl"  -->
-                <!-- <img [src]="'https://music-app-backend-h3sd.onrender.com/' + song.imageUrl" -->
                 <img [src]="song.imageUrl"
                     alt="Album cover" 
                     class="w-full h-48 object-cover">
@@ -24,7 +22,7 @@
                 <h3 class="text-lg font-semibold text-white mb-1 truncate">{{song.title}}</h3>
                 <p class="text-gray-400 text-sm mb-1">{{song.artist}}</p>
                 <p class="text-gray-500 text-sm mb-3">{{song.album}}</p>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center mb-2">
                     <span class="text-gray-400 text-sm">{{formatDuration(song.duration)}}</span>
                     <button (click)="deleteSong(song._id)" 
                             class="text-red-500 hover:text-red-600 transition-colors">
@@ -32,6 +30,22 @@
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
                     </button>
+                </div>
+                <div class="relative">
+                    <button (click)="playlistDropdown.classList.toggle('hidden')"
+                            class="w-full bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors flex justify-between items-center">
+                        <span>Add to Playlist</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div #playlistDropdown class="absolute z-10 hidden mt-2 w-full bg-gray-700 rounded-lg shadow-lg">
+                        <div *ngFor="let playlist of playlists" 
+                             (click)="addToPlaylist(song, playlist._id); playlistDropdown.classList.add('hidden')"
+                             class="px-4 py-2 hover:bg-gray-600 cursor-pointer">
+                            {{ playlist.name }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -264,7 +264,84 @@ function getPublicIdFromUrl(url) {
     const filename = parts[parts.length - 1];
     return 'soundsphere/' + filename.split('.')[0];
 }
+const playlistSchema = new mongoose.Schema({
+    name: String,
+    songs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }]
+});
 
+const Playlist = mongoose.model('Playlist', playlistSchema, 'Playlists');
+
+// Get all playlists
+app.get('/api/playlists', async (req, res) => {
+    try {
+        const playlists = await Playlist.find().populate('songs');
+        res.json(playlists);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Create a new playlist
+app.post('/api/playlists', async (req, res) => {
+    const playlist = new Playlist({
+        name: req.body.name,
+        songs: []
+    });
+
+    try {
+        const newPlaylist = await playlist.save();
+        res.status(201).json(newPlaylist);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Add a song to a playlist
+app.post('/api/playlists/:id/songs', async (req, res) => {
+    try {
+        const playlist = await Playlist.findById(req.params.id);
+        if (playlist) {
+            playlist.songs.push(req.body.songId);
+            const updatedPlaylist = await playlist.save();
+            res.json(updatedPlaylist);
+        } else {
+            res.status(404).json({ message: 'Playlist not found' });
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Remove a song from a playlist
+app.delete('/api/playlists/:id/songs/:songId', async (req, res) => {
+    try {
+        const playlist = await Playlist.findById(req.params.id);
+        if (playlist) {
+            playlist.songs = playlist.songs.filter(song => song.toString() !== req.params.songId);
+            const updatedPlaylist = await playlist.save();
+            res.json(updatedPlaylist);
+        } else {
+            res.status(404).json({ message: 'Playlist not found' });
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Delete a playlist
+app.delete('/api/playlists/:id', async (req, res) => {
+    try {
+        const playlist = await Playlist.findById(req.params.id);
+        if (playlist) {
+            await Playlist.deleteOne({ _id: req.params.id });
+            res.json({ message: 'Playlist deleted' });
+        } else {
+            res.status(404).json({ message: 'Playlist not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
