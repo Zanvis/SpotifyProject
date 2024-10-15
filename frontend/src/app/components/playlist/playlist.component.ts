@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Playlist, PlaylistService } from '../../services/playlist.service';
 import { Song, SongService } from '../../services/song.service';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
@@ -15,31 +15,35 @@ import { AudioPlayerComponent } from '../audio-player/audio-player.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlaylistComponent implements OnInit, OnDestroy {
-  playlists: Playlist[] = [];
+  playlists$: Observable<Playlist[]>;
   newPlaylistName: string = '';
   private subscription: Subscription = new Subscription();
   currentSong: Song | null = null;
   currentPlaylist: Playlist | null = null;
-
+  
   constructor(
     private playlistService: PlaylistService,
     private songService: SongService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    this.playlists$ = this.playlistService.playlists$;
+  }
 
   ngOnInit(): void {
-    this.subscription.add(
-      this.playlistService.playlists$.subscribe(playlists => {
-        this.playlists = playlists;
-        this.cdr.markForCheck();
-      })
-    );
+    this.loadPlaylists();
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
+  loadPlaylists(): void {
+    this.subscription.add(
+      this.playlistService.getPlaylists().subscribe({
+        next: () => this.cdr.markForCheck(),
+        error: error => console.error('Error loading playlists:', error)
+      })
+    );
+  }
   createPlaylist(): void {
     if (this.newPlaylistName.trim()) {
       this.playlistService.createPlaylist(this.newPlaylistName.trim()).subscribe({
@@ -106,5 +110,13 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+  refreshPlaylists(): void {
+    this.subscription.add(
+      this.playlistService.refreshPlaylists().subscribe({
+        next: () => this.cdr.markForCheck(),
+        error: error => console.error('Error refreshing playlists:', error)
+      })
+    );
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { tap, map, catchError } from 'rxjs/operators';
 import { Song } from './song.service';
 
 export interface Playlist {
@@ -17,17 +17,33 @@ export class PlaylistService {
   private apiUrl = 'https://music-app-backend-h3sd.onrender.com/api';
   private playlistsSubject = new BehaviorSubject<Playlist[]>([]);
   playlists$ = this.playlistsSubject.asObservable();
+  private isLoading = false;
 
-  constructor(private http: HttpClient) {
-    this.loadPlaylists();
-  }
+  constructor(private http: HttpClient) {}
 
-  private loadPlaylists(): void {
-    this.http.get<Playlist[]>(`${this.apiUrl}/playlists`)
-      .subscribe(playlists => this.playlistsSubject.next(playlists));
+  loadPlaylists(): Observable<Playlist[]> {
+    if (this.isLoading) {
+      return this.playlists$;
+    }
+
+    this.isLoading = true;
+    return this.http.get<Playlist[]>(`${this.apiUrl}/playlists`).pipe(
+      tap(playlists => {
+        this.playlistsSubject.next(playlists);
+        this.isLoading = false;
+      }),
+      catchError(error => {
+        console.error('Error loading playlists:', error);
+        this.isLoading = false;
+        return of([]);
+      })
+    );
   }
 
   getPlaylists(): Observable<Playlist[]> {
+    if (this.playlistsSubject.value.length === 0 && !this.isLoading) {
+      return this.loadPlaylists();
+    }
     return this.playlists$;
   }
 
@@ -83,5 +99,8 @@ export class PlaylistService {
           this.playlistsSubject.next(updatedPlaylists);
         })
       );
+  }
+  refreshPlaylists(): Observable<Playlist[]> {
+    return this.loadPlaylists();
   }
 }
