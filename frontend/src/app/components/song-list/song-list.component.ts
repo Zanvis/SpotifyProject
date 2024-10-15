@@ -19,7 +19,8 @@ export class SongListComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   playlists: Playlist[] = [];
   currentPlaylist: Playlist | null = null;
-  
+  openDropdownId: string | null = null;
+
   constructor(
     private songService: SongService,
     private playlistService: PlaylistService,
@@ -144,12 +145,18 @@ export class SongListComponent implements OnInit, OnDestroy {
   //     }
   //   });
   // }
+  toggleDropdown(songId: string): void {
+    this.openDropdownId = this.openDropdownId === songId ? null : songId;
+    this.cdr.markForCheck();
+  }
   addToPlaylist(song: Song, playlistId: string): void {
     this.playlistService.addSongToPlaylist(playlistId, song).subscribe({
       next: () => {
         // The playlist service will handle updating the playlists
         // No need to manually update the local playlists array
+        this.openDropdownId = null;
         this.cdr.markForCheck();
+        window.location.reload();
       },
       error: (err) => {
         console.error('Error adding song to playlist:', err);

@@ -1,0 +1,32 @@
+.song-card {
+    position: relative;
+    z-index: 1;
+}
+
+.song-card:hover {
+    z-index: 2;
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.z-50 {
+    z-index: 50;
+}
+
+.mt-1 {
+    margin-top: 0.25rem;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.overflow-visible {
+    overflow: visible;
+}

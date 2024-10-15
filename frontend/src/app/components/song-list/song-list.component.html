@@ -3,7 +3,7 @@
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <div *ngFor="let song of songs" 
-            class="bg-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+            class="bg-gray-800 rounded-xl overflow-visible transition-transform duration-300 hover:scale-105 hover:shadow-xl song-card">
             <div class="relative group">
                 <img [src]="song.imageUrl"
                     alt="Album cover" 
@@ -32,17 +32,18 @@
                     </button>
                 </div>
                 <div class="relative">
-                    <button (click)="playlistDropdown.classList.toggle('hidden')"
+                    <button (click)="toggleDropdown(song._id)"
                             class="w-full bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors flex justify-between items-center">
                         <span>Add to Playlist</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <div #playlistDropdown class="absolute z-10 hidden mt-2 w-full bg-gray-700 rounded-lg shadow-lg">
+                    <div *ngIf="openDropdownId === song._id" 
+                        class="absolute left-0 right-0 mt-1 w-full bg-gray-700 rounded-lg shadow-lg overflow-hidden z-50">
                         <div *ngFor="let playlist of playlists" 
-                             (click)="addToPlaylist(song, playlist._id); playlistDropdown.classList.add('hidden')"
-                             class="px-4 py-2 hover:bg-gray-600 cursor-pointer">
+                            (click)="addToPlaylist(song, playlist._id)"
+                            class="px-4 py-2 hover:bg-gray-600 cursor-pointer text-white">
                             {{ playlist.name }}
                         </div>
                     </div>

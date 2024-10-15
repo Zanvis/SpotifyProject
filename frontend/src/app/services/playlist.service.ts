@@ -46,7 +46,7 @@ export class PlaylistService {
       .pipe(
         map(updatedPlaylist => ({
           ...updatedPlaylist,
-          songs: updatedPlaylist.songs.map(s => ({...s, ...song}))
+          songs: updatedPlaylist.songs.map(s => s._id === song._id ? song : s)
         })),
         tap(updatedPlaylist => {
           const currentPlaylists = this.playlistsSubject.value;
@@ -64,7 +64,10 @@ export class PlaylistService {
         tap(updatedPlaylist => {
           const currentPlaylists = this.playlistsSubject.value;
           const updatedPlaylists = currentPlaylists.map(playlist => 
-            playlist._id === playlistId ? updatedPlaylist : playlist
+            playlist._id === playlistId ? {
+              ...playlist,
+              songs: playlist.songs.filter(song => song._id !== songId)
+            } : playlist
           );
           this.playlistsSubject.next(updatedPlaylists);
         })

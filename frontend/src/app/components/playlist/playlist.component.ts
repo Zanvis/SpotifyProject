@@ -40,12 +40,6 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  loadPlaylists(): void {
-    this.playlistService.getPlaylists().subscribe({
-      error: (error: any) => console.error('Error loading playlists:', error)
-    });
-  }
-
   createPlaylist(): void {
     if (this.newPlaylistName.trim()) {
       this.playlistService.createPlaylist(this.newPlaylistName.trim()).subscribe({
@@ -68,6 +62,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 
   removeSongFromPlaylist(playlistId: string, songId: string): void {
     this.playlistService.removeSongFromPlaylist(playlistId, songId).subscribe({
+      next: () => this.cdr.markForCheck(),
       error: error => console.error('Error removing song from playlist:', error)
     });
   }
