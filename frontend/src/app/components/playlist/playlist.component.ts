@@ -80,8 +80,9 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     }
   }
 
-  playSong(song: Song): void {
+  playSong(song: Song, playlist: Playlist): void {
     this.currentSong = song;
+    this.currentPlaylist = playlist;
     this.cdr.markForCheck();
   }
 

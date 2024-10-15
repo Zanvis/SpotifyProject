@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { Song } from './song.service';
 
 export interface Playlist {
@@ -14,8 +14,7 @@ export interface Playlist {
   providedIn: 'root'
 })
 export class PlaylistService {
-  private apiUrl = 'https://music-app-backend-h3sd.onrender.com/api/';
-  // private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'https://music-app-backend-h3sd.onrender.com/api';
   private playlistsSubject = new BehaviorSubject<Playlist[]>([]);
   playlists$ = this.playlistsSubject.asObservable();
 
@@ -45,6 +44,10 @@ export class PlaylistService {
   addSongToPlaylist(playlistId: string, song: Song): Observable<Playlist> {
     return this.http.post<Playlist>(`${this.apiUrl}/playlists/${playlistId}/songs`, { songId: song._id })
       .pipe(
+        map(updatedPlaylist => ({
+          ...updatedPlaylist,
+          songs: updatedPlaylist.songs.map(s => ({...s, ...song}))
+        })),
         tap(updatedPlaylist => {
           const currentPlaylists = this.playlistsSubject.value;
           const updatedPlaylists = currentPlaylists.map(playlist => 
