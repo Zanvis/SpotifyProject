@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Playlist, PlaylistService } from '../../services/playlist.service';
-import { Song, SongService } from '../../services/song.service';
+import { Song } from '../../services/song.service';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 
 @Component({
@@ -15,51 +15,79 @@ import { AudioPlayerComponent } from '../audio-player/audio-player.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlaylistComponent implements OnInit, OnDestroy {
-  playlists$: Observable<Playlist[]>;
+  playlists: Playlist[] = [];
   newPlaylistName: string = '';
-  private subscription: Subscription = new Subscription();
+  private subscription = new Subscription();
   currentSong: Song | null = null;
   currentPlaylist: Playlist | null = null;
-  
+  loading = true;
+  error: string | null = null;
+
   constructor(
     private playlistService: PlaylistService,
-    private songService: SongService,
     private cdr: ChangeDetectorRef
-  ) {
-    this.playlists$ = this.playlistService.playlists$;
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.loadPlaylists();
+    this.subscription.add(
+      this.playlistService.playlists$.subscribe({
+        next: (playlists) => {
+          this.playlists = playlists;
+          this.loading = false;
+          this.error = null;
+          this.cdr.markForCheck();
+        },
+        error: (error) => {
+          console.error('Error loading playlists:', error);
+          this.error = 'Failed to load playlists. Please try again.';
+          this.loading = false;
+          this.cdr.markForCheck();
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  loadPlaylists(): void {
-    this.subscription.add(
-      this.playlistService.getPlaylists().subscribe({
-        next: () => this.cdr.markForCheck(),
-        error: error => console.error('Error loading playlists:', error)
-      })
-    );
-  }
+
   createPlaylist(): void {
     if (this.newPlaylistName.trim()) {
+      this.loading = true;
       this.playlistService.createPlaylist(this.newPlaylistName.trim()).subscribe({
         next: () => {
           this.newPlaylistName = '';
+          this.loading = false;
           this.cdr.markForCheck();
         },
-        error: error => console.error('Error creating playlist:', error)
+        error: (error) => {
+          console.error('Error creating playlist:', error);
+          this.error = 'Failed to create playlist. Please try again.';
+          this.loading = false;
+          this.cdr.markForCheck();
+        }
       });
     }
   }
 
   deletePlaylist(playlistId: string): void {
     if (confirm('Are you sure you want to delete this playlist?')) {
+      this.loading = true;
       this.playlistService.deletePlaylist(playlistId).subscribe({
-        error: error => console.error('Error deleting playlist:', error)
+        next: () => {
+          if (this.currentPlaylist?._id === playlistId) {
+            this.currentPlaylist = null;
+            this.currentSong = null;
+          }
+          this.loading = false;
+          this.cdr.markForCheck();
+        },
+        error: (error) => {
+          console.error('Error deleting playlist:', error);
+          this.error = 'Failed to delete playlist. Please try again.';
+          this.loading = false;
+          this.cdr.markForCheck();
+        }
       });
     }
   }
@@ -67,7 +95,11 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   removeSongFromPlaylist(playlistId: string, songId: string): void {
     this.playlistService.removeSongFromPlaylist(playlistId, songId).subscribe({
       next: () => this.cdr.markForCheck(),
-      error: error => console.error('Error removing song from playlist:', error)
+      error: error => {
+        console.error('Error removing song from playlist:', error);
+        this.error = 'Failed to remove song. Please try again.';
+        this.cdr.markForCheck();
+      }
     });
   }
 
@@ -111,12 +143,8 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
-  refreshPlaylists(): void {
-    this.subscription.add(
-      this.playlistService.refreshPlaylists().subscribe({
-        next: () => this.cdr.markForCheck(),
-        error: error => console.error('Error refreshing playlists:', error)
-      })
-    );
+
+  trackByPlaylistId(index: number, playlist: Playlist): string {
+    return playlist._id;
   }
 }

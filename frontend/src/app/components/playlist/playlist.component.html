@@ -1,82 +1,92 @@
 <div class="container mx-auto p-4">
   <h2 class="text-3xl font-bold mb-6 text-white">Your Playlists</h2>
-  
+
   <div class="mb-6">
-    <input [(ngModel)]="newPlaylistName"
-          (keyup.enter)="createPlaylist()"
-          class="bg-gray-700 text-white px-4 py-2 rounded-l-lg focus:outline-none"
-          placeholder="New playlist name">
-    <button (click)="createPlaylist()"
-            class="bg-green-500 text-white px-4 py-2 rounded-r-lg hover:bg-green-600 transition-colors">
+    <input 
+      [(ngModel)]="newPlaylistName"
+      (keyup.enter)="createPlaylist()"
+      class="bg-gray-700 text-white px-4 py-2 rounded-l-lg focus:outline-none flex-grow shadow-md"
+      placeholder="New playlist name"
+      [disabled]="loading">
+    <button 
+      (click)="createPlaylist()"
+      class="bg-green-500 text-white px-4 py-2 rounded-r-lg hover:bg-green-600 transition-colors"
+      [disabled]="loading || !newPlaylistName.trim()">
       Create Playlist
     </button>
   </div>
 
-  <div *ngIf="(playlists$ | async) as playlists; else loading">
+  <div *ngIf="error" class="bg-red-500 text-white p-4 rounded-lg mb-4">
+    {{ error }}
+  </div>
 
-    <div *ngIf="playlists.length === 0" class="text-white text-center">
-      No playlists available. Create one to get started!
-    </div>
+  <div *ngIf="loading" class="text-white text-center p-4">
+    Loading...
+  </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <div *ngFor="let playlist of playlists"
-          class="bg-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-        <div class="p-4">
-          <h3 class="text-lg font-semibold text-white mb-2">{{playlist.name}}</h3>
-          <p class="text-gray-400 text-sm mb-4">{{playlist.songs.length}} songs</p>
-          <div class="flex justify-between items-center mb-4">
-            <button (click)="playPlaylist(playlist)"
-                    [disabled]="playlist.songs.length === 0"
-                    [class.opacity-50]="playlist.songs.length === 0"
-                    class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">
-              {{playlist.songs.length === 0 ? 'No Songs' : 'Play Playlist'}}
-            </button>
-            <button (click)="deletePlaylist(playlist._id)"
-                    class="text-red-500 hover:text-red-600 transition-colors">
-              Delete Playlist
-            </button>
-          </div>
+  <div *ngIf="!loading && playlists.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div *ngFor="let playlist of playlists; trackBy: trackByPlaylistId"
+        class="bg-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold text-white mb-2">{{playlist.name}}</h3>
+        <p class="text-gray-400 text-sm mb-4">{{playlist.songs.length}} songs</p>
+        
+        <div class="flex justify-between items-center mb-4">
+          <button 
+            (click)="playPlaylist(playlist)"
+            [disabled]="playlist.songs.length === 0"
+            [class.opacity-50]="playlist.songs.length === 0"
+            class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">
+            {{playlist.songs.length === 0 ? 'No Songs' : 'Play Playlist'}}
+          </button>
+          <button 
+            (click)="deletePlaylist(playlist._id)"
+            class="text-red-500 hover:text-red-600 transition-colors">
+            Delete Playlist
+          </button>
         </div>
-        <div class="p-4 bg-gray-700">
-          <h4 class="text-white font-semibold mb-2">Songs:</h4>
-          <ul *ngIf="playlist.songs.length > 0; else noSongs">
-            <li *ngFor="let song of playlist.songs" class="text-gray-300 mb-2 flex justify-between items-center">
-              <div class="flex items-center">
-                <button (click)="playSong(song, playlist)"
-                        class="mr-2 text-green-500 hover:text-green-600 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
-                  </svg>
-                </button>
-                <span>{{song.title}} - {{song.artist}}</span>
-              </div>
-              <div class="flex items-center">
-                <span class="mr-2 text-sm">{{formatDuration(song.duration)}}</span>
-                <button (click)="removeSongFromPlaylist(playlist._id, song._id)"
-                        class="text-red-400 hover:text-red-500 transition-colors">
-                  Remove
-                </button>
-              </div>
-            </li>
-          </ul>
-          <ng-template #noSongs>
-            <p class="text-gray-400">No songs in this playlist.</p>
-          </ng-template>
-        </div>
+      </div>
+
+      <div class="p-4 bg-gray-700">
+        <h4 class="text-white font-semibold mb-2">Songs:</h4>
+        <ul *ngIf="playlist.songs.length > 0; else noSongs" class="space-y-2">
+          <li *ngFor="let song of playlist.songs" class="text-gray-300 mb-2 flex justify-between items-center">
+            <div class="flex items-center">
+              <button (click)="playSong(song, playlist)"
+                      class="mr-2 text-green-500 hover:text-green-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                </svg>
+              </button>
+              <span>{{song.title}} - {{song.artist}}</span>
+            </div>
+            <div class="flex items-center">
+              <span class="mr-2 text-sm">{{formatDuration(song.duration)}}</span>
+              <button (click)="removeSongFromPlaylist(playlist._id, song._id)"
+                      class="text-red-500 hover:text-red-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </li>
+        </ul>
+        <ng-template #noSongs>
+          <p class="text-gray-400">No songs in this playlist.</p>
+        </ng-template>
       </div>
     </div>
   </div>
-</div>
-<ng-template #loading>
-  <div class="text-white text-center">
-    Loading...
+
+  <div *ngIf="!loading && playlists.length === 0" class="text-white text-center p-4">
+    No playlists available. Create one to get started!
   </div>
-</ng-template>
+</div>
 
 <app-audio-player 
-    *ngIf="currentSong"
-    [song]="currentSong"
-    [playlist]="currentPlaylist?.songs || []"
-    (songEnded)="onSongEnded()"
-    (songChanged)="onSongChanged($event)">
+  *ngIf="currentSong"
+  [song]="currentSong"
+  [playlist]="currentPlaylist?.songs || []"
+  (songEnded)="onSongEnded()"
+  (songChanged)="onSongChanged($event)">
 </app-audio-player>
