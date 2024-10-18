@@ -53,13 +53,25 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
 
   loadAndPlaySong(): void {
     if (this.audioElement) {
+      // Reset the current time
+      this.currentTime = 0;
+      
+      // Add canplay event listener to ensure the audio is ready before playing
+      const playHandler = () => {
+        this.audioElement?.play()
+          .then(() => {
+            this.isPlaying = true;
+          })
+          .catch(error => {
+            console.error('Error playing audio:', error);
+            this.isPlaying = false;
+          });
+        // Remove the event listener after it's triggered
+        this.audioElement?.removeEventListener('canplay', playHandler);
+      };
+
+      this.audioElement.addEventListener('canplay', playHandler);
       this.audioElement.load();
-      this.audioElement.play().then(() => {
-        this.isPlaying = true;
-      }).catch(error => {
-        console.error('Error playing audio:', error);
-        this.isPlaying = false;
-      });
     }
   }
 
