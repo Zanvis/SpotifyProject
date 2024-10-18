@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRe
 import { CommonModule } from '@angular/common';
 import { Song, SongService } from '../../services/song.service';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { Playlist, PlaylistService } from '../../services/playlist.service';
 
 @Component({
@@ -20,6 +20,10 @@ export class SongListComponent implements OnInit, OnDestroy {
   playlists: Playlist[] = [];
   currentPlaylist: Playlist | null = null;
   openDropdownId: string | null = null;
+  isLoading = true;
+  loadingTimeout = false;
+  retryCount = 0;
+  maxRetries = 3;
 
   constructor(
     private songService: SongService,
@@ -28,8 +32,7 @@ export class SongListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.loadSongs();
-    this.loadPlaylists();
+    this.loadInitialData();
     this.subscription.add(
       this.songService.songs$.subscribe(songs => {
         this.songs = songs;
@@ -42,6 +45,44 @@ export class SongListComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck();
       })
     );
+  }
+
+  loadInitialData(): void {
+    this.isLoading = true;
+    this.loadingTimeout = false;
+    this.cdr.markForCheck();
+
+    // Set a timeout to show extended loading message if server takes too long
+    const timeoutSubscription = timer(5000).subscribe(() => {
+      if (this.isLoading) {
+        this.loadingTimeout = true;
+        this.cdr.markForCheck();
+      }
+    });
+
+    this.songService.getSongs().subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.loadingTimeout = false;
+        this.retryCount = 0;
+        timeoutSubscription.unsubscribe();
+        this.loadPlaylists();
+        this.cdr.markForCheck();
+      },
+      error: (error) => {
+        console.error('Error loading songs:', error);
+        if (this.retryCount < this.maxRetries) {
+          this.retryCount++;
+          setTimeout(() => {
+            this.loadInitialData();
+          }, 2000 * this.retryCount); // Exponential backoff
+        } else {
+          this.isLoading = false;
+          this.loadingTimeout = false;
+          this.cdr.markForCheck();
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -152,15 +193,12 @@ export class SongListComponent implements OnInit, OnDestroy {
   addToPlaylist(song: Song, playlistId: string): void {
     this.playlistService.addSongToPlaylist(playlistId, song).subscribe({
       next: () => {
-        // The playlist service will handle updating the playlists
-        // No need to manually update the local playlists array
         this.openDropdownId = null;
         this.cdr.markForCheck();
         window.location.reload();
       },
       error: (err) => {
         console.error('Error adding song to playlist:', err);
-        // Optionally, show an error message to the user
       }
     });
   }
