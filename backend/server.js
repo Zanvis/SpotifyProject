@@ -367,6 +367,7 @@ app.delete('/api/playlists/:id', async (req, res) => {
     }
 });
 
+// Auth Middleware
 const authMiddleware = async (req, res, next) => {
     try {
         const token = req.headers.authorization?.split(' ')[1];
@@ -389,8 +390,10 @@ const authMiddleware = async (req, res, next) => {
     }
 };
 
-// Authentication routes
-app.post('/api/auth/register', async (req, res) => {
+// API Routes
+const apiRouter = express.Router();
+
+apiRouter.post('/register', async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
@@ -434,11 +437,12 @@ app.post('/api/auth/register', async (req, res) => {
             }
         });
     } catch (error) {
+        console.error('Registration error:', error);
         res.status(500).json({ message: error.message });
     }
 });
 
-app.post('/api/auth/login', async (req, res) => {
+apiRouter.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
 
@@ -470,12 +474,12 @@ app.post('/api/auth/login', async (req, res) => {
             }
         });
     } catch (error) {
+        console.error('Login error:', error);
         res.status(500).json({ message: error.message });
     }
 });
 
-// Protected route example
-app.get('/api/auth/me', authMiddleware, async (req, res) => {
+apiRouter.get('/me', authMiddleware, async (req, res) => {
     res.json({
         user: {
             id: req.user._id,
@@ -484,6 +488,9 @@ app.get('/api/auth/me', authMiddleware, async (req, res) => {
         }
     });
 });
+
+// Mount API routes
+app.use('/api/auth', apiRouter);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
