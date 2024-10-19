@@ -4,8 +4,6 @@ import { SongUploadComponent } from './components/song-upload/song-upload.compon
 import { TeamComponent } from './components/team/team.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
     // { path: '', redirectTo: '/songs', pathMatch: 'full' },
@@ -14,7 +12,5 @@ export const routes: Routes = [
     { path: 'upload', component: SongUploadComponent },
     { path: 'team', component: TeamComponent },
     { path: 'playlists', component: PlaylistComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
     { path: '**', redirectTo: '/songs' }
 ];

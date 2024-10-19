@@ -4,39 +4,11 @@
       <a routerLink="/" class="text-2xl font-bold hover:text-gray-300">SoundSphere</a>
       
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex space-x-4 items-center">
-        <!-- Show these links only when authenticated -->
-        <ng-container *ngIf="isAuthenticated">
-          <a routerLink="/songs" routerLinkActive="text-blue-500" class="hover:text-gray-300">Songs</a>
-          <a routerLink="/playlists" routerLinkActive="text-blue-500" class="hover:text-gray-300">Playlists</a>
-          <a routerLink="/upload" routerLinkActive="text-blue-500" class="hover:text-gray-300">Upload</a>
-          <a routerLink="/team" routerLinkActive="text-blue-500" class="hover:text-gray-300">Team</a>
-        </ng-container>
-
-        <!-- Authentication Links -->
-        <ng-container *ngIf="!isAuthenticated">
-          <a routerLink="/login" routerLinkActive="text-blue-500" class="hover:text-gray-300">Login</a>
-          <a routerLink="/register" routerLinkActive="text-blue-500" class="hover:text-gray-300">Register</a>
-        </ng-container>
-
-        <!-- User Menu (when authenticated) -->
-        <div *ngIf="isAuthenticated" class="relative ml-4">
-          <button (click)="toggleUserMenu()" class="flex items-center space-x-2 hover:text-gray-300">
-            <span>{{ username }}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          
-          <!-- User Dropdown Menu -->
-          <div *ngIf="isUserMenuOpen" class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1">
-            <a routerLink="/profile" class="block px-4 py-2 text-sm hover:bg-gray-700">Profile</a>
-            <a routerLink="/settings" class="block px-4 py-2 text-sm hover:bg-gray-700">Settings</a>
-            <button (click)="logout()" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-700">
-              Logout
-            </button>
-          </div>
-        </div>
+      <div class="hidden md:flex space-x-4">
+        <a routerLink="/songs" routerLinkActive="text-blue-500" class="hover:text-gray-300">Songs</a>
+        <a routerLink="/playlists" routerLinkActive="text-blue-500" class="hover:text-gray-300">Playlists</a>
+        <a routerLink="/upload" routerLinkActive="text-blue-500" class="hover:text-gray-300">Upload</a>
+        <a routerLink="/team" routerLinkActive="text-blue-500" class="hover:text-gray-300">Team</a>
       </div>
 
       <!-- Mobile Menu Button -->
@@ -50,45 +22,22 @@
     <!-- Mobile Navigation -->
     <div *ngIf="isMenuOpen" class="md:hidden mt-4">
       <div class="flex flex-col space-y-2">
-        <!-- Show these links only when authenticated -->
-        <ng-container *ngIf="isAuthenticated">
-          <a routerLink="/" routerLinkActive="text-blue-500" 
-            [routerLinkActiveOptions]="{exact: true}"
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Home</a>
-          <a routerLink="/songs" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Songs</a>
-          <a routerLink="/playlists" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Playlists</a>
-          <a routerLink="/upload" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Upload</a>
-          <a routerLink="/team" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Team</a>
-          <a routerLink="/profile" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Profile</a>
-          <a routerLink="/settings" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Settings</a>
-          <button (click)="logout(); toggleMenu()" 
-            class="text-left hover:text-gray-300 py-2 w-full">
-            Logout
-          </button>
-        </ng-container>
-
-        <!-- Authentication Links -->
-        <ng-container *ngIf="!isAuthenticated">
-          <a routerLink="/login" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Login</a>
-          <a routerLink="/register" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Register</a>
-        </ng-container>
+        <a routerLink="/" routerLinkActive="text-blue-500" 
+          [routerLinkActiveOptions]="{exact: true}"
+          class="hover:text-gray-300 py-2"
+          (click)="toggleMenu()">Home</a>
+        <a routerLink="/songs" routerLinkActive="text-blue-500" 
+          class="hover:text-gray-300 py-2"
+          (click)="toggleMenu()">Songs</a>
+        <a routerLink="/playlists" routerLinkActive="text-blue-500" 
+          class="hover:text-gray-300 py-2"
+          (click)="toggleMenu()">Playlists</a>
+        <a routerLink="/upload" routerLinkActive="text-blue-500" 
+          class="hover:text-gray-300 py-2"
+          (click)="toggleMenu()">Upload</a>
+        <a routerLink="/team" routerLinkActive="text-blue-500" 
+          class="hover:text-gray-300 py-2"
+          (click)="toggleMenu()">Team</a>
       </div>
     </div>
   </nav>
