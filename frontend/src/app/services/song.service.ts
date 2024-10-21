@@ -12,6 +12,10 @@ export interface Song {
   filePath: string;
   imageUrl: string;
   uploadDate: Date;
+  uploader: {
+    _id: string;
+    username: string;
+  };
 }
 
 @Injectable({
