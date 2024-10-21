@@ -27,63 +27,66 @@
         <!-- Song Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <div *ngFor="let song of songs" 
-                class="bg-gray-800 rounded-xl overflow-visible transition-transform duration-300 hover:scale-105 hover:shadow-xl song-card">
+            class="bg-gray-800 rounded-xl overflow-visible transition-transform duration-300 hover:scale-105 hover:shadow-xl song-card">
+            
+            <!-- Song Image with Play Overlay -->
+            <div class="relative group">
+                <img [src]="song.imageUrl"
+                    alt="Album cover" 
+                    class="w-full h-48 object-cover rounded-t-xl">
+                <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-t-xl">
+                    <button (click)="playSong(song)" 
+                            class="bg-green-500 text-white p-3 rounded-full hover:bg-green-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Song Information -->
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-white mb-1 truncate">{{song.title}}</h3>
+                <p class="text-gray-400 text-sm mb-1">{{song.artist}}</p>
+                <p class="text-gray-500 text-sm mb-2">{{song.album}}</p>
                 
-                <!-- Song Image with Play Overlay -->
-                <div class="relative group">
-                    <img [src]="song.imageUrl"
-                        alt="Album cover" 
-                        class="w-full h-48 object-cover">
-                    <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <button (click)="playSong(song)" 
-                                class="bg-green-500 text-white p-3 rounded-full hover:bg-green-600 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </button>
-                    </div>
+                <!-- Uploader Information -->
+                <p class="text-gray-400 text-xs mb-3">Uploaded by: {{song.uploader.username}}</p>
+                
+                <!-- Duration and Delete Button -->
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-400 text-sm">{{formatDuration(song.duration)}}</span>
+                    <button (click)="deleteSong(song._id)" 
+                            class="text-red-500 hover:text-red-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
                 </div>
 
-                <!-- Song Information -->
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold text-white mb-1 truncate">{{song.title}}</h3>
-                    <p class="text-gray-400 text-sm mb-1">{{song.artist}}</p>
-                    <p class="text-gray-500 text-sm mb-3">{{song.album}}</p>
+                <!-- Playlist Dropdown -->
+                <div class="relative">
+                    <button (click)="toggleDropdown(song._id)"
+                            class="w-full bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors flex justify-between items-center">
+                        <span>Add to Playlist</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
                     
-                    <!-- Duration and Delete Button -->
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-gray-400 text-sm">{{formatDuration(song.duration)}}</span>
-                        <button (click)="deleteSong(song._id)" 
-                                class="text-red-500 hover:text-red-600 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <!-- Playlist Dropdown -->
-                    <div class="relative">
-                        <button (click)="toggleDropdown(song._id)"
-                                class="w-full bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors flex justify-between items-center">
-                            <span>Add to Playlist</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        
-                        <!-- Dropdown Menu -->
-                        <div *ngIf="openDropdownId === song._id" 
-                            class="absolute left-0 right-0 mt-1 w-full bg-gray-700 rounded-lg shadow-lg overflow-hidden z-50">
-                            <div *ngFor="let playlist of playlists" 
-                                (click)="addToPlaylist(song, playlist._id)"
-                                class="px-4 py-2 hover:bg-gray-600 cursor-pointer text-white">
-                                {{ playlist.name }}
-                            </div>
+                    <!-- Dropdown Menu -->
+                    <div *ngIf="openDropdownId === song._id" 
+                        class="absolute left-0 right-0 mt-1 w-full bg-gray-700 rounded-lg shadow-lg overflow-hidden z-50">
+                        <div *ngFor="let playlist of playlists" 
+                            (click)="addToPlaylist(song, playlist._id)"
+                            class="px-4 py-2 hover:bg-gray-600 cursor-pointer text-white">
+                            {{ playlist.name }}
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </div>

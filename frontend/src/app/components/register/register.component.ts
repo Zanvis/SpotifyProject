@@ -15,6 +15,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
   isLoading = false;
   error: string | null = null;
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -66,5 +67,8 @@ export class RegisterComponent {
         }
       });
     }
+  }
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

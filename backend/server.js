@@ -1,3 +1,4 @@
+// Required dependencies
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -67,6 +68,10 @@ const songSchema = new mongoose.Schema({
     uploadDate: {
         type: Date,
         default: Date.now
+    },
+    uploader: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 
@@ -121,10 +126,33 @@ const upload = multer({ storage: storage });
 
 // Routes
 
+// Middleware for JWT validation
+const authMiddleware = async (req, res, next) => {
+    try {
+        const token = req.headers.authorization?.split(' ')[1];
+        
+        if (!token) {
+            return res.status(401).json({ message: 'Authentication required' });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.userId);
+        
+        if (!user) {
+            return res.status(401).json({ message: 'User not found' });
+        }
+
+        req.user = user;
+        next();
+    } catch (error) {
+        res.status(401).json({ message: 'Invalid token' });
+    }
+};
+
 // Get all songs
 app.get('/api/songs', async (req, res) => {
     try {
-        const songs = await Song.find();
+        const songs = await Song.find().populate('uploader', 'username');
         res.json(songs);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -134,11 +162,11 @@ app.get('/api/songs', async (req, res) => {
 // Get a specific song
 app.get('/api/songs/:id', async (req, res) => {
     try {
-        const song = await Song.findById(req.params.id);
+        const song = await Song.findById(req.params.id).populate('uploader', 'username');
         if (song) {
             res.json(song);
         } else {
-        res.status(404).json({ message: 'Song not found' });
+            res.status(404).json({ message: 'Song not found' });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -175,10 +203,10 @@ app.get('/api/songs/:id', async (req, res) => {
 // });
 
 // Create a new song
-app.post('/api/songs', upload.fields([
+app.post('/api/songs', authMiddleware, upload.fields([
     { name: 'songFile', maxCount: 1 },
     { name: 'imageFile', maxCount: 1 }
-    ]), async (req, res) => {
+]), async (req, res) => {
     try {
         if (!req.files['songFile']) {
             return res.status(400).json({ message: 'No audio file uploaded' });
@@ -198,7 +226,6 @@ app.post('/api/songs', upload.fields([
         if (audioMetadata.duration) {
             duration = Math.round(audioMetadata.duration);
         } else if (audioMetadata.image_metadata && audioMetadata.image_metadata.Duration) {
-            // Parse duration from image_metadata if available
             const durationStr = audioMetadata.image_metadata.Duration;
             const [minutes, seconds] = durationStr.split(':').map(Number);
             duration = minutes * 60 + seconds;
@@ -210,7 +237,8 @@ app.post('/api/songs', upload.fields([
             album: req.body.album,
             duration: duration,
             filePath: audioFile.path,
-            imageUrl: imageFile ? imageFile.path : undefined
+            imageUrl: imageFile ? imageFile.path : undefined,
+            uploader: req.user._id
         });
     
         const newSong = await song.save();
@@ -366,29 +394,6 @@ app.delete('/api/playlists/:id', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-
-// Middleware for JWT validation
-const authMiddleware = async (req, res, next) => {
-    try {
-        const token = req.headers.authorization?.split(' ')[1];
-        
-        if (!token) {
-            return res.status(401).json({ message: 'Authentication required' });
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findById(decoded.userId);
-        
-        if (!user) {
-            return res.status(401).json({ message: 'User not found' });
-        }
-
-        req.user = user;
-        next();
-    } catch (error) {
-        res.status(401).json({ message: 'Invalid token' });
-    }
-};
 
 // Authentication routes
 app.post('/api/auth/register', async (req, res) => {

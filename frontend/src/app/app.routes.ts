@@ -16,5 +16,5 @@ export const routes: Routes = [
     { path: 'playlists', component: PlaylistComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
-    { path: '**', redirectTo: '/songs' }
+    { path: '**', redirectTo: '' }
 ];

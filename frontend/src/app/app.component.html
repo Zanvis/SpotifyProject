@@ -5,10 +5,26 @@
       
       <!-- Desktop Navigation -->
       <div class="hidden md:flex space-x-4 items-center">
-        <!-- Main navigation links available to all users -->
         <a routerLink="/songs" routerLinkActive="text-blue-500" class="hover:text-gray-300">Songs</a>
         <a routerLink="/playlists" routerLinkActive="text-blue-500" class="hover:text-gray-300">Playlists</a>
-        <a routerLink="/upload" routerLinkActive="text-blue-500" class="hover:text-gray-300">Upload</a>
+        <div class="relative inline-block">
+          <button 
+            [disabled]="!isAuthenticated" 
+            (click)="handleUploadClick()" 
+            (mouseenter)="!isAuthenticated && toggleTooltip()"
+            (mouseleave)="!isAuthenticated && toggleTooltip()"
+            routerLinkActive="text-blue-500" 
+            class="hover:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none"
+          >
+            Upload
+          </button>
+          <div *ngIf="!isAuthenticated && showTooltip" 
+              class="absolute z-10 w-48 px-2 py-1 mt-2 text-sm text-white bg-gray-700 rounded-lg shadow-lg transition-opacity duration-300"
+              style="top: 100%; left: 50%; transform: translateX(-50%);"
+          >
+            Please log in to upload music
+          </div>
+        </div>
         <a routerLink="/team" routerLinkActive="text-blue-500" class="hover:text-gray-300">Team</a>
 
         <!-- Authentication Links -->
@@ -48,7 +64,6 @@
     <!-- Mobile Navigation -->
     <div *ngIf="isMenuOpen" class="md:hidden mt-4">
       <div class="flex flex-col space-y-2">
-        <!-- Main navigation links available to all users -->
         <a routerLink="/" routerLinkActive="text-blue-500" 
           [routerLinkActiveOptions]="{exact: true}"
           class="hover:text-gray-300 py-2"
@@ -59,9 +74,24 @@
         <a routerLink="/playlists" routerLinkActive="text-blue-500" 
           class="hover:text-gray-300 py-2"
           (click)="toggleMenu()">Playlists</a>
-        <a routerLink="/upload" routerLinkActive="text-blue-500" 
-          class="hover:text-gray-300 py-2"
-          (click)="toggleMenu()">Upload</a>
+        <div class="relative inline-block">
+          <button 
+            [disabled]="!isAuthenticated" 
+            (click)="handleUploadClick(); toggleMenu()" 
+            (touchstart)="!isAuthenticated && toggleTooltip()"
+            (touchend)="!isAuthenticated && toggleTooltip()"
+            routerLinkActive="text-blue-500" 
+            class="text-left hover:text-gray-300 py-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none"
+          >
+            Upload
+          </button>
+          <div *ngIf="!isAuthenticated && showTooltip" 
+              class="absolute z-10 w-48 px-2 py-1 mt-2 text-sm text-white bg-gray-700 rounded-lg shadow-lg transition-opacity duration-300"
+              style="top: 100%; left: 0;"
+          >
+            Please log in to upload music
+          </div>
+        </div>
         <a routerLink="/team" routerLinkActive="text-blue-500" 
           class="hover:text-gray-300 py-2"
           (click)="toggleMenu()">Team</a>

@@ -4,6 +4,7 @@ import { Song, SongService } from '../../services/song.service';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 import { Subscription, timer } from 'rxjs';
 import { Playlist, PlaylistService } from '../../services/playlist.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-song-list',
@@ -24,10 +25,12 @@ export class SongListComponent implements OnInit, OnDestroy {
   loadingTimeout = false;
   retryCount = 0;
   maxRetries = 3;
+  currentUser: any;
 
   constructor(
     private songService: SongService,
     private playlistService: PlaylistService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -45,8 +48,13 @@ export class SongListComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck();
       })
     );
+    this.subscription.add(
+      this.authService.currentUser$.subscribe(user => {
+        this.currentUser = user;
+        this.cdr.markForCheck();
+      })
+    );
   }
-
   loadInitialData(): void {
     this.isLoading = true;
     this.loadingTimeout = false;

@@ -25,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isUserMenuOpen = false;
   isAuthenticated = false;
   username = '';
+  showTooltip = false;
   private authSubscription: Subscription | undefined;
 
   constructor(
@@ -63,5 +64,14 @@ export class AppComponent implements OnInit, OnDestroy {
     await this.authService.logout();
     this.isUserMenuOpen = false;
     this.isMenuOpen = false;
+  }
+  handleUploadClick() {
+    if (this.isAuthenticated) {
+      this.router.navigate(['/upload']);
+    }
+  }
+
+  toggleTooltip() {
+    this.showTooltip = !this.showTooltip;
   }
 }
