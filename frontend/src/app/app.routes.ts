@@ -6,12 +6,13 @@ import { LandingComponent } from './components/landing/landing.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     // { path: '', redirectTo: '/songs', pathMatch: 'full' },
     { path: '', component: LandingComponent },
     { path: 'songs', component: SongListComponent },
-    { path: 'upload', component: SongUploadComponent },
+    { path: 'upload', component: SongUploadComponent, canActivate: [authGuard] },
     { path: 'team', component: TeamComponent },
     { path: 'playlists', component: PlaylistComponent },
     { path: 'register', component: RegisterComponent },
