@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Song } from '../../services/song.service';
 
 enum LoopMode {
@@ -31,6 +31,7 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
   volume = 1;
   currentSongIndex = 0;
   loopMode: LoopMode = LoopMode.NoLoop;
+  isExpanded = false;
 
   constructor() { }
 
@@ -56,7 +57,6 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
       // Reset the current time
       this.currentTime = 0;
       
-      // Add canplay event listener to ensure the audio is ready before playing
       const playHandler = () => {
         this.audioElement?.play()
           .then(() => {
@@ -74,8 +74,28 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
       this.audioElement.load();
     }
   }
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.code === 'Space') {
+      event.preventDefault();
+      this.togglePlay(event);
+    } else if (event.code === 'Escape' && this.isExpanded) {
+      this.toggleExpandedView(event);
+    }
+  }
 
-  togglePlay(): void {
+  toggleExpandedView(event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.isExpanded = !this.isExpanded;
+    // Toggle body scroll
+    document.body.style.overflow = this.isExpanded ? 'hidden' : '';
+  }
+  togglePlay(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     if (this.audioElement) {
       if (this.isPlaying) {
         this.audioElement.pause();
@@ -98,10 +118,12 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  onSeek(event: Event): void {
+  onSeek(event: Event) {
+    event.stopPropagation();
     const target = event.target as HTMLInputElement;
     if (this.audioElement) {
       this.audioElement.currentTime = Number(target.value);
+      this.updateRangeBackground(target);
     }
   }
 
@@ -119,19 +141,24 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  toggleMute(): void {
+  toggleMute(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     if (this.audioElement) {
       this.audioElement.muted = !this.audioElement.muted;
       this.isMuted = this.audioElement.muted;
     }
   }
 
-  onVolumeChange(event: Event): void {
+  onVolumeChange(event: Event) {
+    event.stopPropagation();
     const target = event.target as HTMLInputElement;
     const volumeValue = Number(target.value) / 100;
     if (this.audioElement) {
       this.audioElement.volume = volumeValue;
       this.volume = volumeValue;
+      this.updateRangeBackground(target);
     }
   }
 
@@ -141,7 +168,10 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
-  previous(): void {
+  previous(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     if (this.playlist.length > 0) {
       this.currentSongIndex = (this.currentSongIndex - 1 + this.playlist.length) % this.playlist.length;
       this.song = this.playlist[this.currentSongIndex];
@@ -150,7 +180,10 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  next(): void {
+  next(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     if (this.playlist.length > 0) {
       this.currentSongIndex = (this.currentSongIndex + 1) % this.playlist.length;
       this.song = this.playlist[this.currentSongIndex];
@@ -161,7 +194,10 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  toggleLoop(): void {
+  toggleLoop(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     switch (this.loopMode) {
       case LoopMode.NoLoop:
         this.loopMode = LoopMode.LoopTrack;
@@ -188,5 +224,11 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
 
   getLoopButtonClass(): string {
     return this.loopMode !== LoopMode.NoLoop ? 'text-green-500 hover:text-green-400' : 'text-gray-400 hover:text-white';
+  }
+  private updateRangeBackground(element: HTMLInputElement) {
+    const value = Number(element.value);
+    const max = Number(element.max) || 100;
+    const percentage = (value / max) * 100;
+    element.style.backgroundSize = `${percentage}% 100%`;
   }
 }
