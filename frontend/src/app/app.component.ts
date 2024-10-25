@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AudioPlayerComponent } from './components/audio-player/audio-player.component';
 import { SongListComponent } from './components/song-list/song-list.component';
@@ -27,11 +27,15 @@ export class AppComponent implements OnInit, OnDestroy {
   username = '';
   showTooltip = false;
   private authSubscription: Subscription | undefined;
+  private userMenuRef: ElementRef;
 
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private elementRef: ElementRef
+  ) {
+    this.userMenuRef = elementRef;
+  }
 
   ngOnInit() {
     this.authSubscription = combineLatest([
@@ -49,6 +53,17 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: Event) {
+    const userMenuElement = this.userMenuRef.nativeElement.querySelector('.user-menu-container');
+    if (!userMenuElement) return;
+    
+    const clickedInside = userMenuElement.contains(event.target as Node);
+    if (!clickedInside && this.isUserMenuOpen) {
+      this.isUserMenuOpen = false;
+    }
+  }
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
     if (this.isMenuOpen) {
@@ -56,7 +71,10 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleUserMenu() {
+  toggleUserMenu(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 
@@ -65,6 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isUserMenuOpen = false;
     this.isMenuOpen = false;
   }
+
   handleUploadClick() {
     if (this.isAuthenticated) {
       this.router.navigate(['/upload']);
