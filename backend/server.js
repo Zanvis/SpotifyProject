@@ -93,6 +93,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    preferences: {
+        emailNotifications: {
+            type: Boolean,
+            default: true
+        },
+        autoPlayNext: {
+            type: Boolean,
+            default: true
+        }
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -489,6 +499,110 @@ app.get('/api/auth/me', authMiddleware, async (req, res) => {
             email: req.user.email
         }
     });
+});
+
+// Update user profile
+app.put('/api/users/profile', authMiddleware, async (req, res) => {
+    try {
+        const { username } = req.body;
+        
+        // Check if username is already taken
+        const existingUser = await User.findOne({ username, _id: { $ne: req.user._id } });
+        if (existingUser) {
+        return res.status(400).json({ message: 'Username is already taken' });
+        }
+
+        // Update user
+        const user = await User.findByIdAndUpdate(
+        req.user._id,
+        { username },
+        { new: true }
+        ).select('-password');
+
+        res.json({ user });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Update password
+app.put('/api/users/password', authMiddleware, async (req, res) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+        
+        // Verify current password
+        const user = await User.findById(req.user._id);
+        const isValid = await bcrypt.compare(currentPassword, user.password);
+        
+        if (!isValid) {
+        return res.status(400).json({ message: 'Current password is incorrect' });
+        }
+
+        // Hash new password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        
+        // Update password
+        await User.findByIdAndUpdate(req.user._id, { password: hashedPassword });
+        
+        res.json({ message: 'Password updated successfully' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Update user preferences
+app.put('/api/users/preferences', authMiddleware, async (req, res) => {
+    try {
+        const { emailNotifications, autoPlayNext } = req.body;
+        
+        // Add preferences field to user schema if not exists
+        const user = await User.findByIdAndUpdate(
+        req.user._id,
+        { 
+            $set: { 
+            preferences: { emailNotifications, autoPlayNext }
+            }
+        },
+        { new: true }
+        );
+        
+        res.json(user.preferences);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Get user preferences
+app.get('/api/users/preferences', authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        res.json(user.preferences || { emailNotifications: true, autoPlayNext: true });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Delete account
+app.delete('/api/users/account', authMiddleware, async (req, res) => {
+    try {
+        // Delete user's playlists
+        await Playlist.deleteMany({ user: req.user._id });
+        
+        // Delete user's songs
+        const userSongs = await Song.find({ uploader: req.user._id });
+        for (const song of userSongs) {
+        // Delete song files from storage
+        // File deletion logic TODO
+        }
+        await Song.deleteMany({ uploader: req.user._id });
+        
+        // Delete user
+        await User.findByIdAndDelete(req.user._id);
+        
+        res.json({ message: 'Account deleted successfully' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 });
 
 app.listen(port, () => {
