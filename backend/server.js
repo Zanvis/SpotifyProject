@@ -529,15 +529,28 @@ app.put('/api/users/profile', authMiddleware, async (req, res) => {
 app.put('/api/users/password', authMiddleware, async (req, res) => {
     try {
         const { currentPassword, newPassword } = req.body;
+    
+        // Validate password requirements
+        if (newPassword.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+        }
+        
+        if (!/\d/.test(newPassword)) {
+            return res.status(400).json({ message: 'Password must contain at least one number' });
+        }
+        
+        if (!/[a-zA-Z]/.test(newPassword)) {
+            return res.status(400).json({ message: 'Password must contain at least one letter' });
+        }
         
         // Verify current password
         const user = await User.findById(req.user._id);
         const isValid = await bcrypt.compare(currentPassword, user.password);
         
         if (!isValid) {
-        return res.status(400).json({ message: 'Current password is incorrect' });
+            return res.status(400).json({ message: 'Current password is incorrect' });
         }
-
+    
         // Hash new password
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         
