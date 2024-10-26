@@ -347,7 +347,7 @@ app.get('/api/playlists', async (req, res) => {
 });
 
 // Create a new playlist
-app.post('/api/playlists', authenticateToken, async (req, res) => {
+app.post('/api/playlists', authMiddleware, async (req, res) => {
     const playlist = new Playlist({
         name: req.body.name,
         songs: [],
