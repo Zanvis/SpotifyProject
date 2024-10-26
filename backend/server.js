@@ -328,8 +328,7 @@ function getPublicIdFromUrl(url) {
 }
 const playlistSchema = new mongoose.Schema({
     name: String,
-    songs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }],
-    creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+    songs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }]
 });
 
 const Playlist = mongoose.model('Playlist', playlistSchema, 'Playlists');
@@ -337,9 +336,7 @@ const Playlist = mongoose.model('Playlist', playlistSchema, 'Playlists');
 // Get all playlists
 app.get('/api/playlists', async (req, res) => {
     try {
-        const playlists = await Playlist.find()
-            .populate('songs')
-            .populate('creator', 'username email');
+        const playlists = await Playlist.find().populate('songs');
         res.json(playlists);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -347,19 +344,15 @@ app.get('/api/playlists', async (req, res) => {
 });
 
 // Create a new playlist
-app.post('/api/playlists', authMiddleware, async (req, res) => {
+app.post('/api/playlists', async (req, res) => {
     const playlist = new Playlist({
         name: req.body.name,
-        songs: [],
-        creator: req.user.userId // From JWT token
+        songs: []
     });
 
     try {
         const newPlaylist = await playlist.save();
-        const populatedPlaylist = await Playlist.findById(newPlaylist._id)
-            .populate('songs')
-            .populate('creator', 'username email'); // Only include username and email fields
-        res.status(201).json(populatedPlaylist);
+        res.status(201).json(newPlaylist);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
