@@ -9,6 +9,8 @@ import { LoginComponent } from './components/login/login.component';
 import { authGuard } from './guards/auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
 
 export const routes: Routes = [
     // { path: '', redirectTo: '/songs', pathMatch: 'full' },
@@ -19,7 +21,9 @@ export const routes: Routes = [
     { path: 'playlists', component: PlaylistComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'profile', component: ProfileComponent},
-    { path: 'settings', component: SettingsComponent},
+    { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+    { path: 'settings', component: SettingsComponent, canActivate: [authGuard] },
+    { path: 'terms', component: TermsComponent },
+    { path: 'privacy', component: PrivacyComponent },
     { path: '**', redirectTo: '' }
 ];
