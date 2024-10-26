@@ -12,9 +12,27 @@
             type="text"
             id="username"
             [(ngModel)]="username"
-            class="w-full px-4 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            (ngModelChange)="onUsernameChange($event)"
+            class="w-full px-4 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2"
+            [ngClass]="{
+              'focus:ring-blue-500': usernameValidation.status === 'idle' || usernameValidation.status === 'checking',
+              'focus:ring-red-500': usernameValidation.status === 'error',
+              'focus:ring-green-500': usernameValidation.status === 'success'
+            }"
             placeholder="Enter username"
           >
+          <!-- Username validation feedback -->
+          <div class="mt-2 text-sm" *ngIf="usernameValidation.status !== 'idle'">
+            <div *ngIf="usernameValidation.status === 'checking'" class="text-blue-400">
+              Checking username availability...
+            </div>
+            <div *ngIf="usernameValidation.status === 'error'" class="text-red-400">
+              {{ usernameValidation.message }}
+            </div>
+            <div *ngIf="usernameValidation.status === 'success'" class="text-green-400">
+              {{ usernameValidation.message }}
+            </div>
+          </div>
         </div>
         <div>
           <label class="block text-gray-300 mb-2" for="email">Email</label>

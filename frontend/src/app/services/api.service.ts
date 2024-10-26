@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
@@ -53,5 +53,25 @@ export class ApiService {
   private handleAuthSuccess(response: AuthResponse) {
     this.authService.setAuthToken(response.token);
     this.authService.setCurrentUser(response.user);
+  }
+  updateProfile(username: string): Observable<{user: User}> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.authService.getAuthToken()}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.put<{user: User}>(`${this.API_URL}/users/profile`, 
+      { username }, 
+      { headers }
+    ).pipe(
+      tap(response => {
+        // Update stored user data after successful update
+        const currentUser = this.authService.getCurrentUser();
+        if (currentUser) {
+          currentUser.username = response.user.username;
+          this.authService.setCurrentUser(currentUser);
+        }
+      })
+    );
   }
 }

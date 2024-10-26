@@ -618,6 +618,26 @@ app.delete('/api/users/account', authMiddleware, async (req, res) => {
     }
 });
 
+app.get('/api/users/check-username/:username', authMiddleware, async (req, res) => {
+    try {
+        const { username } = req.params;
+        
+        // Don't check availability if user is checking their own current username
+        if (req.user.username === username) {
+            return res.json({ available: true });
+        }
+
+        const existingUser = await User.findOne({ 
+        username: username,
+        _id: { $ne: req.user._id } // Exclude current user from check
+        });
+
+        res.json({ available: !existingUser });
+    } catch (error) {
+        res.status(500).json({ message: 'Error checking username availability' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

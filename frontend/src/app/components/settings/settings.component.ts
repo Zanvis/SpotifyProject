@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
-import { firstValueFrom } from 'rxjs';
+import { debounceTime, distinctUntilChanged, firstValueFrom, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 interface PasswordErrors {
@@ -18,6 +18,11 @@ interface PasswordChecks {
   hasLetter: boolean;
 }
 
+interface UsernameValidation {
+  isValid: boolean;
+  message: string;
+  status: 'checking' | 'error' | 'success' | 'idle';
+}
 
 @Component({
   selector: 'app-settings',
@@ -28,6 +33,7 @@ interface PasswordChecks {
 })
 export class SettingsComponent implements OnInit {
   username: string = '';
+  originalUsername: string = '';
   email: string = '';
   currentPassword: string = '';
   newPassword: string = '';
@@ -54,6 +60,13 @@ export class SettingsComponent implements OnInit {
     hasNumber: false,
     hasLetter: false
   };
+
+  private usernameCheck = new Subject<string>();
+  usernameValidation: UsernameValidation = {
+    isValid: true,
+    message: '',
+    status: 'idle'
+  };
   private readonly API_URL = 'https://music-app-backend-h3sd.onrender.com/api';
   // private readonly API_URL = 'http://localhost:3000/api';
 
@@ -61,7 +74,15 @@ export class SettingsComponent implements OnInit {
     private authService: AuthService,
     private apiService: ApiService,
     private http: HttpClient
-  ) {}
+  ) {
+    // Setup username check debounce
+    this.usernameCheck.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(username => {
+      this.validateUsername(username);
+    });
+  }
 
   ngOnInit() {
     this.loadUserData();
@@ -80,6 +101,7 @@ export class SettingsComponent implements OnInit {
     try {
       const user = await firstValueFrom(this.apiService.getCurrentUser());
       this.username = user.user.username;
+      this.originalUsername = user.user.username;
       this.email = user.user.email;
     } catch (error) {
       this.errorMessage = 'Failed to load user data';
@@ -99,9 +121,88 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  onUsernameChange(username: string) {
+    // Don't validate if username hasn't changed from original
+    if (username === this.originalUsername) {
+      this.usernameValidation = {
+        isValid: true,
+        message: '',
+        status: 'idle'
+      };
+      return;
+    }
+
+    // Reset validation if empty
+    if (!username.trim()) {
+      this.usernameValidation = {
+        isValid: false,
+        message: 'Username cannot be empty',
+        status: 'error'
+      };
+      return;
+    }
+
+    // Check username length
+    if (username.length < 3) {
+      this.usernameValidation = {
+        isValid: false,
+        message: 'Username must be at least 3 characters long',
+        status: 'error'
+      };
+      return;
+    }
+
+    // Check for valid characters
+    if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+      this.usernameValidation = {
+        isValid: false,
+        message: 'Username can only contain letters, numbers, underscores, and hyphens',
+        status: 'error'
+      };
+      return;
+    }
+
+    this.usernameValidation.status = 'checking';
+    this.usernameCheck.next(username);
+  }
+
+  private async validateUsername(username: string) {
+    try {
+      const response = await firstValueFrom(
+        this.http.get<{available: boolean}>(
+          `${this.API_URL}/users/check-username/${username}`,
+          { headers: this.getHeaders() }
+        )
+      );
+
+      this.usernameValidation = {
+        isValid: response.available,
+        message: response.available ? 'Username is available' : 'This username is already taken',
+        status: response.available ? 'success' : 'error'
+      };
+    } catch (error) {
+      this.usernameValidation = {
+        isValid: false,
+        message: 'Error checking username availability',
+        status: 'error'
+      };
+    }
+  }
+
   async updateProfile() {
     if (!this.username.trim()) {
       this.errorMessage = 'Username cannot be empty';
+      return;
+    }
+
+    if (this.username === this.originalUsername) {
+      this.successMessage = 'No changes to save';
+      setTimeout(() => this.successMessage = '', 3000);
+      return;
+    }
+
+    if (!this.usernameValidation.isValid) {
+      this.errorMessage = this.usernameValidation.message;
       return;
     }
 
@@ -109,18 +210,30 @@ export class SettingsComponent implements OnInit {
     this.errorMessage = '';
 
     try {
-      await firstValueFrom(
-        this.http.put(
+      const response = await firstValueFrom(
+        this.http.put<{user: any}>(
           `${this.API_URL}/users/profile`,
-          { username: this.username },
+          { username: this.username.trim() },
           { headers: this.getHeaders() }
         )
       );
       
+      const currentUser = this.authService.getCurrentUser();
+      if (currentUser) {
+        currentUser.username = this.username.trim();
+        this.authService.setCurrentUser(currentUser);
+      }
+      
+      this.originalUsername = this.username.trim();
       this.successMessage = 'Profile updated successfully';
       setTimeout(() => this.successMessage = '', 3000);
     } catch (error: any) {
-      this.errorMessage = error.error?.message || 'Failed to update profile';
+      if (error.status === 400) {
+        this.errorMessage = error.error?.message || 'Invalid username';
+      } else {
+        this.errorMessage = 'Failed to update profile. Please try again later.';
+      }
+      this.username = this.originalUsername;
     } finally {
       this.isUpdating = false;
     }
