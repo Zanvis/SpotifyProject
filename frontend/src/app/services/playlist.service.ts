@@ -3,11 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Song } from './song.service';
+import { AuthService } from './auth.service';
 
 export interface Playlist {
   _id: string;
   name: string;
   songs: Song[];
+  creator: {
+    _id: string;
+    username: string;
+  };
+  createdAt?: Date;
 }
 
 @Injectable({
@@ -18,7 +24,7 @@ export class PlaylistService {
   private playlistsSubject = new BehaviorSubject<Playlist[]>([]);
   playlists$ = this.playlistsSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: AuthService) {
     this.loadPlaylists().subscribe();
   }
 
@@ -33,12 +39,20 @@ export class PlaylistService {
     return this.loadPlaylists();
   }
 
+  // createPlaylist(name: string): Observable<Playlist> {
+  //   return this.http.post<Playlist>(`${this.apiUrl}/playlists`, { name }).pipe(
+  //     tap(() => this.refreshPlaylists())
+  //   );
+  // }
   createPlaylist(name: string): Observable<Playlist> {
-    return this.http.post<Playlist>(`${this.apiUrl}/playlists`, { name }).pipe(
+    return this.http.post<Playlist>(`${this.apiUrl}/playlists`, { 
+      name,
+      // The creator ID would typically come from an auth service
+      creatorId: this.authService.getCurrentUser() 
+    }).pipe(
       tap(() => this.refreshPlaylists())
     );
   }
-
   addSongToPlaylist(playlistId: string, song: Song): Observable<Playlist> {
     return this.http.post<Playlist>(
       `${this.apiUrl}/playlists/${playlistId}/songs`, 
