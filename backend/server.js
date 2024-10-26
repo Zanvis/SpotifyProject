@@ -328,16 +328,7 @@ function getPublicIdFromUrl(url) {
 }
 const playlistSchema = new mongoose.Schema({
     name: String,
-    songs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }],
-    creator: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User', 
-        required: true 
-    },
-    createdAt: { 
-        type: Date, 
-        default: Date.now 
-    }
+    songs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }]
 });
 
 const Playlist = mongoose.model('Playlist', playlistSchema, 'Playlists');
@@ -345,10 +336,7 @@ const Playlist = mongoose.model('Playlist', playlistSchema, 'Playlists');
 // Get all playlists
 app.get('/api/playlists', async (req, res) => {
     try {
-        const playlists = await Playlist.find()
-            .populate('songs')
-            .populate('creator', 'username')
-            .sort('-createdAt');
+        const playlists = await Playlist.find().populate('songs');
         res.json(playlists);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -359,16 +347,12 @@ app.get('/api/playlists', async (req, res) => {
 app.post('/api/playlists', async (req, res) => {
     const playlist = new Playlist({
         name: req.body.name,
-        songs: [],
-        creator: req.body.creatorId,
-        createdAt: new Date()
+        songs: []
     });
 
     try {
         const newPlaylist = await playlist.save();
-        // Populate the creator information before sending response
-        const populatedPlaylist = await newPlaylist.populate('creator', 'username');
-        res.status(201).json(populatedPlaylist);
+        res.status(201).json(newPlaylist);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -644,8 +628,8 @@ app.get('/api/users/check-username/:username', authMiddleware, async (req, res) 
         }
 
         const existingUser = await User.findOne({ 
-            username: username,
-            _id: { $ne: req.user._id } // Exclude current user from check
+        username: username,
+        _id: { $ne: req.user._id } // Exclude current user from check
         });
 
         res.json({ available: !existingUser });
