@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Playlist, PlaylistService } from '../../services/playlist.service';
 import { Song } from '../../services/song.service';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-playlist',
@@ -25,6 +26,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 
   constructor(
     private playlistService: PlaylistService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -69,7 +71,10 @@ export class PlaylistComponent implements OnInit, OnDestroy {
       });
     }
   }
-
+  isPlaylistCreator(playlist: Playlist): boolean {
+    const currentUser = this.authService.getCurrentUser();
+    return currentUser?.id === playlist.creator._id;
+  }
   deletePlaylist(playlistId: string): void {
     if (confirm('Are you sure you want to delete this playlist?')) {
       this.loading = true;

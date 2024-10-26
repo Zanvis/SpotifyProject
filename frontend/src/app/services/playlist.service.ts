@@ -3,11 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Song } from './song.service';
+import { AuthService } from './auth.service';
 
 export interface Playlist {
   _id: string;
   name: string;
   songs: Song[];
+  creator: {
+    _id: string;
+    username: string;
+    email: string;
+  };
 }
 
 @Injectable({
@@ -18,7 +24,7 @@ export class PlaylistService {
   private playlistsSubject = new BehaviorSubject<Playlist[]>([]);
   playlists$ = this.playlistsSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: AuthService) {
     this.loadPlaylists().subscribe();
   }
 

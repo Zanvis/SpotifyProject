@@ -26,11 +26,18 @@
 
   <div *ngIf="!loading && playlists.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
     <div *ngFor="let playlist of playlists; trackBy: trackByPlaylistId"
-        class="bg-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+    class="bg-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
       <div class="p-4">
         <h3 class="text-lg font-semibold text-white mb-2">{{playlist.name}}</h3>
+        <div class="flex items-center text-sm text-gray-400 mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+          </svg>
+          Created by: {{playlist.creator.username}}
+        </div>
         <p class="text-gray-400 text-sm mb-4">{{playlist.songs.length}} songs</p>
         
+        <!-- Show delete button only if current user is the creator -->
         <div class="flex justify-between items-center mb-4">
           <button 
             (click)="playPlaylist(playlist)"
@@ -40,6 +47,7 @@
             {{playlist.songs.length === 0 ? 'No Songs' : 'Play Playlist'}}
           </button>
           <button 
+            *ngIf="isPlaylistCreator(playlist)"
             (click)="deletePlaylist(playlist._id)"
             class="text-red-500 hover:text-red-600 transition-colors">
             Delete Playlist
