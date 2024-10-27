@@ -1,27 +1,27 @@
-<div class="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex flex-col justify-start pt-20 sm:pt-32 pb-12 px-4 sm:px-6 lg:px-8"> <!-- Changed justify-center to justify-start and added pt-20 sm:pt-32 -->
+<div class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex flex-col justify-start pt-20 sm:pt-32 pb-12 px-4 sm:px-6 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
-    <h2 class="text-center text-4xl font-extrabold text-white mb-2">
+    <h2 class="text-center text-4xl font-extrabold text-gray-900 dark:text-white mb-2">
       Sign in to your account
     </h2>
-    <p class="text-center text-sm text-gray-400">
+    <p class="text-center text-sm text-gray-600 dark:text-gray-400">
       Or
-      <a routerLink="/register" class="font-medium text-blue-400 hover:text-blue-300 transition-colors duration-200">
+      <a routerLink="/register" class="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
         create a new account
       </a>
     </p>
   </div>
 
-  <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-md"> <!-- Changed mt-8 to mt-6 -->
-    <div class="bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-700">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5"> <!-- Changed space-y-6 to space-y-5 for slightly tighter spacing -->
+  <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-200 dark:border-gray-700">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
         <!-- Error Alert -->
-        <div *ngIf="error" class="bg-red-900/50 text-red-300 p-3 rounded-lg text-sm">
+        <div *ngIf="error" class="bg-red-50 dark:bg-red-900/50 text-red-600 dark:text-red-300 p-3 rounded-lg text-sm">
           {{ error }}
         </div>
 
         <!-- Email Field -->
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-300">
+          <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Email address
           </label>
           <div class="mt-1 relative rounded-md shadow-sm">
@@ -29,18 +29,21 @@
               id="email"
               type="email"
               formControlName="email"
-              class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 sm:text-sm"
+              class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm 
+                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                    transition-colors duration-200 sm:text-sm"
               [class.border-red-500]="isFieldInvalid('email')"
             />
           </div>
-          <div *ngIf="isFieldInvalid('email')" class="mt-1 text-sm text-red-400">
+          <div *ngIf="isFieldInvalid('email')" class="mt-1 text-sm text-red-500 dark:text-red-400">
             Please enter a valid email address
           </div>
         </div>
 
         <!-- Password Field -->
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-300">
+          <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Password
           </label>
           <div class="mt-1 relative rounded-md shadow-sm">
@@ -48,13 +51,16 @@
               id="password"
               [type]="showPassword ? 'text' : 'password'"
               formControlName="password"
-              class="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 sm:text-sm"
+              class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm 
+                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                    transition-colors duration-200 sm:text-sm"
               [class.border-red-500]="isFieldInvalid('password')"
             />
             <button
               type="button"
               (click)="togglePasswordVisibility()"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-300 focus:outline-none"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none"
             >
               <!-- Eye icon when password is hidden -->
               <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -67,7 +73,7 @@
               </svg>
             </button>
           </div>
-          <div *ngIf="isFieldInvalid('password')" class="mt-1 text-sm text-red-400">
+          <div *ngIf="isFieldInvalid('password')" class="mt-1 text-sm text-red-500 dark:text-red-400">
             Password is required
           </div>
         </div>
@@ -79,15 +85,17 @@
               id="remember-me"
               type="checkbox"
               formControlName="rememberMe"
-              class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-blue-500 focus:ring-blue-500 focus:ring-offset-gray-800"
+              class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 
+                    bg-white dark:bg-gray-700 text-blue-600 
+                    focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
             />
-            <label for="remember-me" class="ml-2 block text-sm text-gray-300">
+            <label for="remember-me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
               Remember me
             </label>
           </div>
 
           <div class="text-sm">
-            <a href="#" class="font-medium text-blue-400 hover:text-blue-300 transition-colors duration-200">
+            <a href="#" class="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
               Forgot your password?
             </a>
           </div>
@@ -98,7 +106,10 @@
           <button
             type="submit"
             [disabled]="loginForm.invalid || isLoading"
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium 
+                  text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 
+                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800 
+                  disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
           >
             <span *ngIf="isLoading" class="animate-spin mr-2">⌛</span>
             {{ isLoading ? 'Signing in...' : 'Sign in' }}

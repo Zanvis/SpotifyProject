@@ -1,143 +1,176 @@
-<div class="bg-gray-900 text-white min-h-screen flex flex-col">
-  <nav class="bg-gray-800 p-4">
-    <div class="container mx-auto flex justify-between items-center">
-      <a routerLink="/" class="text-2xl font-bold hover:text-gray-300">SoundSphere</a>
-      
-      <!-- Desktop Navigation -->
-      <div class="hidden md:flex space-x-4 items-center">
-        <a routerLink="/songs" routerLinkActive="text-blue-500" class="hover:text-gray-300">Songs</a>
-        <a routerLink="/playlists" routerLinkActive="text-blue-500" class="hover:text-gray-300">Playlists</a>
-        <div class="relative inline-block">
+<div [class]="isDarkMode ? 'dark' : ''" class="h-full">
+  <div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex flex-col">
+    <nav class="bg-gray-100 dark:bg-gray-800 p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <a routerLink="/" class="text-2xl font-bold hover:text-gray-600 dark:hover:text-gray-300">SoundSphere</a>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex space-x-4 items-center">
+          <a routerLink="/songs" routerLinkActive="text-blue-500" class="hover:text-gray-600 dark:hover:text-gray-300">Songs</a>
+          <a routerLink="/playlists" routerLinkActive="text-blue-500" class="hover:text-gray-600 dark:hover:text-gray-300">Playlists</a>
+          <div class="relative inline-block">
+            <button 
+              [disabled]="!isAuthenticated" 
+              (click)="handleUploadClick()" 
+              (mouseenter)="!isAuthenticated && toggleTooltip()"
+              (mouseleave)="!isAuthenticated && toggleTooltip()"
+              routerLinkActive="text-blue-500" 
+              class="hover:text-gray-600 dark:hover:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none"
+            >
+              Upload
+            </button>
+            <div *ngIf="!isAuthenticated && showTooltip" 
+                class="absolute z-10 w-48 px-2 py-1 mt-2 text-sm text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 rounded-lg shadow-lg transition-opacity duration-300"
+                style="top: 100%; left: 50%; transform: translateX(-50%);"
+            >
+              Please log in to upload music
+            </div>
+          </div>
+          <a routerLink="/team" routerLinkActive="text-blue-500" class="hover:text-gray-600 dark:hover:text-gray-300">Team</a>
+    
+          <!-- Theme Toggle Button - Now positioned in the nav items -->
           <button 
-            [disabled]="!isAuthenticated" 
-            (click)="handleUploadClick()" 
-            (mouseenter)="!isAuthenticated && toggleTooltip()"
-            (mouseleave)="!isAuthenticated && toggleTooltip()"
-            routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none"
+            (click)="toggleTheme()"
+            class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center"
+            aria-label="Toggle theme"
           >
-            Upload
+            <!-- Sun icon for dark mode -->
+            <svg *ngIf="isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <!-- Moon icon for light mode -->
+            <svg *ngIf="!isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
           </button>
-          <div *ngIf="!isAuthenticated && showTooltip" 
-              class="absolute z-10 w-48 px-2 py-1 mt-2 text-sm text-white bg-gray-700 rounded-lg shadow-lg transition-opacity duration-300"
-              style="top: 100%; left: 50%; transform: translateX(-50%);"
-          >
-            Please log in to upload music
+    
+          <!-- Authentication Links -->
+          <ng-container *ngIf="!isAuthenticated">
+            <a routerLink="/login" routerLinkActive="text-blue-500" class="hover:text-gray-600 dark:hover:text-gray-300">Login</a>
+            <a routerLink="/register" routerLinkActive="text-blue-500" class="hover:text-gray-600 dark:hover:text-gray-300">Register</a>
+          </ng-container>
+    
+          <!-- User Menu -->
+          <div *ngIf="isAuthenticated" class="relative ml-4 user-menu-container">
+            <button (click)="toggleUserMenu($event)" class="flex items-center space-x-2 hover:text-gray-600 dark:hover:text-gray-300">
+              <span>{{ username }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            
+            <!-- User Dropdown Menu -->
+            <div *ngIf="isUserMenuOpen" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50">
+              <a routerLink="/profile" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
+              <a routerLink="/settings" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700">Settings</a>
+              <button (click)="logout()" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700">
+                Logout
+              </button>
+            </div>
           </div>
         </div>
-        <a routerLink="/team" routerLinkActive="text-blue-500" class="hover:text-gray-300">Team</a>
-
-        <!-- Authentication Links -->
-        <ng-container *ngIf="!isAuthenticated">
-          <a routerLink="/login" routerLinkActive="text-blue-500" class="hover:text-gray-300">Login</a>
-          <a routerLink="/register" routerLinkActive="text-blue-500" class="hover:text-gray-300">Register</a>
-        </ng-container>
-
-        <!-- User Menu (when authenticated) -->
-        <div *ngIf="isAuthenticated" class="relative ml-4 user-menu-container">
-          <button (click)="toggleUserMenu($event)" class="flex items-center space-x-2 hover:text-gray-300">
-            <span>{{ username }}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+    
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center space-x-2">
+          <!-- Theme Toggle for Mobile -->
+          <button 
+            (click)="toggleTheme()"
+            class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+            aria-label="Toggle theme"
+          >
+            <svg *ngIf="isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg *ngIf="!isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
             </svg>
           </button>
           
-          <!-- User Dropdown Menu -->
-          <div *ngIf="isUserMenuOpen" class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-50">
-            <a routerLink="/profile" class="block px-4 py-2 text-sm hover:bg-gray-700">Profile</a>
-            <a routerLink="/settings" class="block px-4 py-2 text-sm hover:bg-gray-700">Settings</a>
-            <button (click)="logout()" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-700">
+          <!-- Hamburger Menu Button -->
+          <button (click)="toggleMenu()" class="p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div *ngIf="isMenuOpen" class="md:hidden mt-4">
+        <div class="flex flex-col space-y-2">
+          <a routerLink="/" routerLinkActive="text-blue-500" 
+            [routerLinkActiveOptions]="{exact: true}"
+            class="hover:text-gray-600 dark:hover:text-gray-300 py-2"
+            (click)="toggleMenu()">Home</a>
+          <a routerLink="/songs" routerLinkActive="text-blue-500" 
+            class="hover:text-gray-600 dark:hover:text-gray-300 py-2"
+            (click)="toggleMenu()">Songs</a>
+          <a routerLink="/playlists" routerLinkActive="text-blue-500" 
+            class="hover:text-gray-600 dark:hover:text-gray-300 py-2"
+            (click)="toggleMenu()">Playlists</a>
+          <div class="relative inline-block">
+            <button 
+              [disabled]="!isAuthenticated" 
+              (click)="handleUploadClick(); toggleMenu()" 
+              (touchstart)="!isAuthenticated && toggleTooltip()"
+              (touchend)="!isAuthenticated && toggleTooltip()"
+              routerLinkActive="text-blue-500" 
+              class="text-left hover:text-gray-600 dark:hover:text-gray-300 py-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none"
+            >
+              Upload
+            </button>
+            <div *ngIf="!isAuthenticated && showTooltip" 
+                class="absolute z-10 w-48 px-2 py-1 mt-2 text-sm text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 rounded-lg shadow-lg transition-opacity duration-300"
+                style="top: 100%; left: 0;"
+            >
+              Please log in to upload music
+            </div>
+          </div>
+          <a routerLink="/team" routerLinkActive="text-blue-500" 
+            class="hover:text-gray-600 dark:hover:text-gray-300 py-2"
+            (click)="toggleMenu()">Team</a>
+
+          <ng-container *ngIf="!isAuthenticated">
+            <a routerLink="/login" routerLinkActive="text-blue-500" 
+              class="hover:text-gray-600 dark:hover:text-gray-300 py-2"
+              (click)="toggleMenu()">Login</a>
+            <a routerLink="/register" routerLinkActive="text-blue-500" 
+              class="hover:text-gray-600 dark:hover:text-gray-300 py-2"
+              (click)="toggleMenu()">Register</a>
+          </ng-container>
+
+          <ng-container *ngIf="isAuthenticated">
+            <a routerLink="/profile" routerLinkActive="text-blue-500" 
+              class="hover:text-gray-600 dark:hover:text-gray-300 py-2"
+              (click)="toggleMenu()">Profile</a>
+            <a routerLink="/settings" routerLinkActive="text-blue-500" 
+              class="hover:text-gray-600 dark:hover:text-gray-300 py-2"
+              (click)="toggleMenu()">Settings</a>
+            <button (click)="logout(); toggleMenu()" 
+              class="text-left hover:text-gray-600 dark:hover:text-gray-300 py-2 w-full">
               Logout
             </button>
-          </div>
+          </ng-container>
         </div>
       </div>
+    </nav>
+    
+    <main class="flex-grow">
+      <router-outlet></router-outlet>
+    </main>
 
-      <!-- Mobile Menu Button -->
-      <button (click)="toggleMenu()" class="md:hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
-
-    <!-- Mobile Navigation -->
-    <div *ngIf="isMenuOpen" class="md:hidden mt-4">
-      <div class="flex flex-col space-y-2">
-        <a routerLink="/" routerLinkActive="text-blue-500" 
-          [routerLinkActiveOptions]="{exact: true}"
-          class="hover:text-gray-300 py-2"
-          (click)="toggleMenu()">Home</a>
-        <a routerLink="/songs" routerLinkActive="text-blue-500" 
-          class="hover:text-gray-300 py-2"
-          (click)="toggleMenu()">Songs</a>
-        <a routerLink="/playlists" routerLinkActive="text-blue-500" 
-          class="hover:text-gray-300 py-2"
-          (click)="toggleMenu()">Playlists</a>
-        <div class="relative inline-block">
-          <button 
-            [disabled]="!isAuthenticated" 
-            (click)="handleUploadClick(); toggleMenu()" 
-            (touchstart)="!isAuthenticated && toggleTooltip()"
-            (touchend)="!isAuthenticated && toggleTooltip()"
-            routerLinkActive="text-blue-500" 
-            class="text-left hover:text-gray-300 py-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none"
-          >
-            Upload
-          </button>
-          <div *ngIf="!isAuthenticated && showTooltip" 
-              class="absolute z-10 w-48 px-2 py-1 mt-2 text-sm text-white bg-gray-700 rounded-lg shadow-lg transition-opacity duration-300"
-              style="top: 100%; left: 0;"
-          >
-            Please log in to upload music
-          </div>
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 py-4">
+      <div class="container mx-auto text-center">
+        <div class="mb-2">
+          <a routerLink="/terms" class="text-sm hover:text-gray-900 dark:hover:text-white mx-2">Terms of Service</a>
+          <span class="text-gray-400 dark:text-gray-600">|</span>
+          <a routerLink="/privacy" class="text-sm hover:text-gray-900 dark:hover:text-white mx-2">Privacy Policy</a>
         </div>
-        <a routerLink="/team" routerLinkActive="text-blue-500" 
-          class="hover:text-gray-300 py-2"
-          (click)="toggleMenu()">Team</a>
-
-        <!-- Authentication Links -->
-        <ng-container *ngIf="!isAuthenticated">
-          <a routerLink="/login" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Login</a>
-          <a routerLink="/register" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Register</a>
-        </ng-container>
-
-        <!-- User-specific links when authenticated -->
-        <ng-container *ngIf="isAuthenticated">
-          <a routerLink="/profile" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Profile</a>
-          <a routerLink="/settings" routerLinkActive="text-blue-500" 
-            class="hover:text-gray-300 py-2"
-            (click)="toggleMenu()">Settings</a>
-          <button (click)="logout(); toggleMenu()" 
-            class="text-left hover:text-gray-300 py-2 w-full">
-            Logout
-          </button>
-        </ng-container>
+        <div class="text-sm">
+          © {{ currentYear }} SoundSphere. All rights reserved.
+        </div>
       </div>
-    </div>
-  </nav>
-  
-  <main class="flex-grow">
-    <router-outlet></router-outlet>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-gray-800 text-gray-300 py-4">
-    <div class="container mx-auto text-center">
-      <div class="mb-2">
-        <a routerLink="/terms" class="text-sm hover:text-white mx-2">Terms of Service</a>
-        <span class="text-gray-600">|</span>
-        <a routerLink="/privacy" class="text-sm hover:text-white mx-2">Privacy Policy</a>
-      </div>
-      <div class="text-sm">
-        © {{ currentYear }} SoundSphere. All rights reserved.
-      </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
 </div>

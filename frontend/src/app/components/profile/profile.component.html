@@ -1,59 +1,59 @@
-<div class="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 pb-12">
+<div class="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 pb-12">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
     <!-- Profile Header -->
-    <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-8 mb-8 shadow-xl transition-transform hover:scale-[1.01]" *ngIf="currentUser$ | async as user">
+    <div class="bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-600 dark:to-blue-800 rounded-xl p-8 mb-8 shadow-xl transition-transform hover:scale-[1.01]" *ngIf="currentUser$ | async as user">
       <div class="flex flex-col sm:flex-row items-center sm:space-x-6 space-y-4 sm:space-y-0">
-        <div class="bg-white/10 backdrop-blur-sm rounded-full w-24 h-24 flex items-center justify-center text-3xl font-bold text-white ring-4 ring-white/20 shadow-lg">
+        <div class="bg-white/10 backdrop-blur-sm rounded-full w-24 h-24 flex items-center justify-center text-3xl font-bold text-gray-900 dark:text-white ring-4 ring-white/20 shadow-lg">
           {{ user.username.charAt(0).toUpperCase() }}
         </div>
         <div class="text-center sm:text-left">
-          <h1 class="text-3xl font-bold text-white">{{ user.username }}</h1>
-          <p class="text-blue-200">{{ user.email }}</p>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ user.username }}</h1>
+          <p class="text-blue-600 dark:text-blue-200">{{ user.email }}</p>
         </div>
       </div>
     </div>
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12" *ngIf="userStats$ | async as stats">
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-800/70 border border-gray-700">
-        <h3 class="text-lg font-medium text-gray-400 mb-2">Total Songs</h3>
-        <p class="text-3xl font-bold text-white">{{ stats.totalSongs }}</p>
+      <div class="bg-gray-200 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-300 dark:hover:bg-gray-800/70 border border-gray-300 dark:border-gray-700">
+        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">Total Songs</h3>
+        <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ stats.totalSongs }}</p>
       </div>
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-800/70 border border-gray-700">
-        <h3 class="text-lg font-medium text-gray-400 mb-2">Total Playlists</h3>
-        <p class="text-3xl font-bold text-white">{{ stats.totalPlaylists }}</p>
+      <div class="bg-gray-200 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-300 dark:hover:bg-gray-800/70 border border-gray-300 dark:border-gray-700">
+        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">Total Playlists</h3>
+        <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ stats.totalPlaylists }}</p>
       </div>
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-800/70 border border-gray-700">
-        <h3 class="text-lg font-medium text-gray-400 mb-2">Total Duration</h3>
-        <p class="text-3xl font-bold text-white">{{ formatDuration(stats.totalDuration) }}</p>
+      <div class="bg-gray-200 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-300 dark:hover:bg-gray-800/70 border border-gray-300 dark:border-gray-700">
+        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">Total Duration</h3>
+        <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ formatDuration(stats.totalDuration) }}</p>
       </div>
     </div>
 
     <!-- Uploaded Songs -->
     <div class="mb-12">
-      <h2 class="text-2xl font-bold text-white mb-6">Your Uploaded Songs</h2>
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-700">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Your Uploaded Songs</h2>
+      <div class="bg-gray-200 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-300 dark:border-gray-700">
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
-              <tr class="bg-gray-700/50">
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Title</th>
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Artist</th>
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Album</th>
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Duration</th>
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+              <tr class="bg-gray-300 dark:bg-gray-700/50">
+                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Title</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Artist</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Album</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Duration</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-700">
+            <tbody class="divide-y divide-gray-300 dark:divide-gray-700">
               <tr *ngFor="let song of userSongs$ | async" 
-                  class="group hover:bg-gray-700/50 transition-colors">
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{{ song.title }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ song.artist }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ song.album }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ formatDuration(song.duration) }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  class="group hover:bg-gray-200 dark:hover:bg-gray-700/50 transition-colors">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ song.title }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{{ song.artist }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{{ song.album }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{{ formatDuration(song.duration) }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
                   <button (click)="deleteSong(song._id)" 
-                          class="text-red-400 hover:text-red-300 focus:outline-none transition-colors duration-200 opacity-0 group-hover:opacity-100">
+                          class="text-red-600 dark:text-red-400 hover:text-red-500 dark:hover:text-red-300 focus:outline-none transition-colors duration-200 opacity-0 group-hover:opacity-100">
                     Delete
                   </button>
                 </td>
@@ -66,27 +66,27 @@
 
     <!-- Playlists -->
     <div>
-      <h2 class="text-2xl font-bold text-white mb-6">Your Playlists</h2>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Your Playlists</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div *ngFor="let playlist of playlists$ | async" 
-            class="group bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-800/70 border border-gray-700">
+            class="group bg-gray-200 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-300 dark:hover:bg-gray-800/70 border border-gray-300 dark:border-gray-700">
           <div class="flex justify-between items-start mb-4">
             <div>
-              <h3 class="text-lg font-semibold text-white mb-1">{{ playlist.name }}</h3>
-              <p class="text-sm text-gray-400">{{ playlist.songs.length }} songs</p>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">{{ playlist.name }}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">{{ playlist.songs.length }} songs</p>
             </div>
             <button (click)="deletePlaylist(playlist._id)" 
-                    class="text-red-400 hover:text-red-300 focus:outline-none transition-colors duration-200 opacity-0 group-hover:opacity-100">
+                    class="text-red-600 dark:text-red-400 hover:text-red-500 dark:hover:text-red-300 focus:outline-none transition-colors duration-200 opacity-0 group-hover:opacity-100">
               Delete
             </button>
           </div>
           <div class="space-y-2">
             <p *ngFor="let song of playlist.songs.slice(0, 3)" 
-                class="text-sm text-gray-400 truncate">
+                class="text-sm text-gray-600 dark:text-gray-400 truncate">
               {{ song.title }} - {{ song.artist }}
             </p>
             <p *ngIf="playlist.songs.length > 3" 
-                class="text-sm text-blue-400 mt-3 group-hover:text-blue-300 transition-colors">
+                class="text-sm text-blue-600 dark:text-blue-400 mt-3 group-hover:text-blue-500 dark:group-hover:text-blue-300 transition-colors">
               +{{ playlist.songs.length - 3 }} more songs
             </p>
           </div>

@@ -1,11 +1,11 @@
-<div class="container mx-auto p-4">
-  <h2 class="text-3xl font-bold mb-6 text-white">Your Playlists</h2>
+<div class="container mx-auto p-4 theme-dark">
+  <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Your Playlists</h2>
 
   <div class="mb-6">
     <input 
       [(ngModel)]="newPlaylistName"
       (keyup.enter)="createPlaylist()"
-      class="bg-gray-700 text-white px-4 py-2 rounded-l-lg focus:outline-none flex-grow shadow-md"
+      class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-2 rounded-l-lg focus:outline-none flex-grow shadow-md"
       placeholder="New playlist name"
       [disabled]="loading">
     <button 
@@ -20,16 +20,16 @@
     {{ error }}
   </div>
 
-  <div *ngIf="loading" class="text-white text-center p-4">
+  <div *ngIf="loading" class="text-gray-900 dark:text-white text-center p-4">
     Loading...
   </div>
 
   <div *ngIf="!loading && playlists.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
     <div *ngFor="let playlist of playlists; trackBy: trackByPlaylistId"
-        class="bg-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+        class="bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
       <div class="p-4">
-        <h3 class="text-lg font-semibold text-white mb-2">{{playlist.name}}</h3>
-        <p class="text-gray-400 text-sm mb-4">{{playlist.songs.length}} songs</p>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{playlist.name}}</h3>
+        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">{{playlist.songs.length}} songs</p>
         
         <div class="flex justify-between items-center mb-4">
           <button 
@@ -47,10 +47,10 @@
         </div>
       </div>
 
-      <div class="p-4 bg-gray-700">
-        <h4 class="text-white font-semibold mb-2">Songs:</h4>
+      <div class="p-4 bg-gray-200 dark:bg-gray-700">
+        <h4 class="text-gray-900 dark:text-white font-semibold mb-2">Songs:</h4>
         <ul *ngIf="playlist.songs.length > 0; else noSongs" class="space-y-2">
-          <li *ngFor="let song of playlist.songs" class="text-gray-300 mb-2 flex justify-between items-center">
+          <li *ngFor="let song of playlist.songs" class="text-gray-900 dark:text-gray-300 mb-2 flex justify-between items-center">
             <div class="flex items-center">
               <button (click)="playSong(song, playlist)"
                       class="mr-2 text-green-500 hover:text-green-600 transition-colors">
@@ -72,13 +72,13 @@
           </li>
         </ul>
         <ng-template #noSongs>
-          <p class="text-gray-400">No songs in this playlist.</p>
+          <p class="text-gray-600 dark:text-gray-400">No songs in this playlist.</p>
         </ng-template>
       </div>
     </div>
   </div>
 
-  <div *ngIf="!loading && playlists.length === 0" class="text-white text-center p-4">
+  <div *ngIf="!loading && playlists.length === 0" class="text-gray-900 dark:text-white text-center p-4">
     No playlists available. Create one to get started!
   </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 text-white py-8 sm:py-12">
+<div class="min-h-screen bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-950 text-gray-900 dark:text-white py-8 sm:py-12">
   <div class="container mx-auto px-4">
     <!-- Logo and Title Section -->
     <div class="flex flex-col items-center mb-8 sm:mb-12 text-center animate-fade-in-up">
@@ -10,7 +10,7 @@
       <h1 class="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 px-2 animate-fade-in">
         Welcome to SoundSphere
       </h1>
-      <p class="text-lg sm:text-xl text-gray-400 max-w-2xl px-2 animate-fade-in">
+      <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl px-2 animate-fade-in">
         Your personal music sanctuary. Upload, organize, and enjoy your music collection with our intuitive interface.
       </p>
     </div>
@@ -18,18 +18,19 @@
     <!-- Features Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 animate-fade-in">
       <div *ngFor="let feature of features" 
-          class="bg-gray-800 rounded-lg p-4 sm:p-6 flex flex-col items-center text-center hover:scale-105 transform transition-transform duration-300 hover:shadow-lg hover:shadow-blue-500/40">
-        <span class="material-icons text-3xl sm:text-4xl mb-3 sm:mb-4 text-blue-500 animate-float">
+          class="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 flex flex-col items-center text-center hover:scale-105 transform transition-transform duration-300 hover:shadow-lg hover:shadow-blue-500/40 border border-gray-200 dark:border-gray-700">
+        <span class="material-icons text-3xl sm:text-4xl mb-3 sm:mb-4 text-blue-600 dark:text-blue-400 animate-float">
           {{feature.icon}}
         </span>
         <h3 class="text-lg sm:text-xl font-semibold mb-2">{{feature.title}}</h3>
-        <p class="text-gray-400 text-sm sm:text-base">{{feature.description}}</p>
+        <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">{{feature.description}}</p>
       </div>
     </div>
 
     <!-- Button Section -->
     <div class="mt-8 sm:mt-12 text-center animate-fade-in-up">
-      <button routerLink="/songs" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full text-base sm:text-lg transition-colors animate-glow hover:shadow-blue-500/60">
+      <button routerLink="/songs" 
+              class="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full text-base sm:text-lg transition-colors animate-glow hover:shadow-blue-500/60">
         Get Started
       </button>
     </div>

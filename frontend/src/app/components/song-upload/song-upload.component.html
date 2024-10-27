@@ -1,11 +1,11 @@
 <div class="container mx-auto p-4">
-        <h2 class="text-3xl font-bold mb-6 text-white">Upload Your Music</h2>
+        <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Upload Your Music</h2>
 
-        <div class="bg-gray-800 rounded-xl p-6 max-w-2xl mx-auto">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-2xl mx-auto shadow-lg">
                 <form (ngSubmit)="onSubmit()" #uploadForm="ngForm" class="space-y-6">
                         <!-- Song File Upload -->
                         <div 
-                                class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center transition-all"
+                                class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center transition-all"
                                 [class.border-blue-500]="isDraggingFile"
                                 [class.bg-blue-500]="isDraggingFile"
                                 [class.bg-opacity-10]="isDraggingFile"
@@ -14,25 +14,25 @@
                                 (drop)="onDrop($event, 'file')">
 
                                 <div *ngIf="!selectedFile" class="space-y-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" class="mx-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" class="mx-auto text-gray-400 dark:text-gray-500">
                                                 <path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
                                         </svg>
-                                        <h3 class="text-xl font-semibold text-white">Drag and drop your song here</h3>
-                                        <p class="text-gray-400">or</p>
+                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Drag and drop your song here</h3>
+                                        <p class="text-gray-600 dark:text-gray-400">or</p>
                                         <button 
                                                 type="button"
                                                 (click)="songFileInput.click()" 
                                                 class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
                                                 Choose Song File
                                         </button>
-                                        <p class="text-sm text-gray-400">Supported formats: MP3, WAV, AAC</p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Supported formats: MP3, WAV, AAC</p>
                                 </div>
 
                                 <div *ngIf="selectedFile" class="space-y-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
-                                        <h3 class="text-xl font-semibold text-white">{{selectedFile.name}}</h3>
+                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{selectedFile.name}}</h3>
                                         <button 
                                                 type="button"
                                                 (click)="clearFile()"
@@ -52,7 +52,7 @@
                         <!-- Song Details -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                        <label class="block text-gray-300 mb-2" for="title">Title</label>
+                                        <label class="block text-gray-700 dark:text-gray-300 mb-2" for="title">Title</label>
                                         <input 
                                         type="text" 
                                         id="title"
@@ -60,14 +60,14 @@
                                         name="title" 
                                         required
                                         #titleInput="ngModel"
-                                        class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none transition-colors text-white">
+                                        class="w-full p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:outline-none transition-colors text-gray-900 dark:text-white">
                                         <div *ngIf="titleInput.invalid && (titleInput.dirty || titleInput.touched)" class="text-red-500 mt-1 text-sm">
                                                 Title is required
                                         </div>
                                 </div>
 
                                 <div>
-                                        <label class="block text-gray-300 mb-2" for="artist">Artist</label>
+                                        <label class="block text-gray-700 dark:text-gray-300 mb-2" for="artist">Artist</label>
                                         <input 
                                         type="text" 
                                         id="artist"
@@ -75,7 +75,7 @@
                                         name="artist" 
                                         required
                                         #artistInput="ngModel"
-                                        class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none transition-colors text-white">
+                                        class="w-full p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:outline-none transition-colors text-gray-900 dark:text-white">
                                         <div *ngIf="artistInput.invalid && (artistInput.dirty || artistInput.touched)" class="text-red-500 mt-1 text-sm">
                                                 Artist is required
                                         </div>
@@ -83,21 +83,21 @@
                         </div>
 
                         <div>
-                                <label class="block text-gray-300 mb-2" for="album">Album</label>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2" for="album">Album</label>
                                 <input 
                                 type="text" 
                                 id="album"
                                 [(ngModel)]="album" 
                                 name="album" 
-                                class="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none transition-colors text-white">
+                                class="w-full p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:outline-none transition-colors text-gray-900 dark:text-white">
                         </div>
 
                         <!-- Album Cover Upload -->
                         <div>
-                                <label class="block text-gray-300 mb-2">Album Cover (optional)</label>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">Album Cover (optional)</label>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div 
-                                        class="border-2 border-dashed border-gray-600 rounded-lg p-4 text-center transition-all h-48"
+                                        class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center transition-all h-48"
                                         [class.border-blue-500]="isDraggingImage"
                                         [class.bg-blue-500]="isDraggingImage"
                                         [class.bg-opacity-10]="isDraggingImage"
@@ -106,7 +106,7 @@
                                         (drop)="onDrop($event, 'image')">
 
                                                 <div *ngIf="!selectedImage" class="h-full flex flex-col items-center justify-center space-y-2">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                         </svg>
                                                         <button 
@@ -144,17 +144,17 @@
                                 <div class="relative pt-1">
                                         <div class="flex mb-2 items-center justify-between">
                                                 <div>
-                                                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-500 bg-blue-200">
+                                                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900">
                                                         Uploading
                                                         </span>
                                                 </div>
                                                 <div class="text-right">
-                                                        <span class="text-xs font-semibold inline-block text-blue-500">
+                                                        <span class="text-xs font-semibold inline-block text-blue-600 dark:text-blue-400">
                                                                 {{uploadProgress}}%
                                                         </span>
                                                 </div>
                                         </div>
-                                        <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
+                                        <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-100 dark:bg-blue-900">
                                                 <div [style.width.%]="uploadProgress" 
                                                         class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500 transition-all duration-500">
                                                 </div>
