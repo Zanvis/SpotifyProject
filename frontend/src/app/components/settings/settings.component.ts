@@ -49,6 +49,10 @@ export class SettingsComponent implements OnInit {
   successMessage: string = '';
   errorMessage: string = '';
 
+  showCurrentPassword = false;
+  showNewPassword = false;
+  showConfirmPassword = false;
+  
   passwordErrors: PasswordErrors = {
     currentPassword: '',
     newPassword: '',
