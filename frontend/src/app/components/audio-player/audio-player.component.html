@@ -81,7 +81,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
         </svg>
       </button>
-      <button (click)="togglePlay($event)" class="text-gray-900 dark:text-white bg-green-500 dark:bg-green-200 rounded-full p-4">
+      <button (click)="togglePlay($event)" class="text-gray-900 dark:text-white bg-green-500 dark:bg-green-500 rounded-full p-4">
         <ng-container *ngIf="!isPlaying; else pauseIconLarge">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
