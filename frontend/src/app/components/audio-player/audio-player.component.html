@@ -29,7 +29,7 @@
 
   <!-- Progress bar for collapsed view -->
   <div class="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-800" *ngIf="!isExpanded">
-    <div class="h-full bg-green-500" [style.width.%]="(currentTime / duration) * 100"></div>
+    <div class="h-full bg-indigo-500 dark:bg-green-500" [style.width.%]="(currentTime / duration) * 100"></div>
   </div>
 </div>
 
@@ -65,7 +65,7 @@
           [value]="currentTime"
           [max]="duration"
           (input)="onSeek($event)"
-          class="w-full">
+          class="w-full accent-indigo-500 dark:accent-green-500">
   </div>
 
   <!-- Controls -->
@@ -81,7 +81,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
         </svg>
       </button>
-      <button (click)="togglePlay($event)" class="text-gray-900 dark:text-white bg-green-500 dark:bg-green-500 rounded-full p-4">
+      <button (click)="togglePlay($event)" class="text-gray-900 dark:text-white bg-indigo-500 dark:bg-green-500 hover:bg-indigo-600 dark:hover:bg-green-600 rounded-full p-4">
         <ng-container *ngIf="!isPlaying; else pauseIconLarge">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -112,7 +112,7 @@
       <input type="range"
             [value]="volume * 100"
             (input)="onVolumeChange($event)"
-            class="flex-1">
+            class="flex-1 accent-indigo-500 dark:accent-green-500">
     </div>
   </div>
 </div>
@@ -120,7 +120,6 @@
 <!-- Desktop Player -->
 <div class="hidden md:block fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 p-4 z-50">
   <div class="container mx-auto flex items-center justify-between">
-    <!-- Original desktop layout -->
     <div class="flex items-center flex-1">
       <img [src]="song.imageUrl" alt="Album cover" class="w-16 h-16 object-cover rounded-md mr-4">
       <div>
@@ -131,13 +130,13 @@
 
     <div class="flex-1 max-w-2xl">
       <div class="flex items-center justify-center space-x-6">
-        <button (click)="previous($event)" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+        <button (click)="previous($event)" class="text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-green-500">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
           </svg>
         </button>
 
-        <button (click)="togglePlay($event)" class="text-gray-900 dark:text-white">
+        <button (click)="togglePlay($event)" class="text-indigo-500 dark:text-green-500 hover:text-indigo-600 dark:hover:text-green-600">
           <ng-container *ngIf="!isPlaying; else pauseIcon">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -151,7 +150,7 @@
           </ng-template>
         </button>
 
-        <button (click)="next($event)" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+        <button (click)="next($event)" class="text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-green-500">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
           </svg>
@@ -171,13 +170,13 @@
                 [value]="currentTime"
                 [max]="duration"
                 (input)="onSeek($event)"
-                class="w-full">
+                class="w-full accent-indigo-500 dark:accent-green-500">
         </div>
         <span class="text-gray-500 dark:text-gray-400 text-sm w-12">{{formatTime(duration)}}</span>
       </div>
     </div>
     <div class="flex-1 flex justify-end items-center">
-      <button (click)="toggleMute($event)" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mr-4">
+      <button (click)="toggleMute($event)" class="text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-green-500 mr-4">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path *ngIf="!isMuted" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
           <path *ngIf="isMuted" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
@@ -186,7 +185,7 @@
       <input type="range"
             [value]="volume * 100"
             (input)="onVolumeChange($event)"
-            class="w-24">
+            class="w-24 accent-indigo-500 dark:accent-green-500">
     </div>
   </div>
 </div>
