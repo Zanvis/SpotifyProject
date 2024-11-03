@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Song } from '../../services/song.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 enum LoopMode {
   NoLoop,
@@ -13,7 +14,40 @@ enum LoopMode {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './audio-player.component.html',
-  styleUrl: './audio-player.component.css'
+  styleUrl: './audio-player.component.css',
+  animations: [
+    trigger('modalAnimation', [
+      transition(':enter', [
+        style({ 
+          opacity: 0,
+          transform: 'translateY(100%)'
+        }),
+        animate('150ms cubic-bezier(0.4, 0, 0.2, 1)', style({ 
+          opacity: 1,
+          transform: 'translateY(0)'
+        }))
+      ]),
+      transition(':leave', [
+        style({ 
+          opacity: 1,
+          transform: 'translateY(0)'
+        }),
+        animate('100ms cubic-bezier(0.4, 0, 0.2, 1)', style({ 
+          opacity: 0,
+          transform: 'translateY(100%)'
+        }))
+      ])
+    ]),
+    trigger('buttonRotate', [
+      transition(':enter', [
+        style({ transform: 'rotate(-180deg)' }),
+        animate('150ms cubic-bezier(0.4, 0, 0.2, 1)', style({ transform: 'rotate(0)' }))
+      ]),
+      transition(':leave', [
+        animate('100ms cubic-bezier(0.4, 0, 0.2, 1)', style({ transform: 'rotate(-180deg)' }))
+      ])
+    ])
+  ]
 })
 export class AudioPlayerComponent implements OnChanges, AfterViewInit {
   @Input() song!: Song;
