@@ -30,9 +30,9 @@
               type="text"
               formControlName="username"
               class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm 
-                     bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
-                     transition-colors duration-200 sm:text-sm"
+                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                    transition-colors duration-200 sm:text-sm"
               [class.border-red-500]="isFieldInvalid('username')"
             />
           </div>
@@ -52,9 +52,9 @@
               type="email"
               formControlName="email"
               class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm 
-                     bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
-                     transition-colors duration-200 sm:text-sm"
+                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                    transition-colors duration-200 sm:text-sm"
               [class.border-red-500]="isFieldInvalid('email')"
             />
           </div>
@@ -63,7 +63,7 @@
           </div>
         </div>
 
-        <!-- Password Fields -->
+        <!-- Password Field -->
         <div>
           <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Password
@@ -74,9 +74,9 @@
               [type]="showPassword ? 'text' : 'password'"
               formControlName="password"
               class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm 
-                     bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
-                     transition-colors duration-200 sm:text-sm"
+                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                    transition-colors duration-200 sm:text-sm"
               [class.border-red-500]="isFieldInvalid('password')"
             />
             <button
@@ -84,7 +84,6 @@
               (click)="togglePasswordVisibility()"
               class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none"
             >
-              <!-- Eye icons (same as login form) -->
               <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -95,7 +94,7 @@
             </button>
           </div>
           <div *ngIf="isFieldInvalid('password')" class="mt-1 text-sm text-red-500 dark:text-red-400">
-            Password must be at least 8 characters
+            {{ getPasswordErrorMessage() }}
           </div>
         </div>
 
@@ -110,15 +109,24 @@
               [type]="showPassword ? 'text' : 'password'"
               formControlName="confirmPassword"
               class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm 
-                     bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
-                     transition-colors duration-200 sm:text-sm"
+                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                    transition-colors duration-200 sm:text-sm"
               [class.border-red-500]="isFieldInvalid('confirmPassword')"
             />
           </div>
           <div *ngIf="isFieldInvalid('confirmPassword')" class="mt-1 text-sm text-red-500 dark:text-red-400">
             Passwords must match
           </div>
+        </div>
+
+        <!-- Password Requirements -->
+        <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+          <p>Password must:</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Be at least 8 characters long</li>
+            <li>Contain at least one number</li>
+          </ul>
         </div>
 
         <!-- Terms and Conditions -->
@@ -128,8 +136,8 @@
             type="checkbox"
             formControlName="terms"
             class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 
-                   bg-white dark:bg-gray-700 text-blue-600 
-                   focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                  bg-white dark:bg-gray-700 text-blue-600 
+                  focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
           />
           <label for="terms" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
             I agree to the

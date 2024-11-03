@@ -157,11 +157,12 @@
         <div class="mt-4 space-y-2">
           <p class="text-gray-600 dark:text-gray-400 text-sm">Password requirements:</p>
           <ul class="list-disc list-inside space-y-1">
-            <li class="text-sm" [ngClass]="{'text-green-500 dark:text-green-400': passwordChecks.length, 'text-gray-600 dark:text-gray-400': !passwordChecks.length}">
-              At least 6 characters long
+            <li class="text-sm" [ngClass]="{'text-green-500 dark:text-green-400': passwordChecks.minLength, 'text-gray-600 dark:text-gray-400': !passwordChecks.minLength}">
+              At least 8 characters long
             </li>
             <li class="text-sm" [ngClass]="{'text-green-500 dark:text-green-400': passwordChecks.hasNumber, 'text-gray-600 dark:text-gray-400': !passwordChecks.hasNumber}">
               Contains at least one number
+            </li>
             <li class="text-sm" [ngClass]="{'text-green-500 dark:text-green-400': passwordChecks.hasLetter, 'text-gray-600 dark:text-gray-400': !passwordChecks.hasLetter}">
               Contains at least one letter
             </li>

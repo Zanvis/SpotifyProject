@@ -16,8 +16,8 @@ interface PasswordChecks {
   length: boolean;
   hasNumber: boolean;
   hasLetter: boolean;
+  minLength: boolean;
 }
-
 interface UsernameValidation {
   isValid: boolean;
   message: string;
@@ -62,7 +62,8 @@ export class SettingsComponent implements OnInit {
   passwordChecks: PasswordChecks = {
     length: false,
     hasNumber: false,
-    hasLetter: false
+    hasLetter: false,
+    minLength: false
   };
 
   private usernameCheck = new Subject<string>();
@@ -252,7 +253,7 @@ export class SettingsComponent implements OnInit {
     };
 
     // Validate current password
-    if (this.currentPassword && this.currentPassword.length < 6) {
+    if (!this.currentPassword) {
       this.passwordErrors.currentPassword = 'Current password is required';
     }
 
@@ -260,12 +261,13 @@ export class SettingsComponent implements OnInit {
     if (this.newPassword) {
       this.passwordChecks = {
         length: this.newPassword.length >= 6,
+        minLength: this.newPassword.length >= 8,
         hasNumber: /\d/.test(this.newPassword),
         hasLetter: /[a-zA-Z]/.test(this.newPassword)
       };
 
-      if (!this.passwordChecks.length) {
-        this.passwordErrors.newPassword = 'Password must be at least 6 characters long';
+      if (!this.passwordChecks.minLength) {
+        this.passwordErrors.newPassword = 'Password must be at least 8 characters long';
       } else if (!this.passwordChecks.hasNumber) {
         this.passwordErrors.newPassword = 'Password must contain at least one number';
       } else if (!this.passwordChecks.hasLetter) {
@@ -287,7 +289,7 @@ export class SettingsComponent implements OnInit {
       !!this.currentPassword &&
       !!this.newPassword &&
       !!this.confirmPassword &&
-      this.passwordChecks.length &&
+      this.passwordChecks.minLength && // Updated to use minLength
       this.passwordChecks.hasNumber &&
       this.passwordChecks.hasLetter
     );
@@ -322,7 +324,8 @@ export class SettingsComponent implements OnInit {
       this.passwordChecks = {
         length: false,
         hasNumber: false,
-        hasLetter: false
+        hasLetter: false,
+        minLength: false
       };
       this.passwordErrors = {
         currentPassword: '',
