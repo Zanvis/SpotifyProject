@@ -11,6 +11,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
+import { RadioComponent } from './components/radio/radio.component';
 
 export const routes: Routes = [
     // { path: '', redirectTo: '/songs', pathMatch: 'full' },
@@ -25,5 +26,6 @@ export const routes: Routes = [
     { path: 'settings', component: SettingsComponent, canActivate: [authGuard] },
     { path: 'terms', component: TermsComponent },
     { path: 'privacy', component: PrivacyComponent },
+    { path: 'radio', component: RadioComponent },
     { path: '**', redirectTo: '' }
 ];
