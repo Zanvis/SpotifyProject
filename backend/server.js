@@ -596,25 +596,69 @@ app.get('/api/users/preferences', authMiddleware, async (req, res) => {
 });
 
 // Delete account
+// app.delete('/api/users/account', authMiddleware, async (req, res) => {
+//     try {
+//         // Delete user's playlists
+//         await Playlist.deleteMany({ user: req.user._id });
+        
+//         // Delete user's songs
+//         const userSongs = await Song.find({ uploader: req.user._id });
+//         for (const song of userSongs) {
+//         // Delete song files from storage
+//         // File deletion logic TODO
+//         }
+//         await Song.deleteMany({ uploader: req.user._id });
+        
+//         // Delete user
+//         await User.findByIdAndDelete(req.user._id);
+        
+//         res.json({ message: 'Account deleted successfully' });
+//     } catch (error) {
+//         res.status(400).json({ message: error.message });
+//     }
+// });
+// Delete account
 app.delete('/api/users/account', authMiddleware, async (req, res) => {
     try {
         // Delete user's playlists
         await Playlist.deleteMany({ user: req.user._id });
         
-        // Delete user's songs
+        // Find all user's songs
         const userSongs = await Song.find({ uploader: req.user._id });
+        
+        // Delete each song's files from Cloudinary and database
         for (const song of userSongs) {
-        // Delete song files from storage
-        // File deletion logic TODO
+            try {
+                // Delete audio file from Cloudinary
+                if (song.filePath) {
+                    const audioPublicId = getPublicIdFromUrl(song.filePath);
+                    await cloudinary.uploader.destroy(audioPublicId, { resource_type: 'video' });
+                }
+
+                // Delete image file from Cloudinary
+                if (song.imageUrl) {
+                    const imagePublicId = getPublicIdFromUrl(song.imageUrl);
+                    await cloudinary.uploader.destroy(imagePublicId);
+                }
+            } catch (deleteError) {
+                console.error(`Error deleting files for song ${song._id}:`, deleteError);
+                // Continue with the loop even if one song fails
+            }
         }
+        
+        // Delete all user's songs from database
         await Song.deleteMany({ uploader: req.user._id });
         
-        // Delete user
+        // Delete user account
         await User.findByIdAndDelete(req.user._id);
         
-        res.json({ message: 'Account deleted successfully' });
+        res.json({ message: 'Account and all associated content deleted successfully' });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.error('Error deleting account:', error);
+        res.status(500).json({ 
+            message: 'An error occurred while deleting the account',
+            error: error.message 
+        });
     }
 });
 
