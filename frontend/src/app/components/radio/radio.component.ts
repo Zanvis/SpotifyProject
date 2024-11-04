@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, PLATFORM_ID, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { isPlatformBrowser } from '@angular/common';
-import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { RadioService, RadioStation } from '../../services/radio.service';
 import { Song } from '../../services/song.service';
+import { RadioPlayerComponent } from '../radio-player/radio-player.component';
 
 interface AudioResources {
   context: AudioContext;
@@ -18,7 +16,7 @@ interface AudioResources {
 @Component({
   selector: 'app-radio',
   standalone: true,
-  imports: [CommonModule, FormsModule, AudioPlayerComponent],
+  imports: [CommonModule, FormsModule, RadioPlayerComponent],
   templateUrl: './radio.component.html',
   styleUrl: './radio.component.css'
 })

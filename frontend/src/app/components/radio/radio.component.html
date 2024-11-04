@@ -61,11 +61,8 @@
   </div>
 
   <!-- Audio Player -->
-  <app-audio-player 
-    *ngIf="currentSong"
-    [song]="currentSong"
-    [playlist]="radioPlaylist"
-    (songEnded)="onSongEnded()"
-    (songChanged)="onSongChanged($event)">
-  </app-audio-player>
+  <app-radio-player 
+    *ngIf="currentStation"
+    [station]="currentStation">
+  </app-radio-player>
 </div>
