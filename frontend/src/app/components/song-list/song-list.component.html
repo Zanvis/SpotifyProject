@@ -1,4 +1,31 @@
 <div class="container mx-auto p-4">
+    <!-- Search Bar -->
+    <div *ngIf="!isLoading">
+        <div class="relative max-w-md mx-auto">
+            <input
+                type="text"
+                [(ngModel)]="searchQuery"
+                (input)="onSearch($event)"
+                placeholder="Search songs by title, artist, or album..."
+                class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-green-500 transition-all"
+            >
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+            >
+                <path 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round" 
+                    stroke-width="2" 
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+            </svg>
+        </div>
+    </div>
+
     <!-- Loading States -->
     <div *ngIf="isLoading" class="flex flex-col items-center justify-center min-h-[300px]">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 dark:border-green-500 mb-4"></div>
@@ -17,14 +44,18 @@
         <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Your Music Library</h2>
         
         <!-- No songs message -->
-        <div *ngIf="songs.length === 0" class="text-center text-gray-700 dark:text-white py-8">
-            <p class="text-xl">No songs in your library yet</p>
-            <p class="text-gray-500 dark:text-gray-400 mt-2">Start by uploading your favorite tracks!</p>
+        <div *ngIf="filteredSongs.length === 0" class="text-center text-gray-700 dark:text-white py-8">
+            <p class="text-xl">
+                {{ songs.length === 0 ? 'No songs in your library yet' : 'No songs found matching your search' }}
+            </p>
+            <p class="text-gray-500 dark:text-gray-400 mt-2">
+                {{ songs.length === 0 ? 'Start by uploading your favorite tracks!' : 'Try adjusting your search terms' }}
+            </p>
         </div>
 
         <!-- Song Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <div *ngFor="let song of songs" 
+            <div *ngFor="let song of filteredSongs" 
                 class="bg-white dark:bg-gray-800 rounded-xl overflow-visible transition-transform duration-300 hover:scale-105 shadow-md hover:shadow-xl dark:shadow-none song-card">
                 
                 <!-- Song Image with Play Overlay -->
@@ -55,7 +86,8 @@
                     <!-- Duration and Delete Button -->
                     <div class="flex justify-between items-center mb-3">
                         <span class="text-gray-500 dark:text-gray-400 text-sm">{{formatDuration(song.duration)}}</span>
-                        <button (click)="deleteSong(song._id)" 
+                        <button *ngIf="currentUser?._id === song.uploader._id" 
+                                (click)="deleteSong(song._id)" 
                                 class="text-red-500 hover:text-red-600 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -93,7 +125,7 @@
 <app-audio-player 
     *ngIf="currentSong"
     [song]="currentSong"
-    [playlist]="songs"
+    [playlist]="filteredSongs"
     (songEnded)="onSongEnded()"
     (songChanged)="onSongChanged($event)">
 </app-audio-player>

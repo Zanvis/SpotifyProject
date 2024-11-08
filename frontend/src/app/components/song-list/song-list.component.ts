@@ -5,17 +5,19 @@ import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 import { Subscription, timer } from 'rxjs';
 import { Playlist, PlaylistService } from '../../services/playlist.service';
 import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-song-list',
   standalone: true,
-  imports: [CommonModule, AudioPlayerComponent],
+  imports: [CommonModule, FormsModule, AudioPlayerComponent],
   templateUrl: './song-list.component.html',
   styleUrl: './song-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SongListComponent implements OnInit, OnDestroy {
   songs: Song[] = [];
+  filteredSongs: Song[] = [];
   currentSong: Song | null = null;
   private subscription: Subscription = new Subscription();
   playlists: Playlist[] = [];
@@ -26,6 +28,7 @@ export class SongListComponent implements OnInit, OnDestroy {
   retryCount = 0;
   maxRetries = 3;
   currentUser: any;
+  searchQuery: string = '';
 
   constructor(
     private songService: SongService,
@@ -39,6 +42,7 @@ export class SongListComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.songService.songs$.subscribe(songs => {
         this.songs = songs;
+        this.filterSongs();
         this.cdr.markForCheck();
       })
     );
@@ -217,5 +221,25 @@ export class SongListComponent implements OnInit, OnDestroy {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+
+  filterSongs(): void {
+    if (!this.searchQuery.trim()) {
+      this.filteredSongs = this.songs;
+    } else {
+      const query = this.searchQuery.toLowerCase().trim();
+      this.filteredSongs = this.songs.filter(song =>
+        song.title.toLowerCase().includes(query) ||
+        song.artist.toLowerCase().includes(query) ||
+        song.album.toLowerCase().includes(query)
+      );
+    }
+    this.cdr.markForCheck();
+  }
+
+  onSearch(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.searchQuery = target.value;
+    this.filterSongs();
   }
 }
