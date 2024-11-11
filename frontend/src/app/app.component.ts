@@ -1,25 +1,20 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, OnDestroy, OnInit, ElementRef, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnDestroy, OnInit, ElementRef, HostListener, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { AudioPlayerComponent } from './components/audio-player/audio-player.component';
-import { SongListComponent } from './components/song-list/song-list.component';
-import { SongUploadComponent } from './components/song-upload/song-upload.component';
-import { TeamComponent } from './components/team/team.component';
-import { LandingComponent } from './components/landing/landing.component';
-import { PlaylistComponent } from './components/playlist/playlist.component';
 import { AuthService } from './services/auth.service';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { combineLatest, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, AudioPlayerComponent, SongListComponent, SongUploadComponent, TeamComponent, LandingComponent, RouterLinkActive, PlaylistComponent, LoginComponent, RegisterComponent],
+  imports: [RouterOutlet, RouterLink, CommonModule, RouterLinkActive],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit, OnDestroy {
+  @ViewChild('userMenuContainer') userMenuContainer!: ElementRef;
+  @ViewChild('mobileMenuContainer') mobileMenuContainer!: ElementRef;
+  @ViewChild('hamburgerButton') hamburgerButton!: ElementRef;
   currentYear = new Date().getFullYear();
   isMenuOpen = false;
   isUserMenuOpen = false;
@@ -28,7 +23,6 @@ export class AppComponent implements OnInit, OnDestroy {
   showTooltip = false;
   isDarkMode = true;
   private authSubscription: Subscription | undefined;
-  private userMenuRef: ElementRef;
 
   constructor(
     private authService: AuthService,
@@ -36,7 +30,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private elementRef: ElementRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.userMenuRef = elementRef;
     this.initializeTheme();
   }
 
@@ -112,16 +105,29 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
-    const userMenuElement = this.userMenuRef.nativeElement.querySelector('.user-menu-container');
-    if (!userMenuElement) return;
-    
-    const clickedInside = userMenuElement.contains(event.target as Node);
-    if (!clickedInside && this.isUserMenuOpen) {
-      this.isUserMenuOpen = false;
+    // Handle user menu clicks
+    if (this.userMenuContainer && this.isUserMenuOpen) {
+      const clickedInUserMenu = this.userMenuContainer.nativeElement.contains(event.target as Node);
+      if (!clickedInUserMenu) {
+        this.isUserMenuOpen = false;
+      }
+    }
+
+    // Handle mobile menu clicks
+    if (this.mobileMenuContainer && this.hamburgerButton && this.isMenuOpen) {
+      const clickedInMobileMenu = this.mobileMenuContainer.nativeElement.contains(event.target as Node);
+      const clickedHamburger = this.hamburgerButton.nativeElement.contains(event.target as Node);
+      
+      if (!clickedInMobileMenu && !clickedHamburger) {
+        this.isMenuOpen = false;
+      }
     }
   }
 
-  toggleMenu() {
+  toggleMenu(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.isMenuOpen = !this.isMenuOpen;
     if (this.isMenuOpen) {
       this.isUserMenuOpen = false;
@@ -141,9 +147,22 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isMenuOpen = false;
   }
 
-  handleUploadClick() {
+  async handleUploadClick() {
     if (this.isAuthenticated) {
-      this.router.navigate(['/upload']);
+      try {
+        await this.router.navigate(['/upload']);
+        // Close menus after successful navigation
+        this.isMenuOpen = false;
+        this.isUserMenuOpen = false;
+      } catch (error) {
+        console.error('Navigation error:', error);
+      }
+    } else {
+      // Show tooltip for unauthenticated users
+      this.showTooltip = true;
+      setTimeout(() => {
+        this.showTooltip = false;
+      }, 3000); // Hide tooltip after 3 seconds
     }
   }
 
