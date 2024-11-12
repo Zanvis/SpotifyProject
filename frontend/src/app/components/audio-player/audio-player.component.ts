@@ -50,6 +50,8 @@ enum LoopMode {
   ]
 })
 export class AudioPlayerComponent implements OnChanges, AfterViewInit {
+  private readonly VOLUME_STORAGE_KEY = 'audio-player-volume';
+  private readonly DEFAULT_VOLUME = 0.7;
   @Input() song!: Song;
   @Input() playlist: Song[] = [];
   @Output() songEnded = new EventEmitter<void>();
@@ -62,12 +64,15 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
   isMuted = false;
   currentTime = 0;
   duration = 0;
-  volume = 1;
+  volume: number;
   currentSongIndex = 0;
   loopMode: LoopMode = LoopMode.NoLoop;
   isExpanded = false;
 
-  constructor() { }
+  constructor() {
+    const savedVolume = localStorage.getItem(this.VOLUME_STORAGE_KEY);
+    this.volume = savedVolume ? parseFloat(savedVolume) : this.DEFAULT_VOLUME;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['song'] && !changes['song'].firstChange) {
@@ -182,6 +187,10 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
     if (this.audioElement) {
       this.audioElement.muted = !this.audioElement.muted;
       this.isMuted = this.audioElement.muted;
+      // When unmuting, ensure we restore the previous volume
+      if (!this.isMuted) {
+        this.audioElement.volume = this.volume;
+      }
     }
   }
 
@@ -192,6 +201,8 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
     if (this.audioElement) {
       this.audioElement.volume = volumeValue;
       this.volume = volumeValue;
+      // Save volume to localStorage
+      localStorage.setItem(this.VOLUME_STORAGE_KEY, volumeValue.toString());
       this.updateRangeBackground(target);
     }
   }
