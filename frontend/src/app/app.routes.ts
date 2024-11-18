@@ -12,6 +12,9 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { RadioComponent } from './components/radio/radio.component';
+import { RoomComponent } from './components/room/room.component';
+import { guestGuard } from './guards/guest.guard';
+import { JamSessionComponent } from './components/jam-session/jam-session.component';
 
 export const routes: Routes = [
     // { path: '', redirectTo: '/songs', pathMatch: 'full' },
@@ -20,12 +23,14 @@ export const routes: Routes = [
     { path: 'upload', component: SongUploadComponent, canActivate: [authGuard] },
     { path: 'team', component: TeamComponent },
     { path: 'playlists', component: PlaylistComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent, canActivate: [guestGuard] },
+    { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
     { path: 'settings', component: SettingsComponent, canActivate: [authGuard] },
     { path: 'terms', component: TermsComponent },
     { path: 'privacy', component: PrivacyComponent },
     { path: 'radio', component: RadioComponent },
+    { path: 'jamsession', component: JamSessionComponent },
+    { path: 'room/:id', component: RoomComponent },
     { path: '**', redirectTo: '' }
 ];

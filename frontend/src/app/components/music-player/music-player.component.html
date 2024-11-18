@@ -1,0 +1,95 @@
+<div class="w-full max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mt-6">
+  <!-- Error Message -->
+  <div *ngIf="state.error" class="mb-4 p-3 bg-red-100 dark:bg-red-700 text-red-700 dark:text-red-100 rounded-lg text-sm">
+    {{ state.error }}
+  </div>
+
+  <!-- Song Selection -->
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-3">Available Songs</h3>
+    <div class="grid gap-2 max-h-40 overflow-y-auto">
+      <button
+        *ngFor="let song of songs"
+        (click)="changeSong(song)"
+        class="text-left p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+        [class.bg-blue-100]="song._id === state.currentSong?._id"
+        [class.dark:bg-gray-700]="song._id === state.currentSong?._id"
+      >
+        <div class="font-medium text-gray-800 dark:text-gray-100">{{ song.title }}</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400">{{ song.artist }}</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Audio Element -->
+  <audio #audioElement class="hidden" preload="auto">
+    <source [src]="state.currentSong?.filePath" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Current Song Info -->
+  <div class="text-center mb-4" *ngIf="state.currentSong">
+    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">{{ state.currentSong.title }}</h3>
+    <p class="text-sm text-gray-600 dark:text-gray-400">{{ state.currentSong.artist }}</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="state.isLoading" class="flex justify-center items-center mb-4">
+    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 dark:border-green-500"></div>
+  </div>
+
+  <!-- Player Controls -->
+  <div *ngIf="!state.isLoading && state.currentSong" class="space-y-4">
+    <!-- Progress Bar -->
+    <div 
+      class="relative w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full cursor-pointer group"
+      (click)="seek($event)"
+    >
+      <div 
+        class="absolute h-full bg-blue-500 dark:bg-green-500 rounded-full transition-all"
+        [style.width.%]="(state.currentTime / state.duration) * 100"
+      ></div>
+      <div class="absolute h-full w-full bg-gray-300 dark:bg-gray-600 opacity-0 group-hover:opacity-25 rounded-full transition-opacity"></div>
+    </div>
+
+    <!-- Time Display -->
+    <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+      <span>{{ formatTime(state.currentTime) }}</span>
+      <span>{{ formatTime(state.duration) }}</span>
+    </div>
+
+    <!-- Volume Control -->
+    <div class="flex items-center gap-2">
+      <button 
+        (click)="toggleMute()"
+        class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors"
+      >
+        <span class="material-icons">
+          {{ getVolumeIcon() }}
+        </span>
+      </button>
+      <div 
+        class="flex-1 relative h-2 bg-gray-200 dark:bg-gray-700 rounded-full cursor-pointer group"
+        (click)="adjustVolume($event)"
+      >
+        <div 
+          class="absolute h-full bg-blue-500 dark:bg-green-500 rounded-full transition-all"
+          [style.width.%]="state.volume * 100"
+        ></div>
+        <div class="absolute h-full w-full bg-gray-300 dark:bg-gray-600 opacity-0 group-hover:opacity-25 rounded-full transition-opacity"></div>
+      </div>
+    </div>
+
+    <!-- Play/Pause Control -->
+    <div class="flex items-center justify-center gap-4">
+      <button 
+        (click)="playPause()"
+        class="px-6 py-2 rounded-full bg-indigo-600 dark:bg-green-500 text-white hover:bg-indigo-700 dark:hover:bg-green-600 transition-colors flex items-center gap-2"
+        [disabled]="state.isLoading"
+      >
+        <span class="material-icons">{{ state.isPlaying ? 'pause' : 'play_arrow' }}</span>
+        {{ state.isPlaying ? 'Pause' : 'Play' }}
+      </button>
+    </div>
+  </div>
+</div>

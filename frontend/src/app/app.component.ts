@@ -1,20 +1,23 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, OnDestroy, OnInit, ElementRef, HostListener, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ElementRef, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
-import { combineLatest, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, RouterLinkActive],
+  imports: [
+    RouterOutlet, 
+    RouterLink, 
+    CommonModule, 
+    RouterLinkActive
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit, OnDestroy {
-  @ViewChild('userMenuContainer') userMenuContainer!: ElementRef;
-  @ViewChild('mobileMenuContainer') mobileMenuContainer!: ElementRef;
-  @ViewChild('hamburgerButton') hamburgerButton!: ElementRef;
   currentYear = new Date().getFullYear();
   isMenuOpen = false;
   isUserMenuOpen = false;
@@ -23,6 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
   showTooltip = false;
   isDarkMode = true;
   private authSubscription: Subscription | undefined;
+  private storageAvailable = false;
 
   constructor(
     private authService: AuthService,
@@ -36,8 +40,13 @@ export class AppComponent implements OnInit, OnDestroy {
   private initializeTheme(): void {
     if (isPlatformBrowser(this.platformId)) {
       try {
+        // Test storage availability
+        localStorage.setItem('test', 'test');
+        localStorage.removeItem('test');
+        this.storageAvailable = true;
+
         // Check if user has previously selected a theme
-        const savedTheme = window.localStorage.getItem('theme');
+        const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
           this.isDarkMode = savedTheme === 'dark';
         } else {
@@ -46,28 +55,30 @@ export class AppComponent implements OnInit, OnDestroy {
         }
         this.applyTheme();
       } catch (error) {
-        console.error('Error accessing localStorage:', error);
-        // Fallback to default dark theme if localStorage is not available
+        console.warn('LocalStorage not available:', error);
+        this.storageAvailable = false;
+        // Fallback to default dark theme
         this.isDarkMode = true;
         this.applyTheme();
       }
     }
   }
 
-  ngOnInit() {
-    this.authSubscription = combineLatest([
-      this.authService.isAuthenticated$,
-      this.authService.currentUser$
-    ]).subscribe(([isAuthenticated, currentUser]) => {
-      this.isAuthenticated = isAuthenticated;
-      this.username = currentUser?.username || '';
+  async ngOnInit() {
+    // Initialize auth state
+    await this.authService.initialize();
+
+    // Subscribe to auth state changes
+    this.authSubscription = this.authService.currentUser$.subscribe(user => {
+      this.isAuthenticated = this.authService.isAuthenticated();
+      this.username = user?.username || '';
     });
 
     // Listen for system theme changes
     if (isPlatformBrowser(this.platformId)) {
       window.matchMedia('(prefers-color-scheme: dark)')
         .addEventListener('change', e => {
-          if (!window.localStorage.getItem('theme')) {
+          if (!this.storageAvailable || !localStorage.getItem('theme')) {
             this.isDarkMode = e.matches;
             this.applyTheme();
           }
@@ -84,10 +95,12 @@ export class AppComponent implements OnInit, OnDestroy {
   toggleTheme() {
     if (isPlatformBrowser(this.platformId)) {
       this.isDarkMode = !this.isDarkMode;
-      try {
-        window.localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
-      } catch (error) {
-        console.error('Error saving theme preference:', error);
+      if (this.storageAvailable) {
+        try {
+          localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+        } catch (error) {
+          console.warn('Error saving theme preference:', error);
+        }
       }
       this.applyTheme();
     }
@@ -105,29 +118,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
-    // Handle user menu clicks
-    if (this.userMenuContainer && this.isUserMenuOpen) {
-      const clickedInUserMenu = this.userMenuContainer.nativeElement.contains(event.target as Node);
-      if (!clickedInUserMenu) {
-        this.isUserMenuOpen = false;
-      }
-    }
-
-    // Handle mobile menu clicks
-    if (this.mobileMenuContainer && this.hamburgerButton && this.isMenuOpen) {
-      const clickedInMobileMenu = this.mobileMenuContainer.nativeElement.contains(event.target as Node);
-      const clickedHamburger = this.hamburgerButton.nativeElement.contains(event.target as Node);
-      
-      if (!clickedInMobileMenu && !clickedHamburger) {
-        this.isMenuOpen = false;
-      }
+    const userMenuElement = this.elementRef.nativeElement.querySelector('.user-menu-container');
+    if (!userMenuElement) return;
+    
+    const clickedInside = userMenuElement.contains(event.target as Node);
+    if (!clickedInside && this.isUserMenuOpen) {
+      this.isUserMenuOpen = false;
     }
   }
 
-  toggleMenu(event?: Event) {
-    if (event) {
-      event.stopPropagation();
-    }
+  toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
     if (this.isMenuOpen) {
       this.isUserMenuOpen = false;
@@ -148,22 +148,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async handleUploadClick() {
-    if (this.isAuthenticated) {
-      try {
-        await this.router.navigate(['/upload']);
-        // Close menus after successful navigation
-        this.isMenuOpen = false;
-        this.isUserMenuOpen = false;
-      } catch (error) {
-        console.error('Navigation error:', error);
+    // Check current auth state before navigating
+    this.authService.isAuthenticated$.pipe(take(1)).subscribe(isAuthenticated => {
+      if (isAuthenticated) {
+        this.router.navigate(['/upload']);
       }
-    } else {
-      // Show tooltip for unauthenticated users
-      this.showTooltip = true;
-      setTimeout(() => {
-        this.showTooltip = false;
-      }, 3000); // Hide tooltip after 3 seconds
-    }
+    });
   }
 
   toggleTooltip() {

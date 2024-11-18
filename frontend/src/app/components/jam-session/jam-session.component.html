@@ -1,0 +1,76 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8">
+    <div class="max-w-2xl mx-auto">
+        <!-- Header Section -->
+        <div class="mb-12 text-center">
+        <div class="flex items-center justify-center mb-4">
+            <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            class="w-12 h-12 text-indigo-600 dark:text-green-500" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+            >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+            </svg>
+        </div>
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Music Rooms
+        </h1>
+        <p class="text-gray-600 dark:text-gray-300">
+            Create or join a room to start your musical journey
+        </p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="space-y-8">
+        <!-- Create Room Button -->
+        <div class="text-center">
+            <button 
+            (click)="createRoom()" 
+            class="group relative w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-indigo-600 dark:bg-green-500 text-white rounded-xl hover:bg-indigo-700 dark:hover:bg-green-600 transition-all duration-200 shadow-lg hover:shadow-xl"
+            >
+            <!-- Plus icon -->
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                class="h-5 w-5 mr-2" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span class="font-semibold">Create New Room</span>
+            </button>
+        </div>
+
+        <!-- Join Room Section -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+            <div class="relative flex-1 w-full">
+                <input 
+                [(ngModel)]="roomId"
+                placeholder="Enter Room ID"
+                class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-indigo-500 dark:focus:ring-green-500 focus:outline-none transition-shadow duration-200"
+                />
+            </div>
+            <button 
+                (click)="joinRoom()"
+                class="w-full sm:w-auto flex items-center justify-center px-6 py-3 bg-indigo-600 dark:bg-green-500 text-white rounded-lg hover:bg-indigo-700 dark:hover:bg-green-600 transition-colors shadow-md hover:shadow-lg"
+            >
+                <!-- Login icon -->
+                <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                class="h-5 w-5 mr-2" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+                >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+                <span class="font-semibold">Join Room</span>
+            </button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

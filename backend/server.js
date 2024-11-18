@@ -1,30 +1,24 @@
-// Required dependencies
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-// const { getAudioDurationInSeconds } = require('get-audio-duration');
 require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const setupSocketServer = require('./socketServer');
 
 const app = express();
 const port = 3000;
+const server = http.createServer(app);
 
-// Ensure uploads directory exists
-// const uploadDir = 'uploads';
-// if (!fs.existsSync(uploadDir)) {
-//     fs.mkdirSync(uploadDir, { recursive: true });
-// }
-// Middleware
-// app.use(cors());
+// Middleware configurations
 app.use(cors({
     origin: ['https://soundsphere-project.vercel.app', 'http://localhost:4200'],
-    // origin: ['https://soundsphere-project.vercel.app'],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -32,6 +26,8 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.use(express.static('public'));
 
+// Setup Socket.IO with authentication
+const io = setupSocketServer(server);
 // MongoDB connection
 const uri = process.env.MONGODB_URI;
 
@@ -53,6 +49,73 @@ const storage = new CloudinaryStorage({
         allowed_formats: ['jpg', 'png', 'mp3', 'wav', 'aac', 'webp'], 
         resource_type: 'auto'
     }
+});
+
+// Socket Authentication Middleware
+io.use(async (socket, next) => {
+    try {
+        const token = socket.handshake.auth.token;
+        if (!token) {
+            return next(new Error('Authentication required'));
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.userId);
+        
+        if (!user) {
+            return next(new Error('User not found'));
+        }
+
+        socket.user = user;
+        next();
+    } catch (error) {
+        next(new Error('Invalid token'));
+    }
+});
+
+// Socket event handlers for music-related features
+io.on('connection', (socket) => {
+    console.log(`User connected: ${socket.user.username}`);
+
+    // Handle song updates
+    socket.on('song-progress', ({ songId, currentTime }) => {
+        // Broadcast song progress to room members
+        if (socket.roomId) {
+            socket.to(socket.roomId).emit('song-progress-update', { songId, currentTime });
+        }
+    });
+
+    // Handle playlist updates
+    socket.on('playlist-update', async ({ roomId, songId, action }) => {
+        try {
+            const song = await Song.findById(songId).populate('uploader', 'username');
+            if (song) {
+                io.to(roomId).emit('playlist-changed', { song, action });
+            }
+        } catch (error) {
+            socket.emit('error', { message: 'Failed to update playlist' });
+        }
+    });
+
+    // Handle song requests
+    socket.on('request-song', async ({ songId, roomId }) => {
+        try {
+            const song = await Song.findById(songId).populate('uploader', 'username');
+            if (song) {
+                io.to(roomId).emit('song-requested', {
+                    song,
+                    requestedBy: socket.user.username
+                });
+            }
+        } catch (error) {
+            socket.emit('error', { message: 'Failed to request song' });
+        }
+    });
+
+    // Clean up on disconnect
+    socket.on('disconnect', () => {
+        console.log(`User disconnected: ${socket.user.username}`);
+    });
 });
 // Song Schema
 const songSchema = new mongoose.Schema({
@@ -681,7 +744,47 @@ app.get('/api/users/check-username/:username', authMiddleware, async (req, res) 
         res.status(500).json({ message: 'Error checking username availability' });
     }
 });
+// New route to get active listening rooms
+app.get('/api/rooms', authMiddleware, async (req, res) => {
+    try {
+        const rooms = Array.from(io.sockets.adapter.rooms.entries())
+            .filter(([roomId, room]) => roomId.length === 36) // UUID length
+            .map(([roomId, room]) => ({
+                roomId,
+                userCount: room.size
+            }));
+        res.json(rooms);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
-app.listen(port, () => {
+// New route to get room details
+app.get('/api/rooms/:roomId', authMiddleware, async (req, res) => {
+    try {
+        const room = io.sockets.adapter.rooms.get(req.params.roomId);
+        if (!room) {
+            return res.status(404).json({ message: 'Room not found' });
+        }
+
+        const roomData = {
+            roomId: req.params.roomId,
+            userCount: room.size,
+            users: Array.from(room).map(socketId => {
+                const socket = io.sockets.sockets.get(socketId);
+                return {
+                    username: socket.user.username,
+                    id: socket.user._id
+                };
+            })
+        };
+
+        res.json(roomData);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+server.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
