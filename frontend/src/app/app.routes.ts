@@ -30,7 +30,7 @@ export const routes: Routes = [
     { path: 'terms', component: TermsComponent },
     { path: 'privacy', component: PrivacyComponent },
     { path: 'radio', component: RadioComponent },
-    { path: 'jamsession', component: JamSessionComponent },
+    { path: 'jam-session', component: JamSessionComponent, canActivate: [authGuard] },
     { path: 'room/:id', component: RoomComponent },
     { path: '**', redirectTo: '' }
 ];

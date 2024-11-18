@@ -24,6 +24,8 @@ export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   username = '';
   showTooltip = false;
+  uploadTooltip = false;
+  jamSessionTooltip = false;
   isDarkMode = true;
   private authSubscription: Subscription | undefined;
   private storageAvailable = false;
@@ -147,16 +149,38 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isMenuOpen = false;
   }
 
-  async handleUploadClick() {
-    // Check current auth state before navigating
-    this.authService.isAuthenticated$.pipe(take(1)).subscribe(isAuthenticated => {
-      if (isAuthenticated) {
-        this.router.navigate(['/upload']);
-      }
-    });
+  async handleUploadClick(event?: Event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    
+    if (this.isAuthenticated) {
+      await this.router.navigate(['/upload']);
+      this.isMenuOpen = false;
+    }
   }
 
   toggleTooltip() {
     this.showTooltip = !this.showTooltip;
+  }
+
+  toggleUploadTooltip() {
+    this.uploadTooltip = !this.uploadTooltip;
+  }
+
+  toggleJamSessionTooltip() {
+    this.jamSessionTooltip = !this.jamSessionTooltip;
+  }
+  async handleJamSessionClick(event?: Event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    
+    if (this.isAuthenticated) {
+      await this.router.navigate(['/jam-session']);
+      this.isMenuOpen = false;
+    }
   }
 }
