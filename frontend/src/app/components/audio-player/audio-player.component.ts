@@ -67,7 +67,14 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
   loopMode: LoopMode = LoopMode.NoLoop;
   isExpanded = false;
 
-  constructor() { }
+  private readonly VOLUME_STORAGE_KEY = 'audioPlayerVolume';
+
+  constructor() {
+    const savedVolume = localStorage.getItem(this.VOLUME_STORAGE_KEY);
+    if (savedVolume) {
+      this.volume = parseFloat(savedVolume);
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['song'] && !changes['song'].firstChange) {
@@ -88,7 +95,6 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
 
   loadAndPlaySong(): void {
     if (this.audioElement) {
-      // Reset the current time
       this.currentTime = 0;
       
       const playHandler = () => {
@@ -100,7 +106,6 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
             console.error('Error playing audio:', error);
             this.isPlaying = false;
           });
-        // Remove the event listener after it's triggered
         this.audioElement?.removeEventListener('canplay', playHandler);
       };
 
@@ -123,7 +128,6 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
       event.stopPropagation();
     }
     this.isExpanded = !this.isExpanded;
-    // Toggle body scroll
     document.body.style.overflow = this.isExpanded ? 'hidden' : '';
   }
   togglePlay(event?: Event) {
@@ -192,6 +196,7 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
     if (this.audioElement) {
       this.audioElement.volume = volumeValue;
       this.volume = volumeValue;
+      localStorage.setItem(this.VOLUME_STORAGE_KEY, volumeValue.toString());
       this.updateRangeBackground(target);
     }
   }
