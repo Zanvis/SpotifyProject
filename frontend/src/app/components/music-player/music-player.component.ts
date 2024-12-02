@@ -3,6 +3,7 @@ import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@an
 import { MusicState, SocketService } from '../../services/socket.service';
 import { Subject, takeUntil } from 'rxjs';
 import { Song, SongService } from '../../services/song.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface AudioState {
   currentTime: number;
@@ -18,7 +19,7 @@ interface AudioState {
 @Component({
   selector: 'app-music-player',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './music-player.component.html',
   styleUrl: './music-player.component.css'
 })
@@ -129,7 +130,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error('Error loading songs:', error);
-          this.state.error = 'Error loading songs. Please try again later.';
+          this.state.error = 'MUSIC_PLAYER.ERROR.LOADING_FAILED';
         }
       });
   }
@@ -236,7 +237,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       }
     } catch (error) {
       console.error('Error handling remote state update:', error);
-      this.state.error = 'Error syncing with room';
+      this.state.error = 'MUSIC_PLAYER.ERROR.SYNC_FAILED';
     }
   }
 
@@ -266,7 +267,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       this.syncState();
     } catch (error) {
       console.error('Error toggling play/pause:', error);
-      this.state.error = 'Error playing audio';
+      this.state.error = 'MUSIC_PLAYER.ERROR.AUDIO_FAILED';
     } finally {
       this.state.isLoading = false;
     }
@@ -288,7 +289,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       this.syncState();
     } catch (error) {
       console.error('Error seeking:', error);
-      this.state.error = 'Error seeking audio';
+      this.state.error = 'MUSIC_PLAYER.ERROR.SEEK_FAILED';
     } finally {
       this.isSeeking = false;
     }
@@ -306,7 +307,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       });
     } catch (error) {
       console.error('Error syncing state:', error);
-      this.state.error = 'Error syncing with room';
+      this.state.error = 'MUSIC_PLAYER.ERROR.SYNC_FAILED';
     }
   }
 

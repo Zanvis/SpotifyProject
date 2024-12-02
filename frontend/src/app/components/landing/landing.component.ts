@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface Feature {
   icon: string;
@@ -11,7 +12,7 @@ interface Feature {
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslatePipe],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
@@ -19,23 +20,23 @@ export class LandingComponent {
   features: Feature[] = [
     {
       icon: 'play_circle',
-      title: 'Audio Player',
-      description: 'High-quality audio playback with intuitive controls'
+      title: 'LANDING.FEATURES.AUDIO_PLAYER.TITLE',
+      description: 'LANDING.FEATURES.AUDIO_PLAYER.DESCRIPTION'
     },
     {
       icon: 'music_note',
-      title: 'Song List',
-      description: 'Organize and browse your music collection effortlessly'
+      title: 'LANDING.FEATURES.SONG_LIST.TITLE',
+      description: 'LANDING.FEATURES.SONG_LIST.DESCRIPTION'
     },
     {
       icon: 'upload',
-      title: 'Upload Songs',
-      description: 'Easily upload and expand your music library'
+      title: 'LANDING.FEATURES.UPLOAD_SONGS.TITLE',
+      description: 'LANDING.FEATURES.UPLOAD_SONGS.DESCRIPTION'
     },
     {
       icon: 'group',
-      title: 'Team',
-      description: 'Meet the passionate developers behind SoundSphere'
+      title: 'LANDING.FEATURES.TEAM.TITLE',
+      description: 'LANDING.FEATURES.TEAM.DESCRIPTION'
     }
   ];
 }

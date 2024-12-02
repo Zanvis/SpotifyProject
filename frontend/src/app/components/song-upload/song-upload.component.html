@@ -1,5 +1,7 @@
 <div class="container mx-auto p-4">
-    <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Upload Your Music</h2>
+    <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
+        {{ 'UPLOAD.TITLE' | translate }}
+    </h2>
 
     <div class="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-2xl mx-auto shadow-lg border border-gray-100 dark:border-gray-700">
         <form (ngSubmit)="onSubmit()" #uploadForm="ngForm" class="space-y-6">
@@ -19,27 +21,35 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" class="mx-auto text-gray-400 dark:text-gray-500">
                 <path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
                 </svg>
-                <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Drag and drop your song here</h3>
-                <p class="text-gray-600 dark:text-gray-400">or</p>
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
+                    {{ 'UPLOAD.FILE_UPLOAD.DRAG_DROP_TEXT' | translate }}
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400">
+                    {{ 'UPLOAD.FILE_UPLOAD.OR' | translate }}
+                </p>
                 <button 
                 type="button"
                 (click)="songFileInput.click()" 
                 class="px-6 py-3 bg-teal-500 dark:bg-blue-500 text-white rounded-lg hover:bg-teal-600 dark:hover:bg-blue-600 active:bg-teal-700 dark:active:bg-blue-700 transition-colors shadow-sm">
-                Choose Song File
+                {{ 'UPLOAD.FILE_UPLOAD.CHOOSE_FILE_BUTTON' | translate }}
                 </button>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Supported formats: MP3, WAV, AAC</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    {{ 'UPLOAD.FILE_UPLOAD.SUPPORTED_FORMATS' | translate }}
+                </p>
             </div>
     
             <div *ngIf="selectedFile" class="space-y-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 class="text-xl font-semibold text-gray-800 dark:text-white">{{selectedFile.name}}</h3>
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
+                    {{ 'UPLOAD.FILE_UPLOAD.FILE_SELECTED' | translate: { filename: selectedFile.name } }}
+                </h3>
                 <button 
                 type="button"
                 (click)="clearFile()"
                 class="text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300 transition-colors">
-                Remove
+                {{ 'UPLOAD.FILE_UPLOAD.REMOVE_FILE' | translate }}
                 </button>
             </div>
     
@@ -54,49 +64,61 @@
             <!-- Song Details -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2" for="title">Title</label>
+                <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2" for="title">
+                    {{ 'UPLOAD.FORM.LABELS.TITLE' | translate }}
+                </label>
                 <input 
                 type="text" 
                 id="title"
                 [(ngModel)]="title" 
                 name="title" 
                 required
+                placeholder="{{ 'UPLOAD.FORM.PLACEHOLDERS.TITLE' | translate }}"
                 #titleInput="ngModel"
                 class="w-full p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 focus:border-teal-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-teal-200 dark:focus:ring-blue-800 focus:outline-none transition-colors text-gray-900 dark:text-white shadow-sm">
                 <div *ngIf="titleInput.invalid && (titleInput.dirty || titleInput.touched)" class="text-red-500 mt-1 text-sm">
-                Title is required
+                {{ 'UPLOAD.FORM.VALIDATIONS.TITLE_REQUIRED' | translate }}
                 </div>
             </div>
     
             <div>
-                <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2" for="artist">Artist</label>
+                <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2" for="artist">
+                    {{ 'UPLOAD.FORM.LABELS.ARTIST' | translate }}
+                </label>
                 <input 
                 type="text" 
                 id="artist"
                 [(ngModel)]="artist" 
                 name="artist" 
                 required
+                placeholder="{{ 'UPLOAD.FORM.PLACEHOLDERS.ARTIST' | translate }}"
                 #artistInput="ngModel"
                 class="w-full p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 focus:border-teal-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-teal-200 dark:focus:ring-blue-800 focus:outline-none transition-colors text-gray-900 dark:text-white shadow-sm">
                 <div *ngIf="artistInput.invalid && (artistInput.dirty || artistInput.touched)" class="text-red-500 mt-1 text-sm">
-                Artist is required
+                {{ 'UPLOAD.FORM.VALIDATIONS.ARTIST_REQUIRED' | translate }}
                 </div>
             </div>
             </div>
+
     
             <div>
-            <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2" for="album">Album</label>
+            <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2" for="album">
+                {{ 'UPLOAD.FORM.LABELS.ALBUM' | translate }}
+            </label>
             <input 
                 type="text" 
                 id="album"
                 [(ngModel)]="album" 
                 name="album" 
+                placeholder="{{ 'UPLOAD.FORM.PLACEHOLDERS.ALBUM' | translate }}"
                 class="w-full p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 focus:border-teal-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-teal-200 dark:focus:ring-blue-800 focus:outline-none transition-colors text-gray-900 dark:text-white shadow-sm">
             </div>
     
             <!-- Album Cover Upload -->
             <div>
-            <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Album Cover (optional)</label>
+            <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+                {{ 'UPLOAD.FORM.LABELS.ALBUM_COVER' | translate }}
+            </label>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div 
                 class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center transition-all h-48 hover:border-teal-400 dark:hover:border-blue-500"
@@ -149,7 +171,7 @@
                 <div class="flex mb-2 items-center justify-between">
                 <div>
                     <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-teal-700 dark:text-blue-400 bg-teal-100 dark:bg-blue-900">
-                    Uploading
+                    {{ 'UPLOAD.UPLOAD_PROGRESS.STATUS' | translate }}
                     </span>
                 </div>
                 <div class="text-right">
@@ -172,7 +194,7 @@
                 type="submit" 
                 [disabled]="!uploadForm.form.valid || !selectedFile || uploading"
                 class="bg-teal-500 dark:bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-blue-600 active:bg-teal-700 dark:active:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm font-medium">
-                {{ uploading ? 'Uploading...' : 'Upload Song' }}
+                {{ uploading ? 'UPLOAD.UPLOAD_PROGRESS.BUTTON.UPLOADING' : 'UPLOAD.UPLOAD_PROGRESS.BUTTON.UPLOAD' | translate }}
             </button>
             </div>
         </form>

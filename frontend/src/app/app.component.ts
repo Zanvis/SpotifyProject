@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, ElementRef, HostListener, Inject, PLATFOR
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,8 @@ import { take } from 'rxjs/operators';
     RouterOutlet, 
     RouterLink, 
     CommonModule, 
-    RouterLinkActive
+    RouterLinkActive,
+    TranslatePipe,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -29,16 +30,95 @@ export class AppComponent implements OnInit, OnDestroy {
   isDarkMode = true;
   private authSubscription: Subscription | undefined;
   private storageAvailable = false;
+  currentLanguage: string = 'en';
+  private isBrowser: boolean;
+  isLanguageDropdownOpen = false;
+  availableLanguages = [
+    { code: 'en', name: 'English' },
+    { code: 'pl', name: 'Polski' }
+  ];
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private elementRef: ElementRef,
+    private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.initializeTheme();
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  
+    this.translate.addLangs(['en', 'pl']);
+    this.translate.setDefaultLang('en');
+    
+    this.setInitialLanguage();
+  }
+  
+  private setInitialLanguage() {
+    if (!this.isBrowser) return;
+  
+    const savedLanguage = localStorage.getItem('app-language');
+    if (savedLanguage && ['en', 'pl'].includes(savedLanguage)) {
+      this.currentLanguage = savedLanguage;
+      this.translate.use(savedLanguage);
+      return;
+    }
+  
+    const browserLang = navigator.language.split('-')[0].toLowerCase();
+    
+    const supportedLang = this.availableLanguages.find(lang => lang.code === browserLang);
+    
+    if (supportedLang) {
+      this.currentLanguage = browserLang;
+      this.translate.use(browserLang);
+    } else {
+      this.currentLanguage = 'en';
+      this.translate.use('en');
+    }
+  
+    try {
+      localStorage.setItem('app-language', this.currentLanguage);
+    } catch (error) {
+      console.warn('Error saving language preference:', error);
+    }
   }
 
+  @HostListener('document:click', ['$event'])
+  handleClickOutside2(event: Event) {
+    const languageDropdownElement = this.elementRef.nativeElement.querySelector('.language-dropdown-container');
+    if (!languageDropdownElement) return;
+    
+    const clickedInside = languageDropdownElement.contains(event.target as Node);
+    if (!clickedInside && this.isLanguageDropdownOpen) {
+      this.isLanguageDropdownOpen = false;
+    }
+  }
+
+  toggleLanguageDropdown(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.isLanguageDropdownOpen = !this.isLanguageDropdownOpen;
+  }
+
+  selectLanguage(languageCode: string) {
+    this.currentLanguage = languageCode;
+    this.translate.use(languageCode);
+    
+    // Safe localStorage setting
+    if (isPlatformBrowser(this.platformId)) {
+      try {
+        localStorage.setItem('app-language', languageCode);
+      } catch (error) {
+        console.warn('Error saving language preference:', error);
+      }
+    }
+
+    this.isLanguageDropdownOpen = false;
+  }
+  getSelectedLanguageName(): string | undefined {
+    return this.availableLanguages.find(lang => lang.code === this.currentLanguage)?.name;
+  }
   private initializeTheme(): void {
     if (isPlatformBrowser(this.platformId)) {
       try {

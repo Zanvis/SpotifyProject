@@ -1,0 +1,499 @@
+{
+    "NAV": {
+        "HOME": "Strona główna",
+        "SONGS": "Utwory",
+        "PLAYLISTS": "Playlisty",
+        "UPLOAD": "Prześlij",
+        "TEAM": "Zespół",
+        "RADIO": "Radio",
+        "JAM_SESSION": "Sesja Jam",
+        "LOGIN": "Zaloguj się",
+        "REGISTER": "Zarejestruj się",
+        "PROFILE": "Profil",
+        "SETTINGS": "Ustawienia",
+        "LOGOUT": "Wyloguj się"
+    },
+    "TOOLTIPS": {
+        "UPLOAD_REQUIRED_LOGIN": "Zaloguj się, aby przesłać muzykę",
+        "JAM_SESSION_REQUIRED_LOGIN": "Zaloguj się, aby użyć Sesji Jam"
+    },
+    "FOOTER": {
+        "TERMS": "Warunki usługi",
+        "PRIVACY": "Polityka prywatności",
+        "COPYRIGHT": "SoundSphere. Wszelkie prawa zastrzeżone."
+    },
+    "LANDING": {
+        "TITLE": "Witaj w SoundSphere",
+        "SUBTITLE": "Twoja osobista muzyczna przystań. Przesyłaj, organizuj i ciesz się swoją kolekcją muzyczną za pomocą intuicyjnego interfejsu.",
+        "GET_STARTED_BUTTON": "Rozpocznij",
+        "FEATURES": {
+            "AUDIO_PLAYER": {
+                "TITLE": "Odtwarzacz Audio",
+                "DESCRIPTION": "Wysokiej jakości odtwarzanie dźwięku z intuicyjnymi kontrolkami"
+            },
+            "SONG_LIST": {
+                "TITLE": "Lista Utworów", 
+                "DESCRIPTION": "Organizuj i przeglądaj swoją kolekcję muzyczną bez wysiłku"
+            },
+            "UPLOAD_SONGS": {
+                "TITLE": "Prześlij Utwory",
+                "DESCRIPTION": "Łatwo przesyłaj i rozszerzaj swoją bibliotekę muzyczną"
+            },
+            "TEAM": {
+                "TITLE": "Zespół",
+                "DESCRIPTION": "Poznaj pasjonatów stojących za SoundSphere"
+            }
+        }
+    },
+    "TEAM": {
+        "TITLE": "Nasz Zespół",
+        "TEAM_MEMBERS": {
+            "ANTEK": {
+                "NAME": "Antoni Piwowarski",
+                "ROLE": "Główny Programista",
+                "DESCRIPTION": "Pasjonat tworzenia intuicyjnych i zaawansowanych doświadczeń muzycznych."
+            },
+            "KUBA": {
+                "NAME": "Jakub Kuźnicki",
+                "ROLE": "Projektant UI/UX",
+                "DESCRIPTION": "Tworzenie pięknych i funkcjonalnych interfejsów zapewniających najlepsze doświadczenia użytkownika."
+            },
+            "DAWID": {
+                "NAME": "Dawid Mańkowski",
+                "ROLE": "Programista Backend",
+                "DESCRIPTION": "Zapewnienie płynnego i bezpiecznego działania naszej platformy dla wszystkich użytkowników."
+            }
+        },
+        "ABOUT_PROJECT": {
+            "TITLE": "O Naszym Projekcie",
+            "PARAGRAPH1": "Music App to projekt szkolny stworzony przez zespół miłośników muzyki i studentów programowania. Naszym celem jest dostarczenie płynnego i przyjemnego doświadczenia słuchania muzyki, dając użytkownikom pełną kontrolę nad ich biblioteką muzyczną.",
+            "PARAGRAPH2": "Ten projekt pokazuje umiejętności naszego zespołu w zakresie tworzenia stron internetowych, projektowania interfejsów użytkownika oraz implementacji backendu. Wspólnie stworzyliśmy platformę, która demonstruje nasze zrozumienie nowoczesnych technologii webowych i zasad projektowania zorientowanego na użytkownika."
+        }
+    },
+    "PRIVACY_POLICY": {
+        "TITLE": "Polityka Prywatności",
+        "LAST_UPDATED": "Ostatnia aktualizacja: 26 października 2024",
+        "SECTIONS": {
+            "INFORMATION_COLLECT": {
+                "TITLE": "1. Jakie Informacje Zbieramy",
+                "DESCRIPTION": "Zbieramy następujące informacje:",
+                "ITEMS": [
+                    "Informacje o koncie (nazwa użytkownika, email)",
+                    "Dane dotyczące użytkowania (historia odsłuchów, playlisty)",
+                    "Informacje o urządzeniu (typ przeglądarki, adres IP)"
+                ]
+            },
+            "INFORMATION_USE": {
+                "TITLE": "2. Jak Wykorzystujemy Twoje Informacje",
+                "DESCRIPTION": "Wykorzystujemy Twoje dane, aby:",
+                "ITEMS": [
+                    "Świadczyć i ulepszać nasze usługi",
+                    "Personalizować Twoje doświadczenie",
+                    "Komunikować się z Tobą w sprawach związanych z Twoim kontem",
+                    "Analizować wzorce użytkowania naszych usług"
+                ]
+            },
+            "INFORMATION_SHARING": {
+                "TITLE": "3. Udostępnianie Informacji",
+                "DESCRIPTION": "Nie sprzedajemy Twoich danych osobowych. Możemy udostępniać informacje:",
+                "ITEMS": [
+                    "Dostawcom usług wspierającym funkcjonowanie naszej platformy",
+                    "Organom ścigania, gdy jest to wymagane przez prawo"
+                ]
+            },
+            "DATA_SECURITY": {
+                "TITLE": "4. Bezpieczeństwo Danych",
+                "DESCRIPTION": "Wdrażamy odpowiednie środki bezpieczeństwa w celu ochrony Twoich danych. Jednakże, jako że jest to projekt studencki, nie możemy zagwarantować całkowitego bezpieczeństwa."
+            },
+            "USER_RIGHTS": {
+                "TITLE": "5. Twoje Prawa",
+                "DESCRIPTION": "Masz prawo do:",
+                "ITEMS": [
+                    "Dostępu do swoich danych osobowych",
+                    "Poprawiania nieścisłych danych",
+                    "Żądania usunięcia swojego konta",
+                    "Rezygnacji z komunikacji promocyjnej"
+                ]
+            },
+            "CONTACT": {
+                "TITLE": "6. Kontakt z Nami",
+                "DESCRIPTION": "W przypadku pytań dotyczących prywatności prosimy o kontakt pod adresem privacy@soundsphere.edu"
+            }
+        },
+        "RETURN_TO_REGISTRATION": "Powrót do Rejestracji"
+    },
+    "TERMS_OF_SERVICE": {
+        "TITLE": "Regulamin",
+        "LAST_UPDATED": "Ostatnia aktualizacja: 26 października 2024",
+        "SECTIONS": {
+            "INTRODUCTION": {
+                "TITLE": "1. Wprowadzenie",
+                "CONTENT": "Witamy w SoundSphere. Korzystając z naszego serwisu, akceptujesz niniejszy regulamin. SoundSphere to edukacyjny projekt stworzony przez studentów."
+            },
+            "SERVICE_DESCRIPTION": {
+                "TITLE": "2. Opis Usługi",
+                "CONTENT": "SoundSphere to platforma do strumieniowego przesyłania muzyki stworzona w celach edukacyjnych. Umożliwiamy użytkownikom odtwarzanie muzyki, tworzenie playlist i zarządzanie biblioteką muzyczną."
+            },
+            "USER_ACCOUNTS": {
+                "TITLE": "3. Konta Użytkowników",
+                "CONTENT": "Aby korzystać z funkcji SoundSphere, użytkownicy muszą się zarejestrować. Odpowiadasz za zachowanie poufności danych logowania do swojego konta."
+            },
+            "ACCEPTABLE_USE": {
+                "TITLE": "4. Akceptowalne Użycie",
+                "CONTENT": "Użytkownicy zgadzają się na:",
+                "RULES": [
+                    "Korzystanie z serwisu wyłącznie w celach osobistych, niekomercyjnych",
+                    "Niedzieleniem się danymi logowania",
+                    "Niepróbę obchodzenia jakichkolwiek ograniczeń usługi",
+                    "Szacunek dla praw własności intelektualnej"
+                ]
+            },
+            "CONTENT_GUIDELINES": {
+                "TITLE": "5. Wytyczne Dotyczące Treści",
+                "CONTENT": "Użytkownicy nie mogą przesyłać ani udostępniać:",
+                "RESTRICTIONS": [
+                    "Materiałów chronionych prawami autorskimi bez zgody",
+                    "Treści obraźliwych lub nieodpowiednich",
+                    "Złośliwego oprogramowania lub szkodliwych treści"
+                ]
+            },
+            "LIABILITY": {
+                "TITLE": "6. Ograniczenie Odpowiedzialności",
+                "CONTENT": "SoundSphere to projekt studencki i jest udostępniany \"tak jak jest\" bez żadnych gwarancji. Nie ponosimy odpowiedzialności za jakiekolwiek szkody wynikające z korzystania z serwisu."
+            }
+        },
+        "LINKS": {
+            "RETURN_TO_REGISTRATION": "Powrót do Rejestracji"
+        }
+    },
+    "MUSIC_ROOMS": {
+        "TITLE": "Pokoje Muzyczne",
+        "SUBTITLE": "Utwórz lub dołącz do pokoju, aby rozpocząć swoją muzyczną podróż",
+        "CREATE_BUTTON": "Utwórz Nowy Pokój",
+        "JOIN_SECTION": {
+            "PLACEHOLDER": "Wpisz ID Pokoju",
+            "JOIN_BUTTON": "Dołącz do Pokoju"
+        }
+    },
+    "UPLOAD": {
+        "TITLE": "Prześlij Swoją Muzykę",
+        "FILE_UPLOAD": {
+            "DRAG_DROP_TEXT": "Przeciągnij i upuść swoją piosenkę tutaj",
+            "OR": "lub",
+            "CHOOSE_FILE_BUTTON": "Wybierz Plik z Piosenką",
+            "SUPPORTED_FORMATS": "Obsługiwane formaty: MP3, WAV, AAC",
+            "FILE_SELECTED": "{{filename}}",
+            "REMOVE_FILE": "Usuń"
+        },
+        "FORM": {
+            "LABELS": {
+                "TITLE": "Tytuł",
+                "ARTIST": "Artysta",
+                "ALBUM": "Album",
+                "ALBUM_COVER": "Okładka Albumu (opcjonalnie)"
+            },
+            "PLACEHOLDERS": {
+                "TITLE": "Wpisz tytuł piosenki",
+                "ARTIST": "Wpisz nazwę artysty",
+                "ALBUM": "Wpisz nazwę albumu"
+            },
+            "VALIDATIONS": {
+                "TITLE_REQUIRED": "Tytuł jest wymagany",
+                "ARTIST_REQUIRED": "Artysta jest wymagany"
+            }
+        },
+        "UPLOAD_PROGRESS": {
+            "STATUS": "Przesyłanie",
+            "BUTTON": {
+                "UPLOADING": "Przesyłanie...",
+                "UPLOAD": "Prześlij Piosenkę"
+            }
+        }
+    },
+    "LOGIN": {
+        "TITLE": "Zaloguj się do swojego konta",
+        "CREATE_ACCOUNT_OR": "Lub",
+        "CREATE_ACCOUNT": " utwórz nowe konto",
+        "FORM": {
+        "LABELS": {
+            "EMAIL": "Adres e-mail",
+            "PASSWORD": "Hasło"
+        },
+        "PLACEHOLDERS": {
+            "EMAIL": "Wprowadź swój e-mail",
+            "PASSWORD": "Wprowadź swoje hasło"
+        },
+        "VALIDATIONS": {
+            "EMAIL_INVALID": "Proszę wprowadzić prawidłowy adres e-mail",
+            "PASSWORD_REQUIRED": "Hasło jest wymagane"
+        },
+        "REMEMBER_ME": "Zapamiętaj mnie",
+        "FORGOT_PASSWORD": "Zapomniałeś hasła?"
+        },
+        "SUBMIT": {
+        "SIGN_IN": "Zaloguj się",
+        "SIGNING_IN": "Logowanie..."
+        }
+    },
+    "REGISTER": {
+        "TITLE": "Utwórz swoje konto",
+        "EXISTING_ACCOUNT": "Masz już konto?",
+        "SIGN_IN": "Zaloguj się zamiast tego",
+        "USERNAME": "Nazwa użytkownika",
+        "USERNAME_ERROR": "Nazwa użytkownika musi mieć co najmniej 3 znaki",
+        "EMAIL": "Adres e-mail",
+        "EMAIL_ERROR": "Proszę podać poprawny adres e-mail",
+        "PASSWORD": "Hasło",
+        "CONFIRM_PASSWORD": "Potwierdź hasło",
+        "PASSWORDS_MATCH_ERROR": "Hasła muszą się zgadzać",
+        "PASSWORD_REQUIREMENTS": {
+            "TITLE": "Hasło musi:",
+            "LENGTH": "Mieć co najmniej 8 znaków",
+            "NUMBER": "Zawierać co najmniej jedną cyfrę"
+        },
+        "PASSWORD_ERRORS": {
+            "REQUIRED": "Hasło jest wymagane",
+            "MIN_LENGTH": "Hasło musi mieć co najmniej 8 znaków",
+            "NO_NUMBER": "Hasło musi zawierać co najmniej jedną cyfrę"
+        },
+        "TERMS": {
+            "AGREEMENT": "Zgadzam się z",
+            "TERMS": "Warunkami",
+            "AND": "oraz",
+            "PRIVACY_POLICY": "Polityką Prywatności"
+        },
+        "BUTTON": {
+            "CREATE": "Utwórz konto",
+            "CREATING": "Tworzenie konta..."
+        }
+    },
+    "RADIO": {
+        "SEARCH_PLACEHOLDER": "Szukaj stacji radiowych...",
+        "POPULAR_TAGS": "Popularne Tagi",
+        "NO_STATIONS": "Nie znaleziono stacji radiowych"
+    },
+    "PROFILE": {
+        "TOTAL_SONGS": "Całkowita liczba piosenek",
+        "TOTAL_PLAYLISTS": "Całkowita liczba playlist", 
+        "TOTAL_DURATION": "Całkowity czas trwania",
+        "UPLOADED_SONGS": "Twoje przesłane piosenki",
+        "PLAYLISTS": "Twoje playlisty",
+        "TABLE_HEADERS": {
+        "TITLE": "Tytuł",
+        "ARTIST": "Wykonawca", 
+        "ALBUM": "Album",
+        "DURATION": "Czas trwania",
+        "ACTIONS": "Akcje"
+        },
+        "BUTTONS": {
+        "DELETE": "Usuń"
+        },
+        "PLAYLIST": {
+        "SONGS_COUNT": "{{count}} piosenki",
+        "MORE_SONGS": "+{{count}} więcej piosenek"
+        }
+    },
+    "RADIO_PLAYER": {
+        "NOW_PLAYING": "Teraz odtwarzane",
+        "NO_STATION_SELECTED": "Nie wybrano stacji",
+        "CONNECTION_STATUS": {
+            "CONNECTED": "Połączono",
+            "DISCONNECTED": "Rozłączono",
+            "CONNECTING": "Łączenie...",
+            "BUFFERING": "Buforowanie...",
+            "STREAM_STALLED": "Strumień zatrzymany",
+            "CONNECTION_ERROR": "Błąd połączenia",
+            "CONNECTION_FAILED": "Połączenie nieudane",
+            "STREAMING": "Streaming"
+        },
+        "ERRORS": {
+            "PLAYBACK_FAILED": "Odtwarzanie nie powiodło się"
+        }
+    },
+    "MUSIC_PLAYER": {
+        "ERROR": {
+            "SYNC_FAILED": "Błąd synchronizacji z pokojem",
+            "BROWSER_UNSUPPORTED": "Twoja przeglądarka nie obsługuje elementu audio",
+            "LOADING_FAILED": "Błąd ładowania piosenek. Spróbuj ponownie później.",
+            "AUDIO_FAILED": "Błąd odtwarzania dźwięku",
+            "SEEK_FAILED": "Błąd przewijania dźwięku"
+        },
+        "SECTIONS": {
+            "AVAILABLE_SONGS": "Dostępne piosenki",
+            "CURRENT_SONG": "Aktualnie odtwarzane"
+        },
+        "CONTROLS": {
+            "PLAY": "Odtwórz",
+            "PAUSE": "Pauza"
+        }
+    },
+    "ROOM": {
+        "TITLE": "Pokój muzyczny",
+        "USERS_LISTENING": {
+            "ONE": "osoba słuchająca",
+            "MANY": "osób słuchających"
+        },
+        "COPY_ROOM_ID": "Skopiuj ID pokoju",
+        "ROOM_ID_COPIED": "ID pokoju skopiowane! 🎉",
+        "USERS_IN_ROOM": "Użytkownicy w pokoju",
+        "CHAT": "Czat",
+        "MESSAGE_PLACEHOLDER": "Wpisz swoją wiadomość...",
+        "SEND": "Wyślij",
+        "CONNECTING": {
+            "TITLE": "Łączenie z pokojem...",
+            "SUBTITLE": "Proszę czekać, nawiązywanie połączenia"
+        },
+        "ERROR": {
+            "INVALID_ROOM_ID": "Nieprawidłowe ID pokoju",
+            "LOGIN_REQUIRED": "Zaloguj się, aby dołączyć do pokoju",
+            "JOIN_FAILED": "Nie udało się dołączyć do pokoju. Przekierowanie na stronę główną...",
+            "CONNECTION_LOST": "Utracono połączenie. Próba ponownego połączenia...",
+            "SEND_FAILED": "Nie udało się wysłać wiadomości. Spróbuj ponownie.",
+            "COPY_FAILED": "Nie udało się skopiować ID pokoju. Spróbuj skopiować je ręcznie."
+        },
+        "LEAVE_CONFIRMATION": "Czy na pewno chcesz opuścić pokój? Będzie trzeba dołączyć ponownie."
+    },
+    "SETTINGS": {
+        "TITLE": "Ustawienia",
+        "PROFILE_SETTINGS": {
+            "TITLE": "Ustawienia profilu",
+            "USERNAME": {
+                "LABEL": "Nazwa użytkownika",
+                "PLACEHOLDER": "Wprowadź nazwę użytkownika",
+                "VALIDATION": {
+                    "CHECKING": "Sprawdzanie dostępności nazwy użytkownika...",
+                    "ERROR": {
+                        "EMPTY": "Nazwa użytkownika nie może być pusta",
+                        "TOO_SHORT": "Nazwa użytkownika musi mieć co najmniej 3 znaki",
+                        "INVALID_CHARS": "Nazwa użytkownika może zawierać tylko litery, cyfry, podkreślenia i myślniki",
+                        "TAKEN": "Ta nazwa użytkownika jest już zajęta",
+                        "FAILED": "Błąd sprawdzania dostępności nazwy użytkownika"
+                    },
+                    "SUCCESS": "Nazwa użytkownika jest dostępna"
+                }
+            },
+            "EMAIL": {
+                "LABEL": "Email",
+                "PLACEHOLDER": "Wprowadź email"
+            },
+            "UPDATE_BUTTON": {
+                "IDLE": "Zaktualizuj profil",
+                "UPDATING": "Aktualizowanie...",
+                "SUCCESS": "Profil został pomyślnie zaktualizowany",
+                "ERROR": {
+                    "FAILED": "Nie udało się zaktualizować profilu. Spróbuj ponownie później.",
+                    "INVALID": "Nieprawidłowa nazwa użytkownika"
+                }
+            },
+            "NO_CHANGES": "Brak zmian do zapisania"
+        },
+        "PASSWORD_CHANGE": {
+            "TITLE": "Zmień hasło",
+            "CURRENT_PASSWORD": {
+                "LABEL": "Obecne hasło",
+                "PLACEHOLDER": "Wprowadź obecne hasło",
+                "ERROR": "Wymagane jest podanie obecnego hasła"
+            },
+            "NEW_PASSWORD": {
+                "LABEL": "Nowe hasło",
+                "PLACEHOLDER": "Wprowadź nowe hasło"
+            },
+            "CONFIRM_PASSWORD": {
+                "LABEL": "Potwierdź nowe hasło",
+                "PLACEHOLDER": "Potwierdź nowe hasło",
+                "ERROR": "Hasła nie są zgodne"
+            },
+            "PASSWORD_REQUIREMENTS": {
+                "TITLE": "Wymagania dotyczące hasła:",
+                "MIN_LENGTH": "Co najmniej 8 znaków",
+                "HAS_NUMBER": "Musi zawierać co najmniej jedną cyfrę",
+                "HAS_LETTER": "Musi zawierać co najmniej jedną literę"
+            },
+            "UPDATE_BUTTON": {
+                "IDLE": "Zaktualizuj hasło",
+                "UPDATING": "Aktualizowanie...",
+                "SUCCESS": "Hasło zostało pomyślnie zaktualizowane",
+                "ERROR": {
+                    "INCORRECT_CURRENT": "Obecne hasło jest nieprawidłowe",
+                    "FAILED": "Nie udało się zaktualizować hasła"
+                }
+            }
+        },
+        "USER": {
+            "ERROR": "Nie udało się załadować danych użytkownika"
+        },
+        "ACCOUNT_PREFERENCES": {
+            "TITLE": "Preferencje konta",
+            "EMAIL_NOTIFICATIONS": "Włącz powiadomienia e-mail",
+            "AUTO_PLAY_NEXT": "Automatyczne odtwarzanie następnej piosenki",
+            "SAVE_BUTTON": {
+                "IDLE": "Zapisz preferencje",
+                "SAVING": "Zapisywanie...",
+                "SUCCESS": "Preferencje zostały zapisane pomyślnie",
+                "ERROR": "Nie udało się zapisać preferencji"
+            }
+        },
+        "DELETE_ACCOUNT": {
+            "TITLE": "Usuń konto",
+            "WARNING": "Czy na pewno chcesz usunąć swoje konto? Tej operacji nie można cofnąć.",
+            "BUTTON": {
+                "IDLE": "Usuń konto",
+                "DELETING": "Usuwanie...",
+                "ERROR": "Nie udało się usunąć konta"
+            }
+        }
+    },
+    "AUDIO_PLAYER": {
+        "NOW_PLAYING": "Teraz odtwarzane"
+    },
+    "SONG_LIST": {
+        "SEARCH": {
+            "PLACEHOLDER": "Szukaj piosenek po tytule, wykonawcy lub albumie...",
+            "LOADING_LIBRARY": "Ładowanie Twojej biblioteki muzycznej...",
+            "LOADING_SERVER": "Proszę czekać, budzimy serwer...",
+            "LOADING_SERVER_HINT": "To może chwilę potrwać, ponieważ korzystamy z darmowego planu hostingowego."
+        },
+        "MUSIC_LIBRARY": {
+            "TITLE": "Twoja Biblioteka Muzyczna",
+            "NO_SONGS": {
+                "EMPTY_LIBRARY": "Nie ma jeszcze piosenek w Twojej bibliotece",
+                "EMPTY_SEARCH": "Nie znaleziono piosenek pasujących do wyszukiwania",
+                "EMPTY_LIBRARY_HINT": "Zacznij od przesłania swoich ulubionych utworów!",
+                "EMPTY_SEARCH_HINT": "Spróbuj zmienić warunki wyszukiwania"
+            }
+        },
+        "SONG_CARD": {
+            "PLAY_BUTTON": "Odtwórz",
+            "UPLOADED_BY": "Przesłane przez:",
+            "ADD_TO_PLAYLIST": "Dodaj do playlisty"
+        }
+    },
+    "PLAYLISTS": {
+        "TITLE": "Twoje Playlisty",
+        "NEW_PLAYLIST": {
+            "PLACEHOLDER": "Nazwa nowej playlisty",
+            "CREATE_BUTTON": "Utwórz Playlistę"
+        },
+        "LOADING": "Ładowanie...",
+        "NO_PLAYLISTS": "Brak dostępnych playlist. Utwórz jedną, aby rozpocząć!",
+        "PLAYLIST_CARD": {
+            "SONGS_COUNT": " piosenki",
+            "PLAY_BUTTON": {
+                "NO_SONGS": "Brak piosenek",
+                "WITH_SONGS": "Odtwórz Playlistę"
+            },
+            "DELETE_BUTTON": "Usuń Playlistę",
+            "SONGS_SECTION": {
+                "TITLE": "Piosenki:",
+                "NO_SONGS": "Brak piosenek w tej playliście."
+            }
+        },
+        "ERROR": {
+            "LOADING_FAILED": "Nie udało się załadować playlist. Spróbuj ponownie.",
+            "DELETE_FAILED": "Nie udało się usunąć playlisty. Spróbuj ponownie.",
+            "CREATE_FAILED": "Nie udało się utworzyć playlisty. Spróbuj ponownie.",
+            "REMOVE_FAILED": "Nie udało się usunąć piosenki. Spróbuj ponownie."
+        },
+        "CONFIRM": "Czy na pewno chcesz usunąć tę playlistę?"
+    }
+}

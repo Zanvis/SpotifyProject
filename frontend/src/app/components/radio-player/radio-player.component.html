@@ -5,11 +5,11 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center flex-1 min-w-0" (click)="toggleExpandedView($event)">
       <img [src]="station?.favicon" 
-           (error)="onImageError($event)" 
-           alt="Station logo" 
-           class="w-12 h-12 object-cover rounded-md mr-3">
+          (error)="onImageError($event)" 
+          alt="Station logo" 
+          class="w-12 h-12 object-cover rounded-md mr-3">
       <div class="truncate">
-        <h4 class="text-gray-900 dark:text-white font-semibold truncate">{{station?.name || 'No station selected'}}</h4>
+        <h4 class="text-gray-900 dark:text-white font-semibold truncate">{{station?.name || ('RADIO_PLAYER.NO_STATION_SELECTED' | translate)}}</h4>
         <p class="text-gray-500 dark:text-gray-400 text-sm truncate">{{station?.country}}</p>
       </div>
     </div>
@@ -43,25 +43,25 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
-    <span class="text-gray-900 dark:text-white text-sm">Now Playing</span>
+    <span class="text-gray-900 dark:text-white text-sm">{{'RADIO_PLAYER.NOW_PLAYING' | translate}}</span>
     <div class="w-6"></div>
   </div>
 
   <!-- Station Info -->
   <div class="flex-1 flex flex-col items-center justify-center p-8">
     <img [src]="station?.favicon" 
-         (error)="onImageError($event)" 
-         alt="Station logo" 
-         class="w-64 h-64 object-cover rounded-lg shadow-lg mb-8">
-    <h3 class="text-gray-900 dark:text-white text-xl font-bold mb-2">{{station?.name || 'No station selected'}}</h3>
+        (error)="onImageError($event)" 
+        alt="Station logo" 
+        class="w-64 h-64 object-cover rounded-lg shadow-lg mb-8">
+    <h3 class="text-gray-900 dark:text-white text-xl font-bold mb-2">{{station?.name || ('RADIO_PLAYER.NO_STATION_SELECTED' | translate)}}</h3>
     <p class="text-gray-500 dark:text-gray-400">{{station?.country}}</p>
     
     <!-- Connection Status -->
     <div class="mt-4 flex items-center space-x-2">
       <div class="w-2 h-2 rounded-full" 
-           [class.bg-green-500]="isConnected"
-           [class.bg-red-500]="!isConnected"></div>
-      <span class="text-sm text-gray-500 dark:text-gray-400">{{connectionStatus}}</span>
+          [class.bg-green-500]="isConnected"
+          [class.bg-red-500]="!isConnected"></div>
+      <span class="text-sm text-gray-500 dark:text-gray-400">{{connectionStatus | translate}}</span>
     </div>
   </div>
 
@@ -102,11 +102,11 @@
     <!-- Station Info -->
     <div class="flex items-center flex-1">
       <img [src]="station?.favicon" 
-           (error)="onImageError($event)" 
-           alt="Station logo" 
-           class="w-16 h-16 object-cover rounded-md mr-4">
+          (error)="onImageError($event)" 
+          alt="Station logo" 
+          class="w-16 h-16 object-cover rounded-md mr-4">
       <div>
-        <h4 class="text-gray-900 dark:text-white font-semibold">{{station?.name || 'No station selected'}}</h4>
+        <h4 class="text-gray-900 dark:text-white font-semibold">{{station?.name || ('RADIO_PLAYER.NO_STATION_SELECTED' | translate)}}</h4>
         <p class="text-gray-500 dark:text-gray-400 text-sm">{{station?.country}}</p>
       </div>
     </div>
@@ -132,9 +132,9 @@
       <!-- Connection Status -->
       <div class="mt-2 flex items-center space-x-2">
         <div class="w-2 h-2 rounded-full" 
-             [class.bg-green-500]="isConnected"
-             [class.bg-red-500]="!isConnected"></div>
-        <span class="text-sm text-gray-500 dark:text-gray-400">{{connectionStatus}}</span>
+            [class.bg-green-500]="isConnected"
+            [class.bg-red-500]="!isConnected"></div>
+        <span class="text-sm text-gray-500 dark:text-gray-400">{{connectionStatus | translate}}</span>
       </div>
     </div>
 

@@ -1,13 +1,13 @@
 <div class="container mx-auto px-4 py-8 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
   <div class="max-w-2xl mx-auto">
-    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Settings</h1>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">{{'SETTINGS.TITLE' | translate}}</h1>
     
     <!-- Profile Settings Section -->
     <div class="bg-gray-200 dark:bg-gray-800 rounded-lg p-6 mb-6">
-      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Profile Settings</h2>
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{'SETTINGS.PROFILE_SETTINGS.TITLE' | translate}}</h2>
       <div class="space-y-4">
         <div>
-          <label class="block text-gray-700 dark:text-gray-300 mb-2" for="username">Username</label>
+          <label class="block text-gray-700 dark:text-gray-300 mb-2" for="username">{{'SETTINGS.PROFILE_SETTINGS.USERNAME.LABEL' | translate}}</label>
           <input
             type="text"
             id="username"
@@ -19,29 +19,29 @@
               'focus:ring-red-500': usernameValidation.status === 'error',
               'focus:ring-green-500': usernameValidation.status === 'success'
             }"
-            placeholder="Enter username"
+            [placeholder]="'SETTINGS.PROFILE_SETTINGS.USERNAME.PLACEHOLDER' | translate"
           >
           <!-- Username validation feedback -->
           <div class="mt-2 text-sm" *ngIf="usernameValidation.status !== 'idle'">
             <div *ngIf="usernameValidation.status === 'checking'" class="text-blue-500 dark:text-blue-400">
-              Checking username availability...
+              {{'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.CHECKING' | translate}}
             </div>
             <div *ngIf="usernameValidation.status === 'error'" class="text-red-500 dark:text-red-400">
-              {{ usernameValidation.message }}
+              {{ usernameValidation.message | translate}}
             </div>
             <div *ngIf="usernameValidation.status === 'success'" class="text-green-500 dark:text-green-400">
-              {{ usernameValidation.message }}
+              {{ usernameValidation.message | translate}}
             </div>
           </div>
         </div>
         <div>
-          <label class="block text-gray-700 dark:text-gray-300 mb-2" for="email">Email</label>
+          <label class="block text-gray-700 dark:text-gray-300 mb-2" for="email">{{'SETTINGS.PROFILE_SETTINGS.EMAIL.LABEL' | translate}}</label>
           <input
             type="email"
             id="email"
             [(ngModel)]="email"
             class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter email"
+            [placeholder]="'SETTINGS.PROFILE_SETTINGS.EMAIL.PLACEHOLDER' | translate"
             readonly
           >
         </div>
@@ -51,16 +51,16 @@
         class="mt-6 px-6 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded hover:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         [disabled]="isUpdating"
       >
-        {{ isUpdating ? 'Updating...' : 'Update Profile' }}
+        {{ isUpdating ? ('SETTINGS.PROFILE_SETTINGS.UPDATE_BUTTON.UPDATING' | translate) : ('SETTINGS.PROFILE_SETTINGS.UPDATE_BUTTON.IDLE' | translate) }}
       </button>
     </div>
     
     <!-- Password Change Section -->
     <div class="bg-gray-200 dark:bg-gray-800 rounded-lg p-6 mb-6">
-      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Change Password</h2>
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{'SETTINGS.PASSWORD_CHANGE.TITLE' | translate}}</h2>
       <div class="space-y-4">
         <div>
-          <label class="block text-gray-700 dark:text-gray-300 mb-2" for="currentPassword">Current Password</label>
+          <label class="block text-gray-700 dark:text-gray-300 mb-2" for="currentPassword">{{'SETTINGS.PASSWORD_CHANGE.CURRENT_PASSWORD.LABEL' | translate}}</label>
           <div class="relative">
             <input
               [type]="showCurrentPassword ? 'text' : 'password'"
@@ -68,7 +68,7 @@
               [(ngModel)]="currentPassword"
               (ngModelChange)="validatePasswords()"
               class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12"
-              placeholder="Enter current password"
+              [placeholder]="'SETTINGS.PASSWORD_CHANGE.CURRENT_PASSWORD.PLACEHOLDER' | translate"
             >
             <button
               type="button"
@@ -87,11 +87,11 @@
             </button>
           </div>
           <span *ngIf="passwordErrors.currentPassword" class="text-red-500 dark:text-red-400 text-sm mt-1 block">
-            {{ passwordErrors.currentPassword }}
+            {{ passwordErrors.currentPassword | translate}}
           </span>
         </div>
         <div>
-          <label class="block text-gray-700 dark:text-gray-300 mb-2" for="newPassword">New Password</label>
+          <label class="block text-gray-700 dark:text-gray-300 mb-2" for="newPassword">{{'SETTINGS.PASSWORD_CHANGE.NEW_PASSWORD.LABEL' | translate}}</label>
           <div class="relative">
             <input
               [type]="showNewPassword ? 'text' : 'password'"
@@ -99,7 +99,7 @@
               [(ngModel)]="newPassword"
               (ngModelChange)="validatePasswords()"
               class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12"
-              placeholder="Enter new password"
+              [placeholder]="'SETTINGS.PASSWORD_CHANGE.NEW_PASSWORD.PLACEHOLDER' | translate"
             >
             <button
               type="button"
@@ -118,11 +118,11 @@
             </button>
           </div>
           <span *ngIf="passwordErrors.newPassword" class="text-red-500 dark:text-red-400 text-sm mt-1 block">
-            {{ passwordErrors.newPassword }}
+            {{ passwordErrors.newPassword | translate}}
           </span>
         </div>
         <div>
-          <label class="block text-gray-700 dark:text-gray-300 mb-2" for="confirmPassword">Confirm New Password</label>
+          <label class="block text-gray-700 dark:text-gray-300 mb-2" for="confirmPassword">{{'SETTINGS.PASSWORD_CHANGE.CONFIRM_PASSWORD.LABEL' | translate}}</label>
           <div class="relative">
             <input
               [type]="showConfirmPassword ? 'text' : 'password'"
@@ -130,7 +130,7 @@
               [(ngModel)]="confirmPassword"
               (ngModelChange)="validatePasswords()"
               class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12"
-              placeholder="Confirm new password"
+              [placeholder]="'SETTINGS.PASSWORD_CHANGE.CONFIRM_PASSWORD.PLACEHOLDER' | translate"
             >
             <button
               type="button"
@@ -149,22 +149,22 @@
             </button>
           </div>
           <span *ngIf="passwordErrors.confirmPassword" class="text-red-500 dark:text-red-400 text-sm mt-1 block">
-            {{ passwordErrors.confirmPassword }}
+            {{ passwordErrors.confirmPassword | translate}}
           </span>
         </div>
         
         <!-- Password Requirements -->
         <div class="mt-4 space-y-2">
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Password requirements:</p>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">{{'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.TITLE' | translate}}:</p>
           <ul class="list-disc list-inside space-y-1">
             <li class="text-sm" [ngClass]="{'text-green-500 dark:text-green-400': passwordChecks.minLength, 'text-gray-600 dark:text-gray-400': !passwordChecks.minLength}">
-              At least 8 characters long
+              {{'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.MIN_LENGTH' | translate}}
             </li>
             <li class="text-sm" [ngClass]="{'text-green-500 dark:text-green-400': passwordChecks.hasNumber, 'text-gray-600 dark:text-gray-400': !passwordChecks.hasNumber}">
-              Contains at least one number
+              {{'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.HAS_NUMBER' | translate}}
             </li>
             <li class="text-sm" [ngClass]="{'text-green-500 dark:text-green-400': passwordChecks.hasLetter, 'text-gray-600 dark:text-gray-400': !passwordChecks.hasLetter}">
-              Contains at least one letter
+              {{'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.HAS_LETTER' | translate}}
             </li>
           </ul>
         </div>
@@ -174,23 +174,23 @@
         class="mt-6 px-6 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded hover:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         [disabled]="isUpdatingPassword || !isPasswordValid()"
       >
-        {{ isUpdatingPassword ? 'Updating...' : 'Update Password' }}
+        {{ isUpdatingPassword ? ('SETTINGS.PASSWORD_CHANGE.UPDATE_BUTTON.UPDATING' | translate) : ('SETTINGS.PASSWORD_CHANGE.UPDATE_BUTTON.IDLE' | translate) }}
       </button>
     </div>
     
     <!-- Account Preferences -->
     <div class="bg-gray-200 dark:bg-gray-800 rounded-lg p-6 mb-6">
-      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Account Preferences</h2>
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{'SETTINGS.ACCOUNT_PREFERENCES.TITLE' | translate}}</h2>
       <div class="space-y-4">
         <div class="flex items-center justify-between">
-          <span class="text-gray-700 dark:text-gray-300">Enable Email Notifications</span>
+          <span class="text-gray-700 dark:text-gray-300">{{'SETTINGS.ACCOUNT_PREFERENCES.EMAIL_NOTIFICATIONS' | translate}}</span>
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" [(ngModel)]="emailNotifications" class="sr-only peer">
             <div class="w-11 h-6 bg-gray-300 dark:bg-gray-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 dark:after:border-gray-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500 dark:peer-checked:bg-blue-600"></div>
           </label>
         </div>
         <div class="flex items-center justify-between">
-          <span class="text-gray-700 dark:text-gray-300">Auto-play Next Song</span>
+          <span class="text-gray-700 dark:text-gray-300">{{'SETTINGS.ACCOUNT_PREFERENCES.AUTO_PLAY_NEXT' | translate}}</span>
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" [(ngModel)]="autoPlayNext" class="sr-only peer">
             <div class="w-11 h-6 bg-gray-300 dark:bg-gray-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 dark:after:border-gray-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500 dark:peer-checked:bg-blue-600"></div>
@@ -202,29 +202,29 @@
         class="mt-6 px-6 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded hover:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         [disabled]="isSavingPreferences"
       >
-        {{ isSavingPreferences ? 'Saving...' : 'Save Preferences' }}
+        {{ isSavingPreferences ? ('SETTINGS.ACCOUNT_PREFERENCES.SAVE_BUTTON.SAVING' | translate) : ('SETTINGS.ACCOUNT_PREFERENCES.SAVE_BUTTON.IDLE' | translate) }}
       </button>
     </div>
     
     <!-- Delete Account Section -->
     <div class="bg-gray-200 dark:bg-gray-800 rounded-lg p-6">
-      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Delete Account</h2>
-      <p class="text-gray-700 dark:text-gray-300 mb-4">Once you delete your account, there is no going back. Please be certain.</p>
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{'SETTINGS.DELETE_ACCOUNT.TITLE' | translate}}</h2>
+      <p class="text-gray-700 dark:text-gray-300 mb-4">{{'SETTINGS.DELETE_ACCOUNT.WARNING' | translate}}</p>
       <button
         (click)="confirmDeleteAccount()"
         class="px-6 py-2 bg-red-500 dark:bg-red-600 text-white rounded hover:bg-red-600 dark:hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
         [disabled]="isDeleting"
       >
-        {{ isDeleting ? 'Deleting...' : 'Delete Account' }}
+        {{ isDeleting ? ('SETTINGS.DELETE_ACCOUNT.BUTTON.DELETING' | translate) : ('SETTINGS.DELETE_ACCOUNT.BUTTON.IDLE' | translate)  }}
       </button>
     </div>
     
     <!-- Success/Error Messages -->
     <div *ngIf="successMessage" class="mt-4 p-4 bg-green-500 dark:bg-green-600 text-white rounded">
-      {{ successMessage }}
+      {{ successMessage | translate}}
     </div>
     <div *ngIf="errorMessage" class="mt-4 p-4 bg-red-500 dark:bg-red-600 text-white rounded">
-      {{ errorMessage }}
+      {{ errorMessage | translate }}
     </div>
   </div>
 </div>

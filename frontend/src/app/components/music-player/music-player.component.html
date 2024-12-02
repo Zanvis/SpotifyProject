@@ -1,12 +1,12 @@
 <div class="w-full max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mt-6">
   <!-- Error Message -->
   <div *ngIf="state.error" class="mb-4 p-3 bg-red-100 dark:bg-red-700 text-red-700 dark:text-red-100 rounded-lg text-sm">
-    {{ state.error }}
+    {{ state.error | translate }}
   </div>
 
   <!-- Song Selection -->
   <div class="mb-6">
-    <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-3">Available Songs</h3>
+    <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-3">{{ 'MUSIC_PLAYER.SECTIONS.AVAILABLE_SONGS' | translate }}</h3>
     <div class="grid gap-2 max-h-40 overflow-y-auto">
       <button
         *ngFor="let song of songs"
@@ -24,7 +24,7 @@
   <!-- Audio Element -->
   <audio #audioElement class="hidden" preload="auto">
     <source [src]="state.currentSong?.filePath" type="audio/mp3">
-    Your browser does not support the audio element.
+    {{ 'MUSIC_PLAYER.ERROR.BROWSER_UNSUPPORTED' | translate }}
   </audio>
 
   <!-- Current Song Info -->
@@ -88,7 +88,7 @@
         [disabled]="state.isLoading"
       >
         <span class="material-icons">{{ state.isPlaying ? 'pause' : 'play_arrow' }}</span>
-        {{ state.isPlaying ? 'Pause' : 'Play' }}
+        {{ state.isPlaying ? ('MUSIC_PLAYER.CONTROLS.PAUSE' | translate) : ('MUSIC_PLAYER.CONTROLS.PLAY' | translate) }}
       </button>
     </div>
   </div>

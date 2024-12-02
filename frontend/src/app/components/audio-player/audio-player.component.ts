@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Song } from '../../services/song.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { TranslatePipe } from '@ngx-translate/core';
 
 enum LoopMode {
   NoLoop,
@@ -12,7 +13,7 @@ enum LoopMode {
 @Component({
   selector: 'app-audio-player',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './audio-player.component.html',
   styleUrl: './audio-player.component.css',
   animations: [

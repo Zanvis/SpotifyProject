@@ -16,32 +16,50 @@
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12" *ngIf="userStats$ | async as stats">
       <div class="bg-gray-200 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-300 dark:hover:bg-gray-800/70 border border-gray-300 dark:border-gray-700">
-        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">Total Songs</h3>
+        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">
+          {{'PROFILE.TOTAL_SONGS' | translate}}
+        </h3>
         <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ stats.totalSongs }}</p>
       </div>
       <div class="bg-gray-200 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-300 dark:hover:bg-gray-800/70 border border-gray-300 dark:border-gray-700">
-        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">Total Playlists</h3>
+        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">
+          {{'PROFILE.TOTAL_PLAYLISTS' | translate}}
+        </h3>
         <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ stats.totalPlaylists }}</p>
       </div>
       <div class="bg-gray-200 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-300 dark:hover:bg-gray-800/70 border border-gray-300 dark:border-gray-700">
-        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">Total Duration</h3>
+        <h3 class="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">
+          {{'PROFILE.TOTAL_DURATION' | translate}}
+        </h3>
         <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ formatDuration(stats.totalDuration) }}</p>
       </div>
     </div>
 
     <!-- Uploaded Songs -->
     <div class="mb-12">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Your Uploaded Songs</h2>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+        {{'PROFILE.UPLOADED_SONGS' | translate}}
+      </h2>
       <div class="bg-gray-200 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-300 dark:border-gray-700">
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
               <tr class="bg-gray-300 dark:bg-gray-700/50">
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Title</th>
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Artist</th>
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Album</th>
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Duration</th>
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                  {{'PROFILE.TABLE_HEADERS.TITLE' | translate}}
+                </th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                  {{'PROFILE.TABLE_HEADERS.ARTIST' | translate}}
+                </th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                  {{'PROFILE.TABLE_HEADERS.ALBUM' | translate}}
+                </th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                  {{'PROFILE.TABLE_HEADERS.DURATION' | translate}}
+                </th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                  {{'PROFILE.TABLE_HEADERS.ACTIONS' | translate}}
+                </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-300 dark:divide-gray-700">
@@ -54,7 +72,7 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
                   <button (click)="deleteSong(song._id)" 
                           class="text-red-600 dark:text-red-400 hover:text-red-500 dark:hover:text-red-300 focus:outline-none transition-colors duration-200 opacity-0 group-hover:opacity-100">
-                    Delete
+                    {{'PROFILE.BUTTONS.DELETE' | translate}}
                   </button>
                 </td>
               </tr>
@@ -66,18 +84,22 @@
 
     <!-- Playlists -->
     <div>
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Your Playlists</h2>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+        {{'PROFILE.PLAYLISTS' | translate}}
+      </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div *ngFor="let playlist of playlists$ | async" 
             class="group bg-gray-200 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg transition-all hover:bg-gray-300 dark:hover:bg-gray-800/70 border border-gray-300 dark:border-gray-700">
           <div class="flex justify-between items-start mb-4">
             <div>
               <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">{{ playlist.name }}</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">{{ playlist.songs.length }} songs</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                {{ 'PROFILE.PLAYLIST.SONGS_COUNT' | translate:{ count: playlist.songs.length } }}
+              </p>
             </div>
             <button (click)="deletePlaylist(playlist._id)" 
                     class="text-red-600 dark:text-red-400 hover:text-red-500 dark:hover:text-red-300 focus:outline-none transition-colors duration-200 opacity-0 group-hover:opacity-100">
-              Delete
+              {{'PROFILE.BUTTONS.DELETE' | translate}}
             </button>
           </div>
           <div class="space-y-2">
@@ -87,7 +109,7 @@
             </p>
             <p *ngIf="playlist.songs.length > 3" 
                 class="text-sm text-blue-600 dark:text-blue-400 mt-3 group-hover:text-blue-500 dark:group-hover:text-blue-300 transition-colors">
-              +{{ playlist.songs.length - 3 }} more songs
+              {{ 'PROFILE.PLAYLIST.MORE_SONGS' | translate:{ count: playlist.songs.length - 3 } }}
             </p>
           </div>
         </div>

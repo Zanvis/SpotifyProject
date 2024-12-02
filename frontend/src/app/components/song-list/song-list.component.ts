@@ -6,11 +6,12 @@ import { Subscription, timer } from 'rxjs';
 import { Playlist, PlaylistService } from '../../services/playlist.service';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-song-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, AudioPlayerComponent],
+  imports: [CommonModule, FormsModule, AudioPlayerComponent, TranslatePipe],
   templateUrl: './song-list.component.html',
   styleUrl: './song-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

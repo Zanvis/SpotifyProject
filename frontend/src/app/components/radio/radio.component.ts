@@ -5,6 +5,7 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { RadioService, RadioStation } from '../../services/radio.service';
 import { Song } from '../../services/song.service';
 import { RadioPlayerComponent } from '../radio-player/radio-player.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface AudioResources {
   context: AudioContext;
@@ -16,7 +17,7 @@ interface AudioResources {
 @Component({
   selector: 'app-radio',
   standalone: true,
-  imports: [CommonModule, FormsModule, RadioPlayerComponent],
+  imports: [CommonModule, FormsModule, RadioPlayerComponent, TranslatePipe],
   templateUrl: './radio.component.html',
   styleUrl: './radio.component.css'
 })

@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -63,14 +64,16 @@ export class RegisterComponent {
 
   getPasswordErrorMessage(): string {
     const passwordControl = this.registerForm.get('password');
-    if (passwordControl?.errors?.['required']) {
-      return 'Password is required';
-    }
-    if (passwordControl?.errors?.['minlength']) {
-      return 'Password must be at least 8 characters';
-    }
-    if (passwordControl?.errors?.['noNumber']) {
-      return 'Password must contain at least one number';
+    if (passwordControl?.errors) {
+      if (passwordControl.errors['required']) {
+        return 'REGISTER.PASSWORD_ERRORS.REQUIRED';
+      }
+      if (passwordControl.errors['minlength']) {
+        return 'REGISTER.PASSWORD_ERRORS.MIN_LENGTH';
+      }
+      if (passwordControl.errors['noNumber']) {
+        return 'REGISTER.PASSWORD_ERRORS.NO_NUMBER';
+      }
     }
     return '';
   }

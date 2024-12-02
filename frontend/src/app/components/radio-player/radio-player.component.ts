@@ -3,11 +3,12 @@ import { RadioStation } from '../../services/radio.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-radio-player',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './radio-player.component.html',
   styleUrl: './radio-player.component.css',
   animations: [
@@ -45,7 +46,7 @@ export class RadioPlayerComponent implements OnInit, OnDestroy, OnChanges {
   isMuted = false;
   volume = 1;
   isConnected = false;
-  connectionStatus = 'Disconnected';
+  connectionStatus = 'RADIO_PLAYER.CONNECTION_STATUS.DISCONNECTED';
   isExpanded = false;
   private retryAttempts = 0;
   private maxRetryAttempts = 3;
@@ -82,7 +83,7 @@ export class RadioPlayerComponent implements OnInit, OnDestroy, OnChanges {
     if (!this.audio || !this.station) return;
 
     // Reset connection status
-    this.connectionStatus = 'Connecting...';
+    this.connectionStatus = 'RADIO_PLAYER.CONNECTION_STATUS.CONNECTING';
     this.isConnected = false;
 
     // Stop current playback
@@ -100,7 +101,7 @@ export class RadioPlayerComponent implements OnInit, OnDestroy, OnChanges {
         this.isPlaying = true;
       }).catch(error => {
         console.error('Playback failed:', error);
-        this.connectionStatus = 'Playback Failed';
+        this.connectionStatus = 'RADIO_PLAYER.ERRORS.PLAYBACK_FAILED';
         this.isPlaying = false;
       });
     }
@@ -119,29 +120,29 @@ export class RadioPlayerComponent implements OnInit, OnDestroy, OnChanges {
     this.audio.addEventListener('playing', () => {
       this.isPlaying = true;
       this.isConnected = true;
-      this.connectionStatus = 'Connected';
+      this.connectionStatus = 'RADIO_PLAYER.CONNECTION_STATUS.CONNECTED';
       this.retryAttempts = 0;
     });
 
     this.audio.addEventListener('pause', () => {
       // Only update isPlaying if we're not in the middle of switching stations
-      if (this.connectionStatus !== 'Connecting...') {
+      if (this.connectionStatus !== 'RADIO_PLAYER.CONNECTION_STATUS.CONNECTING') {
         this.isPlaying = false;
       }
     });
 
     this.audio.addEventListener('waiting', () => {
-      this.connectionStatus = 'Buffering...';
+      this.connectionStatus = 'RADIO_PLAYER.CONNECTION_STATUS.BUFFERING';
     });
 
     this.audio.addEventListener('error', () => {
       this.isConnected = false;
-      this.connectionStatus = 'Connection Error';
+      this.connectionStatus = 'RADIO_PLAYER.CONNECTION_STATUS.CONNECTION_ERROR';
       this.handleConnectionError();
     });
 
     this.audio.addEventListener('stalled', () => {
-      this.connectionStatus = 'Stream Stalled';
+      this.connectionStatus = 'RADIO_PLAYER.CONNECTION_STATUS.STREAM_STALLED';
       this.handleConnectionError();
     });
 
@@ -149,7 +150,7 @@ export class RadioPlayerComponent implements OnInit, OnDestroy, OnChanges {
       if (this.audio?.buffered.length) {
         const bufferedEnd = this.audio.buffered.end(this.audio.buffered.length - 1);
         if (bufferedEnd > 0) {
-          this.connectionStatus = 'Streaming';
+          this.connectionStatus = 'RADIO_PLAYER.CONNECTION_STATUS.STREAMING';
         }
       }
     });
@@ -184,7 +185,7 @@ export class RadioPlayerComponent implements OnInit, OnDestroy, OnChanges {
       this.retryConnection();
       this.retryAttempts++;
     } else {
-      this.connectionStatus = 'Connection Failed';
+      this.connectionStatus = 'RADIO_PLAYER.CONNECTION_STATUS.CONNECTION_FAILED';
       this.isConnected = false;
       this.isPlaying = false;
     }

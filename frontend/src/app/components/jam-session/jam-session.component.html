@@ -14,10 +14,10 @@
             </svg>
         </div>
         <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Music Rooms
+            {{ 'MUSIC_ROOMS.TITLE' | translate }}
         </h1>
         <p class="text-gray-600 dark:text-gray-300">
-            Create or join a room to start your musical journey
+            {{ 'MUSIC_ROOMS.SUBTITLE' | translate }}
         </p>
         </div>
 
@@ -39,7 +39,7 @@
             >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
-            <span class="font-semibold">Create New Room</span>
+            <span class="font-semibold">{{ 'MUSIC_ROOMS.CREATE_BUTTON' | translate }}</span>
             </button>
         </div>
 
@@ -49,7 +49,7 @@
             <div class="relative flex-1 w-full">
                 <input 
                 [(ngModel)]="roomId"
-                placeholder="Enter Room ID"
+                [placeholder]="'MUSIC_ROOMS.JOIN_SECTION.PLACEHOLDER' | translate"
                 class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-indigo-500 dark:focus:ring-green-500 focus:outline-none transition-shadow duration-200"
                 />
             </div>
@@ -67,7 +67,7 @@
                 >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                 </svg>
-                <span class="font-semibold">Join Room</span>
+                <span class="font-semibold">{{ 'MUSIC_ROOMS.JOIN_SECTION.JOIN_BUTTON' | translate }}</span>
             </button>
             </div>
         </div>

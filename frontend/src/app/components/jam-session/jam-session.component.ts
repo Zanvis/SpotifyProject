@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SocketManagerService } from '../../services/socket-manager.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-jam-session',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './jam-session.component.html',
   styleUrl: './jam-session.component.css'
 })

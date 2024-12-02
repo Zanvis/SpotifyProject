@@ -5,11 +5,12 @@ import { Subscription } from 'rxjs';
 import { Playlist, PlaylistService } from '../../services/playlist.service';
 import { Song } from '../../services/song.service';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-playlist',
   standalone: true,
-  imports: [CommonModule, FormsModule, AudioPlayerComponent],
+  imports: [CommonModule, FormsModule, AudioPlayerComponent, TranslatePipe],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -25,7 +26,8 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 
   constructor(
     private playlistService: PlaylistService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +41,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error('Error loading playlists:', error);
-          this.error = 'Failed to load playlists. Please try again.';
+          this.error = 'PLAYLISTS.ERROR.LOADING_FAILED';
           this.loading = false;
           this.cdr.markForCheck();
         }
@@ -62,7 +64,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error('Error creating playlist:', error);
-          this.error = 'Failed to create playlist. Please try again.';
+          this.error = 'PLAYLISTS.ERROR.CREATE_FAILED';
           this.loading = false;
           this.cdr.markForCheck();
         }
@@ -71,7 +73,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   }
 
   deletePlaylist(playlistId: string): void {
-    if (confirm('Are you sure you want to delete this playlist?')) {
+    if (confirm(this.translateService.instant('PLAYLISTS.CONFIRM', { defaultValue: 'Are you sure you want to delete this playlist?' }))) {
       this.loading = true;
       this.playlistService.deletePlaylist(playlistId).subscribe({
         next: () => {
@@ -84,7 +86,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error('Error deleting playlist:', error);
-          this.error = 'Failed to delete playlist. Please try again.';
+          this.error = 'PLAYLISTS.ERROR.DELETE_FAILED';
           this.loading = false;
           this.cdr.markForCheck();
         }
@@ -97,7 +99,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
       next: () => this.cdr.markForCheck(),
       error: error => {
         console.error('Error removing song from playlist:', error);
-        this.error = 'Failed to remove song. Please try again.';
+        this.error = 'PLAYLISTS.ERROR.REMOVE_FAILED';
         this.cdr.markForCheck();
       }
     });

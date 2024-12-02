@@ -8,10 +8,10 @@
         class="w-48 h-48 sm:w-64 sm:h-64 mb-4 sm:mb-6 rounded-full animate-scale-in"
       >
       <h1 class="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 px-2 animate-fade-in">
-        Welcome to SoundSphere
+        {{'LANDING.TITLE' | translate}}
       </h1>
       <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl px-2 animate-fade-in">
-        Your personal music sanctuary. Upload, organize, and enjoy your music collection with our intuitive interface.
+        {{'LANDING.SUBTITLE' | translate}}
       </p>
     </div>
 
@@ -22,8 +22,8 @@
         <span class="material-icons text-3xl sm:text-4xl mb-3 sm:mb-4 text-blue-600 dark:text-blue-400 animate-float">
           {{feature.icon}}
         </span>
-        <h3 class="text-lg sm:text-xl font-semibold mb-2">{{feature.title}}</h3>
-        <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">{{feature.description}}</p>
+        <h3 class="text-lg sm:text-xl font-semibold mb-2">{{feature.title | translate}}</h3>
+        <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">{{feature.description | translate}}</p>
       </div>
     </div>
 
@@ -31,7 +31,7 @@
     <div class="mt-8 sm:mt-12 text-center animate-fade-in-up">
       <button routerLink="/songs" 
               class="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full text-base sm:text-lg transition-colors animate-glow hover:shadow-blue-500/60">
-        Get Started
+        {{'LANDING.GET_STARTED_BUTTON' | translate}}
       </button>
     </div>
   </div>

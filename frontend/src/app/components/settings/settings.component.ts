@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { debounceTime, distinctUntilChanged, firstValueFrom, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 interface PasswordErrors {
   currentPassword: string;
@@ -27,7 +28,7 @@ interface UsernameValidation {
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
 })
@@ -78,7 +79,8 @@ export class SettingsComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private apiService: ApiService,
-    private http: HttpClient
+    private http: HttpClient,
+    private translateService: TranslateService
   ) {
     // Setup username check debounce
     this.usernameCheck.pipe(
@@ -109,7 +111,7 @@ export class SettingsComponent implements OnInit {
       this.originalUsername = user.user.username;
       this.email = user.user.email;
     } catch (error) {
-      this.errorMessage = 'Failed to load user data';
+      this.errorMessage = 'SETTINGS.USER.ERROR';
       console.error('Error loading user data:', error);
     }
   }
@@ -141,7 +143,7 @@ export class SettingsComponent implements OnInit {
     if (!username.trim()) {
       this.usernameValidation = {
         isValid: false,
-        message: 'Username cannot be empty',
+        message: 'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.ERROR.EMPTY',
         status: 'error'
       };
       return;
@@ -151,7 +153,7 @@ export class SettingsComponent implements OnInit {
     if (username.length < 3) {
       this.usernameValidation = {
         isValid: false,
-        message: 'Username must be at least 3 characters long',
+        message: 'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.ERROR.TOO_SHORT',
         status: 'error'
       };
       return;
@@ -161,7 +163,7 @@ export class SettingsComponent implements OnInit {
     if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
       this.usernameValidation = {
         isValid: false,
-        message: 'Username can only contain letters, numbers, underscores, and hyphens',
+        message: 'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.ERROR.INVALID_CHARS',
         status: 'error'
       };
       return;
@@ -182,13 +184,13 @@ export class SettingsComponent implements OnInit {
 
       this.usernameValidation = {
         isValid: response.available,
-        message: response.available ? 'Username is available' : 'This username is already taken',
+        message: response.available ? 'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.SUCCESS' : 'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.ERROR.TAKEN',
         status: response.available ? 'success' : 'error'
       };
     } catch (error) {
       this.usernameValidation = {
         isValid: false,
-        message: 'Error checking username availability',
+        message: 'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.ERROR.FAILED',
         status: 'error'
       };
     }
@@ -196,12 +198,12 @@ export class SettingsComponent implements OnInit {
 
   async updateProfile() {
     if (!this.username.trim()) {
-      this.errorMessage = 'Username cannot be empty';
+      this.errorMessage = 'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.ERROR.EMPTY';
       return;
     }
 
     if (this.username === this.originalUsername) {
-      this.successMessage = 'No changes to save';
+      this.successMessage = 'SETTINGS.PROFILE_SETTINGS.NO_CHANGES';
       setTimeout(() => this.successMessage = '', 3000);
       return;
     }
@@ -230,13 +232,13 @@ export class SettingsComponent implements OnInit {
       }
       
       this.originalUsername = this.username.trim();
-      this.successMessage = 'Profile updated successfully';
+      this.successMessage = 'SETTINGS.PROFILE_SETTINGS.UPDATE_BUTTON.SUCCESS';
       setTimeout(() => this.successMessage = '', 3000);
     } catch (error: any) {
       if (error.status === 400) {
-        this.errorMessage = error.error?.message || 'Invalid username';
+        this.errorMessage = error.error?.message || 'SETTINGS.PROFILE_SETTINGS.UPDATE_BUTTON.ERROR.INVALID';
       } else {
-        this.errorMessage = 'Failed to update profile. Please try again later.';
+        this.errorMessage = 'SETTINGS.PROFILE_SETTINGS.UPDATE_BUTTON.ERROR.FAILED';
       }
       this.username = this.originalUsername;
     } finally {
@@ -254,7 +256,7 @@ export class SettingsComponent implements OnInit {
 
     // Validate current password
     if (!this.currentPassword) {
-      this.passwordErrors.currentPassword = 'Current password is required';
+      this.passwordErrors.currentPassword = 'SETTINGS.PASSWORD_CHANGE.CURRENT_PASSWORD.ERROR';
     }
 
     // Validate new password
@@ -267,17 +269,17 @@ export class SettingsComponent implements OnInit {
       };
 
       if (!this.passwordChecks.minLength) {
-        this.passwordErrors.newPassword = 'Password must be at least 8 characters long';
+        this.passwordErrors.newPassword = 'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.MIN_LENGTH';
       } else if (!this.passwordChecks.hasNumber) {
-        this.passwordErrors.newPassword = 'Password must contain at least one number';
+        this.passwordErrors.newPassword = 'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.HAS_NUMBER';
       } else if (!this.passwordChecks.hasLetter) {
-        this.passwordErrors.newPassword = 'Password must contain at least one letter';
+        this.passwordErrors.newPassword = 'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.HAS_LETTER';
       }
     }
 
     // Validate password confirmation
     if (this.newPassword && this.confirmPassword && this.newPassword !== this.confirmPassword) {
-      this.passwordErrors.confirmPassword = 'Passwords do not match';
+      this.passwordErrors.confirmPassword = 'SETTINGS.PASSWORD_CHANGE.CONFIRM_PASSWORD.ERROR';
     }
   }
 
@@ -289,7 +291,7 @@ export class SettingsComponent implements OnInit {
       !!this.currentPassword &&
       !!this.newPassword &&
       !!this.confirmPassword &&
-      this.passwordChecks.minLength && // Updated to use minLength
+      this.passwordChecks.minLength &&
       this.passwordChecks.hasNumber &&
       this.passwordChecks.hasLetter
     );
@@ -316,7 +318,7 @@ export class SettingsComponent implements OnInit {
         )
       );
 
-      this.successMessage = 'Password updated successfully';
+      this.successMessage = 'SETTINGS.PASSWORD_CHANGE.UPDATE_BUTTON.SUCCESS';
       this.currentPassword = '';
       this.newPassword = '';
       this.confirmPassword = '';
@@ -335,9 +337,9 @@ export class SettingsComponent implements OnInit {
       setTimeout(() => this.successMessage = '', 3000);
     } catch (error: any) {
       if (error.status === 400 && error.error?.message === 'Current password is incorrect') {
-        this.passwordErrors.currentPassword = 'Current password is incorrect';
+        this.passwordErrors.currentPassword = 'SETTINGS.PASSWORD_CHANGE.UPDATE_BUTTON.ERROR.INCORRECT_CURRENT';
       } else {
-        this.errorMessage = error.error?.message || 'Failed to update password';
+        this.errorMessage = error.error?.message || 'SETTINGS.PASSWORD_CHANGE.UPDATE_BUTTON.ERROR.FAILED';
       }
     } finally {
       this.isUpdatingPassword = false;
@@ -360,17 +362,17 @@ export class SettingsComponent implements OnInit {
         )
       );
 
-      this.successMessage = 'Preferences saved successfully';
+      this.successMessage = 'SETTINGS.ACCOUNT_PREFERENCES.SAVE_BUTTON.SUCCESS';
       setTimeout(() => this.successMessage = '', 3000);
     } catch (error: any) {
-      this.errorMessage = error.error?.message || 'Failed to save preferences';
+      this.errorMessage = error.error?.message || 'SETTINGS.ACCOUNT_PREFERENCES.SAVE_BUTTON.ERROR';
     } finally {
       this.isSavingPreferences = false;
     }
   }
 
   async confirmDeleteAccount() {
-    if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+    if (!confirm(this.translateService.instant('SETTINGS.DELETE_ACCOUNT.WARNING', { defaultValue: 'Are you sure you want to delete your account? This action cannot be undone.' }))) {
       return;
     }
 
@@ -388,7 +390,7 @@ export class SettingsComponent implements OnInit {
       await this.authService.logout();
     } catch (error: any) {
       this.isDeleting = false;
-      this.errorMessage = error.error?.message || 'Failed to delete account';
+      this.errorMessage = error.error?.message || 'SETTINGS.DELETE_ACCOUNT.BUTTON.ERROR';
     }
   }
 }

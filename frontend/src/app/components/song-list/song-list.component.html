@@ -6,7 +6,7 @@
                 type="text"
                 [(ngModel)]="searchQuery"
                 (input)="onSearch($event)"
-                placeholder="Search songs by title, artist, or album..."
+                [placeholder]="'SONG_LIST.SEARCH.PLACEHOLDER' | translate"
                 class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-green-500 transition-all"
             >
             <svg 
@@ -34,22 +34,22 @@
             Loading your music library...
         </div>
         <div *ngIf="loadingTimeout" class="text-center">
-            <p class="text-gray-700 dark:text-white text-lg mb-2">Please wait while we wake up the server...</p>
-            <p class="text-gray-500 dark:text-gray-400 text-sm">This might take a few moments since we're using a free hosting plan.</p>
+            <p class="text-gray-700 dark:text-white text-lg mb-2">{{'SONG_LIST.SEARCH.LOADING_SERVER' | translate}}</p>
+            <p class="text-gray-500 dark:text-gray-400 text-sm">{{'SONG_LIST.SEARCH.LOADING_SERVER_HINT' | translate}}</p>
         </div>
     </div>
 
     <!-- Main Content -->
     <div *ngIf="!isLoading">
-        <h2 class="text-3xl font-bold mb-6 mt-3 sm:mt-0 text-gray-800 dark:text-white">Your Music Library</h2>
+        <h2 class="text-3xl font-bold mb-6 mt-3 sm:mt-0 text-gray-800 dark:text-white">{{'SONG_LIST.MUSIC_LIBRARY.TITLE' | translate}}</h2>
         
         <!-- No songs message -->
         <div *ngIf="filteredSongs.length === 0" class="text-center text-gray-700 dark:text-white py-8">
             <p class="text-xl">
-                {{ songs.length === 0 ? 'No songs in your library yet' : 'No songs found matching your search' }}
+                {{ songs.length === 0 ? ('SONG_LIST.MUSIC_LIBRARY.NO_SONGS.EMPTY_LIBRARY' | translate) : ('SONG_LIST.MUSIC_LIBRARY.NO_SONGS.EMPTY_SEARCH' | translate) }}
             </p>
             <p class="text-gray-500 dark:text-gray-400 mt-2">
-                {{ songs.length === 0 ? 'Start by uploading your favorite tracks!' : 'Try adjusting your search terms' }}
+                {{ songs.length === 0 ? ('SONG_LIST.MUSIC_LIBRARY.NO_SONGS.EMPTY_LIBRARY_HINT' | translate) : ('SONG_LIST.MUSIC_LIBRARY.NO_SONGS.EMPTY_SEARCH_HINT' | translate) }}
             </p>
         </div>
 
@@ -81,7 +81,7 @@
                     <p class="text-gray-500 dark:text-gray-500 text-sm mb-2">{{song.album}}</p>
                     
                     <!-- Uploader Information -->
-                    <p class="text-gray-500 dark:text-gray-400 text-xs mb-3">Uploaded by: {{song.uploader.username}}</p>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs mb-3">{{'SONG_LIST.SONG_CARD.UPLOADED_BY' | translate}} {{song.uploader.username}}</p>
                     
                     <!-- Duration and Delete Button -->
                     <div class="flex justify-between items-center mb-3">
@@ -99,7 +99,7 @@
                     <div class="relative">
                         <button (click)="toggleDropdown(song._id)"
                                 class="w-full bg-gray-50 hover:bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white px-4 py-2 rounded-lg dark:hover:bg-gray-600 transition-colors flex justify-between items-center border border-gray-200 dark:border-transparent">
-                            <span>Add to Playlist</span>
+                            <span>{{'SONG_LIST.SONG_CARD.ADD_TO_PLAYLIST' | translate}}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>

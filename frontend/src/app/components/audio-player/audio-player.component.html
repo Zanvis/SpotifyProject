@@ -39,18 +39,18 @@
     class="fixed inset-0 bg-white dark:bg-gray-900 z-[100] flex flex-col md:hidden overflow-hidden"
     (click)="$event.stopPropagation()">
   <!-- Header -->
-  <div class="p-4 flex items-center justify-between">
-    <button (click)="toggleExpandedView($event)" [@buttonRotate] class="text-gray-900 dark:text-white">
+  <div class="p-2 pt-4 flex items-center justify-between">
+    <button (click)="toggleExpandedView($event)" [@buttonRotate] class="text-gray-900 dark:text-white pl-2">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
-    <span class="text-gray-900 dark:text-white text-sm">Now Playing</span>
+    <span class="text-gray-900 dark:text-white text-sm pr-4">{{'AUDIO_PLAYER.NOW_PLAYING' | translate}}</span>
     <div class="w-6"></div>
   </div>
 
   <!-- Album Art -->
-  <div class="flex-1 flex flex-col items-center justify-center p-8">
+  <div class="flex-1 flex flex-col items-center justify-center p-8 pt-4">
     <img [src]="song.imageUrl" alt="Album cover" class="w-64 h-64 object-cover rounded-lg shadow-lg mb-8">
     <h3 class="text-gray-900 dark:text-white text-xl font-bold mb-2">{{song.title}}</h3>
     <p class="text-gray-500 dark:text-gray-400">{{song.artist}}</p>
@@ -70,7 +70,7 @@
   </div>
 
   <!-- Controls -->
-  <div class="p-8">
+  <div class="p-8 pb-16">
     <div class="flex items-center justify-between mb-8">
       <button (click)="toggleLoop($event)" [class]="getLoopButtonClass()">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
