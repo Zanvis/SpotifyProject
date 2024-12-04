@@ -83,17 +83,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('document:click', ['$event'])
-  handleClickOutside2(event: Event) {
-    const languageDropdownElement = this.elementRef.nativeElement.querySelector('.language-dropdown-container');
-    if (!languageDropdownElement) return;
-    
-    const clickedInside = languageDropdownElement.contains(event.target as Node);
-    if (!clickedInside && this.isLanguageDropdownOpen) {
-      this.isLanguageDropdownOpen = false;
-    }
-  }
-
   toggleLanguageDropdown(event?: Event) {
     if (event) {
       event.stopPropagation();
@@ -200,19 +189,42 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
+    // User Menu Dropdown
     const userMenuElement = this.elementRef.nativeElement.querySelector('.user-menu-container');
-    if (!userMenuElement) return;
-    
-    const clickedInside = userMenuElement.contains(event.target as Node);
-    if (!clickedInside && this.isUserMenuOpen) {
-      this.isUserMenuOpen = false;
+    if (userMenuElement) {
+      const clickedInside = userMenuElement.contains(event.target as Node);
+      if (!clickedInside && this.isUserMenuOpen) {
+        this.isUserMenuOpen = false;
+      }
+    }
+
+    // Language Dropdown
+    const languageDropdownElement = this.elementRef.nativeElement.querySelector('.language-dropdown-container');
+    if (languageDropdownElement) {
+      const clickedInside = languageDropdownElement.contains(event.target as Node);
+      if (!clickedInside && this.isLanguageDropdownOpen) {
+        this.isLanguageDropdownOpen = false;
+      }
+    }
+
+    // Mobile Menu
+    const mobileMenuElement = this.elementRef.nativeElement.querySelector('.mobile-menu-container');
+    if (mobileMenuElement) {
+      const clickedInside = mobileMenuElement.contains(event.target as Node);
+      if (!clickedInside && this.isMenuOpen) {
+        this.isMenuOpen = false;
+      }
     }
   }
 
-  toggleMenu() {
+  toggleMenu(event?: Event) {
+    if(event) {
+      event.stopPropagation();
+    }
     this.isMenuOpen = !this.isMenuOpen;
     if (this.isMenuOpen) {
       this.isUserMenuOpen = false;
+      this.isLanguageDropdownOpen = false;
     }
   }
 
