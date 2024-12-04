@@ -6,7 +6,7 @@ import { Subscription, timer } from 'rxjs';
 import { Playlist, PlaylistService } from '../../services/playlist.service';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-song-list',
@@ -35,7 +35,8 @@ export class SongListComponent implements OnInit, OnDestroy {
     private songService: SongService,
     private playlistService: PlaylistService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -140,7 +141,7 @@ export class SongListComponent implements OnInit, OnDestroy {
   }
 
   deleteSong(id: string): void {
-    if (confirm('Are you sure you want to delete this song?')) {
+    if (confirm(this.translateService.instant('SONG_LIST.CONFIRM', { defaultValue: 'Are you sure you want to delete this song?' }))) {
       // Optimistic update
       this.songs = this.songs.filter(song => song._id !== id);
       if (this.currentSong?._id === id) {

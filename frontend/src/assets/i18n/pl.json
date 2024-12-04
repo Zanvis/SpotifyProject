@@ -466,7 +466,8 @@
             "PLAY_BUTTON": "Odtwórz",
             "UPLOADED_BY": "Przesłane przez:",
             "ADD_TO_PLAYLIST": "Dodaj do playlisty"
-        }
+        },
+        "CONFIRM": "Czy na pewno chcesz usunąć ten utwór?"
     },
     "PLAYLISTS": {
         "TITLE": "Twoje Playlisty",

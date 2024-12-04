@@ -86,7 +86,7 @@
                     <!-- Duration and Delete Button -->
                     <div class="flex justify-between items-center mb-3">
                         <span class="text-gray-500 dark:text-gray-400 text-sm">{{formatDuration(song.duration)}}</span>
-                        <button *ngIf="currentUser?._id === song.uploader._id" 
+                        <button 
                                 (click)="deleteSong(song._id)" 
                                 class="text-red-500 hover:text-red-600 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

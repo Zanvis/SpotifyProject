@@ -466,7 +466,8 @@
             "PLAY_BUTTON": "Play",
             "UPLOADED_BY": "Uploaded by:",
             "ADD_TO_PLAYLIST": "Add to Playlist"
-        }
+        },
+        "CONFIRM": "Are you sure you want to delete this song?"
     },
     "PLAYLISTS": {
         "TITLE": "Your Playlists",
