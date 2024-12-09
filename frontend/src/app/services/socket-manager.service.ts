@@ -45,7 +45,7 @@ export class SocketManagerService implements OnDestroy {
       });
   }
 
-  // Helper methods for common socket operations
+  // Helper methods for socket operations
   async joinRoom(roomId: string) {
     try {
       const currentUser = this.authService.getCurrentUser();

@@ -4,7 +4,7 @@ import { combineLatest, map, Observable } from 'rxjs';
 import { Song, SongService } from '../../services/song.service';
 import { AuthService } from '../../services/auth.service';
 import { PlaylistService } from '../../services/playlist.service';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
@@ -28,7 +28,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private songService: SongService,
-    private playlistService: PlaylistService
+    private playlistService: PlaylistService,
+    private translateService: TranslateService
   ) {
     // Filter songs to only show user's uploaded songs
     this.userSongs$ = combineLatest([
@@ -65,13 +66,13 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteSong(songId: string): void {
-    if (confirm('Are you sure you want to delete this song?')) {
+    if (confirm(this.translateService.instant('PROFILE.CONFIRM.DELETE_SONG', { defaultValue: 'Are you sure you want to delete this song?' }))) {
       this.songService.deleteSong(songId).subscribe();
     }
   }
 
   deletePlaylist(playlistId: string): void {
-    if (confirm('Are you sure you want to delete this playlist?')) {
+    if (confirm(this.translateService.instant('PROFILE.CONFIRM.DELETE_PLAYLIST', { defaultValue: 'Are you sure you want to delete this playlist?' }))) {
       this.playlistService.deletePlaylist(playlistId).subscribe();
     }
   }

@@ -126,8 +126,6 @@ export class RadioComponent implements OnInit, OnDestroy {
   }
 
   onSongEnded() {
-    // Since it's a radio stream, you might want to handle this differently
-    // For now, we'll just keep playing the same station
     if (this.currentStation) {
       this.playStation(this.currentStation);
     }

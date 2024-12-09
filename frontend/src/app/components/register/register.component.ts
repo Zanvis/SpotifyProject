@@ -90,7 +90,7 @@ export class RegisterComponent {
           this.router.navigate(['/']);
         },
         error: (error) => {
-          this.error = error?.error?.message || 'An error occurred during registration';
+          this.error = error?.error?.message || 'REGISTER.ERROR';
           this.isLoading = false;
         }
       });

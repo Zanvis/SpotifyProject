@@ -41,7 +41,6 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
-  // Add beforeunload event listener
   @HostListener('window:beforeunload', ['$event'])
   handleBeforeUnload(event: BeforeUnloadEvent) {
     if (!this.isBrowser) return;
@@ -68,7 +67,7 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.isBrowser) {
-      // Add navigation prevention
+      // Navigation prevention
       const w = typeof window !== 'undefined' ? window : null;
       if (w) {
         w.history.pushState(null, '', w.location.href);

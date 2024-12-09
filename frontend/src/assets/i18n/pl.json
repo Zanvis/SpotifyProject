@@ -208,6 +208,15 @@
                 "UPLOADING": "Przesyłanie...",
                 "UPLOAD": "Prześlij Piosenkę"
             }
+        },
+        "ALERTS": {
+            "FILE_SIZE_EXCEEDED": "Rozmiar pliku audio przekracza limit 10 MB",
+            "FILE_TYPE_INVALID": "Proszę wybrać prawidłowy plik audio (MP3, WAV lub AAC)",
+            "IMAGE_SIZE_EXCEEDED": "Rozmiar pliku obrazu przekracza limit 10 MB",
+            "IMAGE_TYPE_INVALID": "Proszę wybrać prawidłowy plik obrazu (JPG, PNG lub WebP)",
+            "INVALID": "Nieprawidłowy typ pliku lub rozmiar przekracza limit 10 MB",
+            "FILE_REQUIRED": "Proszę wybrać plik z piosenką",
+            "UPLOAD_FAILED": "Przesyłanie nie powiodło się. Proszę spróbować ponownie."
         }
     },
     "LOGIN": {
@@ -215,25 +224,26 @@
         "CREATE_ACCOUNT_OR": "Lub",
         "CREATE_ACCOUNT": " utwórz nowe konto",
         "FORM": {
-        "LABELS": {
-            "EMAIL": "Adres e-mail",
-            "PASSWORD": "Hasło"
-        },
-        "PLACEHOLDERS": {
-            "EMAIL": "Wprowadź swój e-mail",
-            "PASSWORD": "Wprowadź swoje hasło"
-        },
-        "VALIDATIONS": {
-            "EMAIL_INVALID": "Proszę wprowadzić prawidłowy adres e-mail",
-            "PASSWORD_REQUIRED": "Hasło jest wymagane"
-        },
-        "REMEMBER_ME": "Zapamiętaj mnie",
-        "FORGOT_PASSWORD": "Zapomniałeś hasła?"
+            "LABELS": {
+                "EMAIL": "Adres e-mail",
+                "PASSWORD": "Hasło"
+            },
+            "PLACEHOLDERS": {
+                "EMAIL": "Wprowadź swój e-mail",
+                "PASSWORD": "Wprowadź swoje hasło"
+            },
+            "VALIDATIONS": {
+                "EMAIL_INVALID": "Proszę wprowadzić prawidłowy adres e-mail",
+                "PASSWORD_REQUIRED": "Hasło jest wymagane"
+            },
+            "REMEMBER_ME": "Zapamiętaj mnie",
+            "FORGOT_PASSWORD": "Zapomniałeś hasła?"
         },
         "SUBMIT": {
-        "SIGN_IN": "Zaloguj się",
-        "SIGNING_IN": "Logowanie..."
-        }
+            "SIGN_IN": "Zaloguj się",
+            "SIGNING_IN": "Logowanie..."
+        },
+        "ERROR": "Wystąpił błąd podczas logowania"
     },
     "REGISTER": {
         "TITLE": "Utwórz swoje konto",
@@ -265,7 +275,8 @@
         "BUTTON": {
             "CREATE": "Utwórz konto",
             "CREATING": "Tworzenie konta..."
-        }
+        },
+        "ERROR": "Wystąpił błąd podczas rejestracji"
     },
     "RADIO": {
         "SEARCH_PLACEHOLDER": "Szukaj stacji radiowych...",
@@ -279,18 +290,22 @@
         "UPLOADED_SONGS": "Twoje przesłane piosenki",
         "PLAYLISTS": "Twoje playlisty",
         "TABLE_HEADERS": {
-        "TITLE": "Tytuł",
-        "ARTIST": "Wykonawca", 
-        "ALBUM": "Album",
-        "DURATION": "Czas trwania",
-        "ACTIONS": "Akcje"
+            "TITLE": "Tytuł",
+            "ARTIST": "Wykonawca", 
+            "ALBUM": "Album",
+            "DURATION": "Czas trwania",
+            "ACTIONS": "Akcje"
         },
         "BUTTONS": {
-        "DELETE": "Usuń"
+            "DELETE": "Usuń"
         },
         "PLAYLIST": {
-        "SONGS_COUNT": "{{count}} piosenki",
-        "MORE_SONGS": "+{{count}} więcej piosenek"
+            "SONGS_COUNT": "{{count}} piosenki",
+            "MORE_SONGS": "+{{count}} więcej piosenek"
+        },
+        "CONFIRM": {
+            "DELETE_SONG": "Czy na pewno chcesz usunąć tę piosenkę?",
+            "DELETE_PLAYLIST": "Czy na pewno chcesz usunąć tę playlistę?"
         }
     },
     "RADIO_PLAYER": {

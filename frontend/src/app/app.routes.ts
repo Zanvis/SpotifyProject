@@ -17,7 +17,6 @@ import { guestGuard } from './guards/guest.guard';
 import { JamSessionComponent } from './components/jam-session/jam-session.component';
 
 export const routes: Routes = [
-    // { path: '', redirectTo: '/songs', pathMatch: 'full' },
     { path: '', component: LandingComponent },
     { path: 'songs', component: SongListComponent },
     { path: 'upload', component: SongUploadComponent, canActivate: [authGuard] },

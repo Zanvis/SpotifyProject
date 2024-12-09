@@ -3,7 +3,7 @@ import { SongService } from '../../services/song.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-song-upload',
@@ -27,7 +27,8 @@ export class SongUploadComponent {
 
   constructor(
     private songService: SongService,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) { }
 
   onFileSelected(event: any): void {
@@ -36,10 +37,10 @@ export class SongUploadComponent {
       if (this.isValidFileSize(file)) {
         this.selectedFile = file;
       } else {
-        alert('Audio file size exceeds 10MB limit');
+        alert(this.translateService.instant('UPLOAD.ALERTS.FILE_SIZE_EXCEEDED', { defaultValue: 'Audio file size exceeds 10MB limit' }));
       }
     } else {
-      alert('Please select a valid audio file (MP3, WAV, or AAC)');
+      alert(this.translateService.instant('UPLOAD.ALERTS.FILE_TYPE_INVALID', { defaultValue: 'Please select a valid audio file (MP3, WAV, or AAC)' }));
     }
   }
 
@@ -49,10 +50,10 @@ export class SongUploadComponent {
       if (this.isValidFileSize(file)) {
         this.handleImageSelection(file);
       } else {
-        alert('Image file size exceeds 10MB limit');
+        alert(this.translateService.instant('UPLOAD.ALERTS.IMAGE_SIZE_EXCEEDED', { defaultValue: 'Image file size exceeds 10MB limit' }));
       }
     } else {
-      alert('Please select a valid image file (JPG, PNG, or WebP)');
+      alert(this.translateService.instant('UPLOAD.ALERTS.IMAGE_TYPE_INVALID', { defaultValue: 'Please select a valid image file (JPG, PNG, or WebP)' }));
     }
   }
 
@@ -95,7 +96,7 @@ export class SongUploadComponent {
     } else if (type === 'image' && this.isValidImageFile(file) && this.isValidFileSize(file)) {
       this.handleImageSelection(file);
     } else {
-      alert('Invalid file type or size exceeds 10MB limit');
+      alert(this.translateService.instant('UPLOAD.ALERTS.INVALID', { defaultValue: 'Invalid file type or size exceeds 10MB limit' }));
     }
   }
 
@@ -133,17 +134,17 @@ export class SongUploadComponent {
 
   onSubmit(): void {
     if (!this.selectedFile) {
-      alert('Please select a song file');
+      alert(this.translateService.instant('UPLOAD.ALERTS.FILE_REQUIRED', { defaultValue: 'Please select a song file' }));
       return;
     }
 
     if (!this.isValidFileSize(this.selectedFile)) {
-      alert('Audio file size exceeds 10MB limit');
+      alert(this.translateService.instant('UPLOAD.ALERTS.FILE_SIZE_EXCEEDED', { defaultValue: 'Audio file size exceeds 10MB limit' }));
       return;
     }
 
     if (this.selectedImage && !this.isValidFileSize(this.selectedImage)) {
-      alert('Image file size exceeds 10MB limit');
+      alert(this.translateService.instant('UPLOAD.ALERTS.IMAGE_SIZE_EXCEEDED', { defaultValue: 'Image file size exceeds 10MB limit' }));
       return;
     }
 
@@ -165,7 +166,7 @@ export class SongUploadComponent {
       },
       error: (error) => {
         console.error('Upload failed', error);
-        alert('Upload failed. Please try again.');
+        alert(this.translateService.instant('UPLOAD.ALERTS.UPLOAD_FAILED', { defaultValue: 'Upload failed. Please try again.' }));
       },
       complete: () => {
         this.uploading = false;

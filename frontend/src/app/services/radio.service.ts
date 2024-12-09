@@ -8,7 +8,7 @@ export interface RadioStation {
   name: string;
   url: string;
   favicon: string;
-  tags: string[];  // API might return string, null, or undefined
+  tags: string[];
   country: string;
   language: string;
   votes: number;
@@ -19,7 +19,7 @@ interface ApiRadioStation {
   name: string;
   url: string;
   favicon: string;
-  tags: string | string[] | null;  // API response type
+  tags: string | string[] | null;
   country: string;
   language: string;
   votes: number;

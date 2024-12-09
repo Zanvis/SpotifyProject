@@ -47,7 +47,7 @@ export class LoginComponent {
           this.router.navigate(['/']);
         },
         error: (error) => {
-          this.error = error?.error?.message || 'An error occurred during sign in';
+          this.error = error?.error?.message || 'LOGIN.ERROR';
           this.isLoading = false;
         }
       });

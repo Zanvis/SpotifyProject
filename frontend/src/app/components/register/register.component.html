@@ -16,7 +16,7 @@
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
         <!-- Error Alert -->
         <div *ngIf="error" class="bg-red-50 dark:bg-red-900/50 text-red-600 dark:text-red-300 p-3 rounded-lg text-sm">
-          {{ error }}
+          {{ error | translate }}
         </div>
 
         <!-- Username Field -->

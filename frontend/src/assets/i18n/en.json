@@ -208,6 +208,15 @@
                 "UPLOADING": "Uploading...",
                 "UPLOAD": "Upload Song"
             }
+        },
+        "ALERTS": {
+            "FILE_SIZE_EXCEEDED": "Audio file size exceeds 10MB limit",
+            "FILE_TYPE_INVALID": "Please select a valid audio file (MP3, WAV, or AAC)",
+            "IMAGE_SIZE_EXCEEDED": "Image file size exceeds 10MB limit",
+            "IMAGE_TYPE_INVALID": "Please select a valid image file (JPG, PNG, or WebP)",
+            "INVALID": "Invalid file type or size exceeds 10MB limit",
+            "FILE_REQUIRED": "Please select a song file",
+            "UPLOAD_FAILED": "Upload failed. Please try again."
         }
     },
     "LOGIN": {
@@ -215,25 +224,26 @@
         "CREATE_ACCOUNT_OR": "Or",
         "CREATE_ACCOUNT": " create a new account",
         "FORM": {
-        "LABELS": {
-            "EMAIL": "Email address",
-            "PASSWORD": "Password"
-        },
-        "PLACEHOLDERS": {
-            "EMAIL": "Enter your email",
-            "PASSWORD": "Enter your password"
-        },
-        "VALIDATIONS": {
-            "EMAIL_INVALID": "Please enter a valid email address",
-            "PASSWORD_REQUIRED": "Password is required"
-        },
-        "REMEMBER_ME": "Remember me",
-        "FORGOT_PASSWORD": "Forgot your password?"
+            "LABELS": {
+                "EMAIL": "Email address",
+                "PASSWORD": "Password"
+            },
+            "PLACEHOLDERS": {
+                "EMAIL": "Enter your email",
+                "PASSWORD": "Enter your password"
+            },
+            "VALIDATIONS": {
+                "EMAIL_INVALID": "Please enter a valid email address",
+                "PASSWORD_REQUIRED": "Password is required"
+            },
+            "REMEMBER_ME": "Remember me",
+            "FORGOT_PASSWORD": "Forgot your password?"
         },
         "SUBMIT": {
-        "SIGN_IN": "Sign in",
-        "SIGNING_IN": "Signing in..."
-        }
+            "SIGN_IN": "Sign in",
+            "SIGNING_IN": "Signing in..."
+        },
+        "ERROR": "An error occurred during sign in"
     },
     "REGISTER": {
         "TITLE": "Create your account",
@@ -265,7 +275,8 @@
         "BUTTON": {
             "CREATE": "Create account",
             "CREATING": "Creating account..."
-        }
+        },
+        "ERROR": "An error occurred during registration"
     },
     "RADIO": {
         "SEARCH_PLACEHOLDER": "Search radio stations...",
@@ -291,6 +302,10 @@
         "PLAYLIST": {
             "SONGS_COUNT": "{{count}} songs",
             "MORE_SONGS": "+{{count}} more songs"
+        },
+        "CONFIRM": {
+            "DELETE_SONG": "Are you sure you want to delete this song?",
+            "DELETE_PLAYLIST": "Are you sure you want to delete this playlist?"
         }
     },
     "RADIO_PLAYER": {
