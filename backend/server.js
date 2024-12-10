@@ -310,7 +310,7 @@ app.post('/api/songs', authMiddleware, upload.fields([
             album: req.body.album,
             duration: duration,
             filePath: audioFile.path,
-            imageUrl: imageFile ? imageFile.path : undefined,
+            imageUrl: imageFile ? imageFile.path : '/default-album.png',
             uploader: req.user._id
         });
     
