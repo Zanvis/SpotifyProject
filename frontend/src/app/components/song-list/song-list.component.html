@@ -62,7 +62,8 @@
                 <div class="relative group">
                     <img [src]="song.imageUrl"
                         alt="Album cover" 
-                        class="w-full h-48 object-cover rounded-t-xl">
+                        class="w-full h-48 object-cover rounded-t-xl"
+                        (error)="handleImageError($event)">
                     <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-t-xl">
                         <button (click)="playSong(song)" 
                                 class="bg-indigo-600 dark:bg-green-500 text-white p-3 rounded-full hover:bg-indigo-700 dark:hover:bg-green-600 transition-colors">

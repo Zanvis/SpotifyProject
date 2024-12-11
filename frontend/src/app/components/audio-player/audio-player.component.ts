@@ -271,4 +271,7 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
     const percentage = (value / max) * 100;
     element.style.backgroundSize = `${percentage}% 100%`;
   }
+  handleImageError(event: any) { 
+    event.target.src = 'https://music-app-backend-h3sd.onrender.com/public/default-album.png'; 
+  }
 }

@@ -244,4 +244,8 @@ export class SongListComponent implements OnInit, OnDestroy {
     this.searchQuery = target.value;
     this.filterSongs();
   }
+  
+  handleImageError(event: any) { 
+    event.target.src = 'https://music-app-backend-h3sd.onrender.com/public/default-album.png'; 
+  }
 }

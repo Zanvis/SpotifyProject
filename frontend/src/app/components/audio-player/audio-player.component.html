@@ -4,7 +4,7 @@
   <!-- Collapsed view content -->
   <div class="flex items-center justify-between">
     <div class="flex items-center flex-1 min-w-0" (click)="toggleExpandedView($event)">
-      <img [src]="song.imageUrl" alt="Album cover" class="w-12 h-12 object-cover rounded-md mr-3">
+      <img [src]="song.imageUrl" (error)="handleImageError($event)" alt="Album cover" class="w-12 h-12 object-cover rounded-md mr-3">
       <div class="truncate">
         <h4 class="text-gray-900 dark:text-white font-semibold truncate">{{song.title}}</h4>
         <p class="text-gray-500 dark:text-gray-400 text-sm truncate">{{song.artist}}</p>
@@ -51,7 +51,7 @@
 
   <!-- Album Art -->
   <div class="flex-1 flex flex-col items-center justify-center p-8 pt-4">
-    <img [src]="song.imageUrl" alt="Album cover" class="w-64 h-64 object-cover rounded-lg shadow-lg mb-8">
+    <img [src]="song.imageUrl" (error)="handleImageError($event)" alt="Album cover" class="w-64 h-64 object-cover rounded-lg shadow-lg mb-8">
     <h3 class="text-gray-900 dark:text-white text-xl font-bold mb-2">{{song.title}}</h3>
     <p class="text-gray-500 dark:text-gray-400">{{song.artist}}</p>
   </div>
@@ -122,7 +122,7 @@
 <div class="hidden md:block fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 p-4 z-50">
   <div class="container mx-auto flex items-center justify-between">
     <div class="flex items-center flex-1">
-      <img [src]="song.imageUrl" alt="Album cover" class="w-16 h-16 object-cover rounded-md mr-4">
+      <img [src]="song.imageUrl" (error)="handleImageError($event)" alt="Album cover" class="w-16 h-16 object-cover rounded-md mr-4">
       <div>
         <h4 class="text-gray-900 dark:text-white font-semibold">{{song.title}}</h4>
         <p class="text-gray-500 dark:text-gray-400 text-sm">{{song.artist}}</p>
