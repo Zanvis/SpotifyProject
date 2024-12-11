@@ -125,8 +125,8 @@ const songSchema = new mongoose.Schema({
     duration: Number,
     filePath: String,
     imageUrl: {
-        type: String,
-        default: '/default-album.png'
+        type: String
+        // default: '/default-album.png'
     },
     uploadDate: {
         type: Date,
