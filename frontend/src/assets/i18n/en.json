@@ -354,6 +354,7 @@
         "CHAT": "Chat",
         "MESSAGE_PLACEHOLDER": "Type your message...",
         "SEND": "Send",
+        "LEAVE": "Leave Room",
         "CONNECTING": {
             "TITLE": "Connecting to room...",
             "SUBTITLE": "Please wait while we establish connection"
@@ -364,7 +365,8 @@
             "JOIN_FAILED": "Failed to join room. Redirecting to home...",
             "CONNECTION_LOST": "Connection lost. Trying to reconnect...",
             "SEND_FAILED": "Failed to send message. Please try again.",
-            "COPY_FAILED": "Failed to copy room ID. Please try manually copying it."
+            "COPY_FAILED": "Failed to copy room ID. Please try manually copying it.",
+            "LEAVE_FAILED": "Failed to leave room. Please try again."
         },
         "LEAVE_CONFIRMATION": "Are you sure you want to leave the room? You will need to rejoin."
     },

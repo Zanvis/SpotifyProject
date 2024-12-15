@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, HostListener, inject, PLATFORM_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { SocketManagerService } from '../../services/socket-manager.service';
 import { MusicPlayerComponent } from '../music-player/music-player.component';
-import { Subject, takeUntil } from 'rxjs';
+import { filter, Subject, takeUntil } from 'rxjs';
 import { Message, RoomUser } from '../../services/socket.service';
 import { AuthService } from '../../services/auth.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -72,6 +72,19 @@ export class RoomComponent implements OnInit, OnDestroy {
       if (w) {
         w.history.pushState(null, '', w.location.href);
       }
+
+      // Detect route changes and leave room
+      this.router.events
+        .pipe(
+          takeUntil(this.destroyed$),
+          filter((event): event is NavigationStart => event instanceof NavigationStart)
+        )
+        .subscribe((event: NavigationStart) => {
+          // Check if navigating to a different route
+          if (event.url !== `/room/${this.roomId}`) {
+            this.autoLeaveRoom();
+          }
+        });
     }
 
     // Subscribe to auth state
@@ -196,6 +209,26 @@ export class RoomComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Failed to copy room ID:', error);
       this.error = 'ROOM.ERROR.COPY_FAILED';
+    }
+  }
+  async leaveRoom() {
+    if (confirm(this.translateService.instant('ROOM.LEAVE_CONFIRMATION', { defaultValue: 'Are you sure you want to leave the room?' }))) {
+      try {
+        await this.socketManager.leaveRoom();
+        this.router.navigate(['/']);
+      } catch (error) {
+        console.error('Error leaving room:', error);
+        this.error = 'ROOM.ERROR.LEAVE_FAILED';
+      }
+    }
+  }
+
+  private async autoLeaveRoom() {
+    try {
+      // Disconnect from the socket and leave the room
+      await this.socketManager.leaveRoom();
+    } catch (error) {
+      console.error('Error auto-leaving room:', error);
     }
   }
 

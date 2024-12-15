@@ -70,7 +70,16 @@ export class SocketManagerService implements OnDestroy {
       throw error;
     }
   }
-
+  
+  async leaveRoom() {
+    try {
+      await this.socketService.leaveRoom();
+    } catch (error) {
+      console.error('Failed to leave room:', error);
+      throw error;
+    }
+  }
+    
   sendMessage(message: string) {
     this.socketService.sendMessage(message);
   }

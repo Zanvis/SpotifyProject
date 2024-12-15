@@ -354,6 +354,7 @@
         "CHAT": "Czat",
         "MESSAGE_PLACEHOLDER": "Wpisz swoją wiadomość...",
         "SEND": "Wyślij",
+        "LEAVE": "Opuść pokój",
         "CONNECTING": {
             "TITLE": "Łączenie z pokojem...",
             "SUBTITLE": "Proszę czekać, nawiązywanie połączenia"
@@ -364,7 +365,8 @@
             "JOIN_FAILED": "Nie udało się dołączyć do pokoju. Przekierowanie na stronę główną...",
             "CONNECTION_LOST": "Utracono połączenie. Próba ponownego połączenia...",
             "SEND_FAILED": "Nie udało się wysłać wiadomości. Spróbuj ponownie.",
-            "COPY_FAILED": "Nie udało się skopiować ID pokoju. Spróbuj skopiować je ręcznie."
+            "COPY_FAILED": "Nie udało się skopiować ID pokoju. Spróbuj skopiować je ręcznie.",
+            "LEAVE_FAILED": "Nie udało się opuścić pokoju. Spróbuj ponownie."
         },
         "LEAVE_CONFIRMATION": "Czy na pewno chcesz opuścić pokój? Będzie trzeba dołączyć ponownie."
     },

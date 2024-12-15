@@ -172,6 +172,27 @@ export class SocketService implements OnDestroy {
     });
   }
 
+  leaveRoom(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (!this.socket?.connected || !this.currentRoomId) {
+        reject(new Error('No active room or socket connection'));
+        return;
+      }
+
+      this.socket.emit('leave-room', this.currentRoomId, (response: { success: boolean }) => {
+        if (response.success) {
+          // Reset room-related state
+          this.currentRoomId = null;
+          this.userCount.next(0);
+          this.roomUsers.next([]);
+          resolve();
+        } else {
+          reject(new Error('Failed to leave room'));
+        }
+      });
+    });
+  }
+
   // Music state management
   syncMusicState(state: MusicState): void {
     if (!this.currentRoomId || !this.socket?.connected) return;
@@ -293,3 +314,4 @@ export class SocketService implements OnDestroy {
     this.disconnect();
   }
 }
+

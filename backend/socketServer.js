@@ -83,7 +83,14 @@ function setupSocketServer(server) {
                 callback({ error: 'Failed to join room', success: false });
             }
         });
-
+        socket.on('leave-room', (roomId, callback) => {
+        try {
+            leaveRoom(socket, roomId);
+            callback({ success: true });
+        } catch (error) {
+            callback({ success: false, error: error.message });
+        }
+});
         // Handle music state updates
         socket.on('sync-music-state', (state) => {
             try {
