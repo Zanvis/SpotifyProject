@@ -4,6 +4,7 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { AuthService } from './services/auth.service';
 import { Subscription } from 'rxjs';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,19 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
     TranslatePipe,
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-10%)', opacity: 0 }),
+        animate('200ms ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateY(0)', opacity: 1 }),
+        animate('200ms ease-in', style({ transform: 'translateY(-10%)', opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class AppComponent implements OnInit, OnDestroy {
   currentYear = new Date().getFullYear();
