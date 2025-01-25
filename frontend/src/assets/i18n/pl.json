@@ -513,5 +513,8 @@
             "REMOVE_FAILED": "Nie udało się usunąć piosenki. Spróbuj ponownie."
         },
         "CONFIRM": "Czy na pewno chcesz usunąć tę playlistę?"
+    },
+    "LYRICS": {
+        "ERROR": "Nie znaleziono słów dla tego utworu."
     }
 }

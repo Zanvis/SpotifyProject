@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input
 import { Song } from '../../services/song.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { TranslatePipe } from '@ngx-translate/core';
+import { LyricsComponent } from '../lyrics/lyrics.component';
 
 enum LoopMode {
   NoLoop,
@@ -13,7 +14,7 @@ enum LoopMode {
 @Component({
   selector: 'app-audio-player',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, LyricsComponent],
   templateUrl: './audio-player.component.html',
   styleUrl: './audio-player.component.css',
   animations: [
@@ -47,6 +48,15 @@ enum LoopMode {
       transition(':leave', [
         animate('100ms cubic-bezier(0.4, 0, 0.2, 1)', style({ transform: 'rotate(-180deg)' }))
       ])
+    ]),
+    trigger('slideUpDown', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('300ms ease-in-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in-out', style({ opacity: 0, transform: 'translateY(20px)' }))
+      ])
     ])
   ]
 })
@@ -67,6 +77,8 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
   currentSongIndex = 0;
   loopMode: LoopMode = LoopMode.NoLoop;
   isExpanded = false;
+  activeTab: 'player' | 'lyrics' = 'player';
+  showLyrics = false;
 
   private readonly VOLUME_STORAGE_KEY = 'audioPlayerVolume';
 
@@ -273,5 +285,8 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
   }
   handleImageError(event: any) { 
     event.target.src = 'assets/default-album.png';
+  }
+  toggleLyrics(): void {
+    this.showLyrics = !this.showLyrics;
   }
 }

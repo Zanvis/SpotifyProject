@@ -513,5 +513,8 @@
             "REMOVE_FAILED": "Failed to remove song. Please try again."
         },
         "CONFIRM": "Are you sure you want to delete this playlist?"
+    },
+    "LYRICS": {
+        "ERROR": "No lyrics found for this song."
     }
 }

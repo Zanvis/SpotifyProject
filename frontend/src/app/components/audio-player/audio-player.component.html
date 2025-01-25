@@ -36,7 +36,7 @@
 <!-- Mobile Expanded View Modal -->
 <div *ngIf="isExpanded"
     [@modalAnimation]
-    class="fixed inset-0 bg-white dark:bg-gray-900 z-[100] flex flex-col md:hidden overflow-hidden"
+    class="fixed inset-0 bg-white dark:bg-gray-900 z-[100] flex flex-col md:hidden overflow-auto"
     (click)="$event.stopPropagation()">
   <!-- Header -->
   <div class="p-2 pt-4 flex items-center justify-between">
@@ -114,12 +114,34 @@
             [value]="volume * 100"
             (input)="onVolumeChange($event)"
             class="flex-1 accent-indigo-500 dark:accent-green-500">
+      <button (click)="toggleLyrics()" class="text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-green-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <!-- Lyrics Section (Expandable) -->
+  <div *ngIf="showLyrics" [@slideUpDown] class="container mx-auto mb-4 border-b border-gray-200 dark:border-gray-700 pb-4">
+    <div class="flex justify-center">
+      <div class="w-full max-w-2xl">
+        <app-lyrics [song]="song" [currentTime]="currentTime"></app-lyrics>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Desktop Player -->
 <div class="hidden md:block fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 p-4 z-50">
+  <!-- Lyrics Section (Expandable) -->
+  <div *ngIf="showLyrics" [@slideUpDown] class="container mx-auto mb-4 border-b border-gray-200 dark:border-gray-700 pb-4">
+    <div class="flex justify-center">
+      <div class="w-full max-w-2xl">
+        <app-lyrics [song]="song" [currentTime]="currentTime"></app-lyrics>
+      </div>
+    </div>
+  </div>
   <div class="container mx-auto flex items-center justify-between">
     <div class="flex items-center flex-1">
       <img [src]="song.imageUrl" (error)="handleImageError($event)" alt="Album cover" class="w-16 h-16 object-cover rounded-md mr-4">
@@ -131,6 +153,13 @@
 
     <div class="flex-1 max-w-2xl">
       <div class="flex items-center justify-center space-x-6">
+        <button (click)="toggleLyrics()" class="text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-green-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+          </svg>
+        </button>
+
         <button (click)="previous($event)" class="text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-green-500">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
