@@ -286,7 +286,22 @@ export class AudioPlayerComponent implements OnChanges, AfterViewInit {
   handleImageError(event: any) { 
     event.target.src = 'assets/default-album.png';
   }
+  
   toggleLyrics(): void {
     this.showLyrics = !this.showLyrics;
+  }
+  
+  rewind15(event?: Event) {
+    if (event) event.stopPropagation();
+    if (this.audioElement) {
+      this.audioElement.currentTime = Math.max(0, this.audioElement.currentTime - 15);
+    }
+  }
+
+  forward15(event?: Event) {
+    if (event) event.stopPropagation();
+    if (this.audioElement) {
+      this.audioElement.currentTime = Math.min(this.duration, this.audioElement.currentTime + 15);
+    }
   }
 }
