@@ -4,7 +4,7 @@
         "SONGS": "Utwory",
         "PLAYLISTS": "Playlisty",
         "UPLOAD": "Prześlij",
-        "TEAM": "Zespół",
+        "TEAM": "O Projekcie",
         "RADIO": "Radio",
         "JAM_SESSION": "Sesja Jam",
         "LOGIN": "Zaloguj się",
@@ -45,29 +45,43 @@
             }
         }
     },
+    "ABOUT": {
+        "PROJECT": {
+            "TITLE": "Serwis Zarządzania Plikami Muzycznymi",
+            "SUBTITLE": "Projekt Inżynierski",
+            "DESCRIPTION": "Aplikacja internetowa do zarządzania i udostępniania plików muzycznych wykorzystująca technologię MEAN Stack. Projekt koncentruje się na funkcjach współpracy w czasie rzeczywistym, efektywnym zarządzaniu plikami i przyjaznym interfejsie użytkownika.",
+            "SOURCE_CODE": "Zobacz Kod Źródłowy"
+        },
+        "FEATURES": {
+            "TITLE": "Główne Funkcje",
+            "FEATURE1": {
+                "TITLE": "Zarządzanie Plikami",
+                "DESCRIPTION": "Przesyłaj, organizuj i zarządzaj plikami muzycznymi z integracją przechowywania w chmurze przy użyciu Cloudinary"
+            },
+            "FEATURE2": {
+                "TITLE": "Współpraca w Czasie Rzeczywistym",
+                "DESCRIPTION": "Udostępniaj pliki muzyczne i współpracuj z innymi w czasie rzeczywistym przy użyciu technologii Socket.IO"
+            },
+            "FEATURE3": {
+                "TITLE": "Tworzenie Playlist",
+                "DESCRIPTION": "Twórz i zarządzaj osobistymi playlistami z zaawansowanymi funkcjami organizacji"
+            },
+            "FEATURE4": {
+                "TITLE": "Czat w Czasie Rzeczywistym",
+                "DESCRIPTION": "Komunikuj się z innymi użytkownikami poprzez zintegrowany system czatu w czasie rzeczywistym"
+            }
+        },
+        "TECH": {
+            "TITLE": "Stos Technologiczny"
+        }
+    },
     "TEAM": {
-        "TITLE": "Nasz Zespół",
         "TEAM_MEMBERS": {
             "ANTEK": {
                 "NAME": "Antoni Piwowarski",
-                "ROLE": "Główny Programista",
-                "DESCRIPTION": "Pasjonat tworzenia intuicyjnych i zaawansowanych doświadczeń muzycznych."
-            },
-            "KUBA": {
-                "NAME": "Jakub Kuźnicki",
-                "ROLE": "Projektant UI/UX",
-                "DESCRIPTION": "Tworzenie pięknych i funkcjonalnych interfejsów zapewniających najlepsze doświadczenia użytkownika."
-            },
-            "DAWID": {
-                "NAME": "Dawid Mańkowski",
-                "ROLE": "Programista Backend",
-                "DESCRIPTION": "Zapewnienie płynnego i bezpiecznego działania naszej platformy dla wszystkich użytkowników."
+                "ROLE": "Autor Projektu",
+                "DESCRIPTION": "Student informatyki na Uczelni Vistula, specjalizujący się w inżynierii technologii internetowych. Ten projekt inżynierski łączy nowoczesne technologie webowe w celu stworzenia wydajnego systemu zarządzania plikami muzycznymi."
             }
-        },
-        "ABOUT_PROJECT": {
-            "TITLE": "O Naszym Projekcie",
-            "PARAGRAPH1": "Music App to projekt szkolny stworzony przez zespół miłośników muzyki i studentów programowania. Naszym celem jest dostarczenie płynnego i przyjemnego doświadczenia słuchania muzyki, dając użytkownikom pełną kontrolę nad ich biblioteką muzyczną.",
-            "PARAGRAPH2": "Ten projekt pokazuje umiejętności naszego zespołu w zakresie tworzenia stron internetowych, projektowania interfejsów użytkownika oraz implementacji backendu. Wspólnie stworzyliśmy platformę, która demonstruje nasze zrozumienie nowoczesnych technologii webowych i zasad projektowania zorientowanego na użytkownika."
         }
     },
     "PRIVACY_POLICY": {

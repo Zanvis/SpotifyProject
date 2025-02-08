@@ -4,7 +4,7 @@
         "SONGS": "Songs",
         "PLAYLISTS": "Playlists",
         "UPLOAD": "Upload",
-        "TEAM": "Team",
+        "TEAM": "About Project",
         "RADIO": "Radio",
         "JAM_SESSION": "Jam Session",
         "LOGIN": "Login",
@@ -45,29 +45,43 @@
             }
         }
     },
+    "ABOUT": {
+        "PROJECT": {
+            "TITLE": "Music File Management Service",
+            "SUBTITLE": "Engineering Thesis Project",
+            "DESCRIPTION": "A web application for managing and sharing music files using MEAN Stack technology. The project focuses on real-time collaboration features, efficient file management, and user-friendly interface design.",
+            "SOURCE_CODE": "View Source"
+        },
+        "FEATURES": {
+            "TITLE": "Key Features",
+            "FEATURE1": {
+                "TITLE": "File Management",
+                "DESCRIPTION": "Upload, organize, and manage your music files with cloud storage integration using Cloudinary"
+            },
+            "FEATURE2": {
+                "TITLE": "Real-time Collaboration",
+                "DESCRIPTION": "Share music files and collaborate with others in real-time using Socket.IO technology"
+            },
+            "FEATURE3": {
+                "TITLE": "Playlist Creation",
+                "DESCRIPTION": "Create and manage personal playlists with advanced organization features"
+            },
+            "FEATURE4": {
+                "TITLE": "Real-time Chat",
+                "DESCRIPTION": "Communicate with other users through an integrated real-time chat system"
+            }
+        },
+        "TECH": {
+            "TITLE": "Technology Stack"
+        }
+    },
     "TEAM": {
-        "TITLE": "Our Team",
         "TEAM_MEMBERS": {
             "ANTEK": {
                 "NAME": "Antoni Piwowarski",
-                "ROLE": "Lead Developer",
-                "DESCRIPTION": "Passionate about creating intuitive and powerful music experiences."
-            },
-            "KUBA": {
-                "NAME": "Jakub Kuźnicki", 
-                "ROLE": "UI/UX Designer",
-                "DESCRIPTION": "Creating beautiful and functional interfaces for the best user experience."
-            },
-            "DAWID": {
-                "NAME": "Dawid Mańkowski",
-                "ROLE": "Backend Developer", 
-                "DESCRIPTION": "Ensuring our platform runs smoothly and securely for all users."
+                "ROLE": "Project Author",
+                "DESCRIPTION": "Computer Science student at Vistula University, specializing in Internet Technology Engineering. This engineering thesis project combines modern web technologies to create an efficient music file management system."
             }
-        },
-        "ABOUT_PROJECT": {
-            "TITLE": "About Our Project",
-            "PARAGRAPH1": "Music App is a school project created by a team of music enthusiasts and student developers. Our goal is to provide a seamless and enjoyable music listening experience while giving users complete control over their music library.",
-            "PARAGRAPH2": "This project showcases our team's skills in web development, user interface design, and backend implementation. We've worked together to create a platform that demonstrates our understanding of modern web technologies and user-centered design principles."
         }
     },
     "PRIVACY_POLICY": {

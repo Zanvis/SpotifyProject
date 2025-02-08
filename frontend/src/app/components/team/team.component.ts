@@ -10,28 +10,32 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './team.component.css'
 })
 export class TeamComponent {
-  teamMembers = [
+  features = [
     {
-      image: 'assets/antek.jpg',
-      name: 'TEAM.TEAM_MEMBERS.ANTEK.NAME',
-      role: 'TEAM.TEAM_MEMBERS.ANTEK.ROLE',
-      description: 'TEAM.TEAM_MEMBERS.ANTEK.DESCRIPTION',
-      githubLink: 'https://github.com/Zanvis'
+      title: 'ABOUT.FEATURES.FEATURE1.TITLE',
+      description: 'ABOUT.FEATURES.FEATURE1.DESCRIPTION'
     },
     {
-      image: 'assets/kuba.png',
-      name: 'TEAM.TEAM_MEMBERS.KUBA.NAME',
-      role: 'TEAM.TEAM_MEMBERS.KUBA.ROLE',
-      description: 'TEAM.TEAM_MEMBERS.KUBA.DESCRIPTION',
-      githubLink: 'https://github.com/Brbn-jpg'
+      title: 'ABOUT.FEATURES.FEATURE2.TITLE',
+      description: 'ABOUT.FEATURES.FEATURE2.DESCRIPTION'
     },
     {
-      image: 'assets/dawid.jpg',
-      name: 'TEAM.TEAM_MEMBERS.DAWID.NAME',
-      role: 'TEAM.TEAM_MEMBERS.DAWID.ROLE',
-      description: 'TEAM.TEAM_MEMBERS.DAWID.DESCRIPTION',
-      githubLink: '#'
+      title: 'ABOUT.FEATURES.FEATURE3.TITLE',
+      description: 'ABOUT.FEATURES.FEATURE3.DESCRIPTION'
+    },
+    {
+      title: 'ABOUT.FEATURES.FEATURE4.TITLE',
+      description: 'ABOUT.FEATURES.FEATURE4.DESCRIPTION'
     }
   ];
 
+  technologies = [
+    'MongoDB',
+    'Express.js',
+    'Angular',
+    'Node.js',
+    'Tailwind CSS',
+    'Cloudinary',
+    'Socket.IO'
+  ];
 }
