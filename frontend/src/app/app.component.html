@@ -236,7 +236,7 @@
               (click)="handleJamSessionClick($event)" 
               class="text-left hover:text-gray-600 dark:hover:text-gray-300 py-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none w-full"
             >
-              Jam Session
+            {{'NAV.JAM_SESSION' | translate}}
             </button>
             <div *ngIf="!isAuthenticated && jamSessionTooltip" 
                 class="absolute z-10 w-48 px-2 py-1 mt-2 text-sm text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 rounded-lg shadow-lg transition-opacity duration-300"

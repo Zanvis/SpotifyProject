@@ -24,7 +24,7 @@
     },
     "LANDING": {
         "TITLE": "Welcome to SoundSphere",
-        "SUBTITLE": "Your personal music sanctuary. Upload, organize, and enjoy your music collection with our intuitive interface.",
+        "SUBTITLE": "Your personal music sanctuary. Upload, organize, and enjoy your music collection with my intuitive interface.",
         "GET_STARTED_BUTTON": "Get Started",
         "FEATURES": {
             "AUDIO_PLAYER": {
@@ -40,8 +40,8 @@
                 "DESCRIPTION": "Easily upload and expand your music library"
             },
             "TEAM": {
-                "TITLE": "Team",
-                "DESCRIPTION": "Meet the passionate developers behind SoundSphere"
+                "TITLE": "Project Author",
+                "DESCRIPTION": "Meet the student developer behind SoundSphere"
             }
         }
     },
@@ -88,51 +88,51 @@
         "TITLE": "Privacy Policy",
         "LAST_UPDATED": "Last updated: October 26, 2024",
         "SECTIONS": {
-        "INFORMATION_COLLECT": {
-            "TITLE": "1. Information We Collect",
-            "DESCRIPTION": "We collect the following information:",
-            "ITEMS": [
-            "Account information (username, email)",
-            "Usage data (listening history, playlists)",
-            "Device information (browser type, IP address)"
-            ]
-        },
-        "INFORMATION_USE": {
-            "TITLE": "2. How We Use Your Information",
-            "DESCRIPTION": "We use your information to:",
-            "ITEMS": [
-            "Provide and improve our services",
-            "Personalize your experience", 
-            "Communicate with you about your account",
-            "Analyze service usage patterns"
-            ]
-        },
-        "INFORMATION_SHARING": {
-            "TITLE": "3. Information Sharing",
-            "DESCRIPTION": "We do not sell your personal information. We may share information with:",
-            "ITEMS": [
-            "Service providers helping operate our platform",
-            "Law enforcement when required by law"
-            ]
-        },
-        "DATA_SECURITY": {
-            "TITLE": "4. Data Security",
-            "DESCRIPTION": "We implement reasonable security measures to protect your information. However, as this is a student project, we cannot guarantee absolute security."
-        },
-        "USER_RIGHTS": {
-            "TITLE": "5. Your Rights",
-            "DESCRIPTION": "You have the right to:",
-            "ITEMS": [
-            "Access your personal information",
-            "Request correction of inaccurate data", 
-            "Request deletion of your account",
-            "Opt-out of promotional communications"
-            ]
-        },
-        "CONTACT": {
-            "TITLE": "6. Contact Us",
-            "DESCRIPTION": "For any privacy-related questions, please contact us at privacy@soundsphere.edu"
-        }
+            "INFORMATION_COLLECT": {
+                "TITLE": "1. Information I Collect",
+                "DESCRIPTION": "I collect the following information:",
+                "ITEMS": [
+                    "Account information (username, email)",
+                    "Usage data (listening history, playlists)",
+                    "Device information (browser type, IP address)"
+                ]
+            },
+            "INFORMATION_USE": {
+                "TITLE": "2. How I Use Your Information",
+                "DESCRIPTION": "I use your information to:",
+                "ITEMS": [
+                    "Provide and improve my service",
+                    "Personalize your experience", 
+                    "Communicate with you about your account",
+                    "Analyze service usage patterns"
+                ]
+            },
+            "INFORMATION_SHARING": {
+                "TITLE": "3. Information Sharing",
+                "DESCRIPTION": "I do not sell your personal information. I may share information with:",
+                "ITEMS": [
+                    "Service providers helping operate my platform",
+                    "Law enforcement when required by law"
+                ]
+            },
+            "DATA_SECURITY": {
+                "TITLE": "4. Data Security",
+                "DESCRIPTION": "I implement reasonable security measures to protect your information. However, as this is a student project, I cannot guarantee absolute security."
+            },
+            "USER_RIGHTS": {
+                "TITLE": "5. Your Rights",
+                "DESCRIPTION": "You have the right to:",
+                "ITEMS": [
+                    "Access your personal information",
+                    "Request correction of inaccurate data", 
+                    "Request deletion of your account",
+                    "Opt-out of promotional communications"
+                ]
+            },
+            "CONTACT": {
+                "TITLE": "6. Contact Me",
+                "DESCRIPTION": "For any privacy-related questions, please contact me at privacy@soundsphere.edu"
+            }
         },
         "RETURN_TO_REGISTRATION": "Return to Registration"
     },
@@ -142,11 +142,11 @@
         "SECTIONS": {
             "INTRODUCTION": {
                 "TITLE": "1. Introduction",
-                "CONTENT": "Welcome to SoundSphere. By accessing our service, you agree to these terms. SoundSphere is an educational project created by students."
+                "CONTENT": "Welcome to SoundSphere. By accessing my service, you agree to these terms. SoundSphere is an educational project created by a student."
             },
             "SERVICE_DESCRIPTION": {
                 "TITLE": "2. Service Description",
-                "CONTENT": "SoundSphere is a music streaming platform designed for educational purposes. We provide users with the ability to stream music, create playlists, and manage their music library."
+                "CONTENT": "SoundSphere is a music streaming platform designed for educational purposes. I provide users with the ability to stream music, create playlists, and manage their music library."
             },
             "USER_ACCOUNTS": {
                 "TITLE": "3. User Accounts",
@@ -173,7 +173,7 @@
             },
             "LIABILITY": {
                 "TITLE": "6. Limitation of Liability",
-                "CONTENT": "SoundSphere is a student project and is provided \"as is\" without any warranties. We are not liable for any damages arising from your use of the service."
+                "CONTENT": "SoundSphere is a student project and is provided \"as is\" without any warranties. I am not liable for any damages arising from your use of the service."
             }
         },
         "LINKS": {
@@ -197,7 +197,8 @@
             "CHOOSE_FILE_BUTTON": "Choose Song File",
             "SUPPORTED_FORMATS": "Supported formats: MP3, WAV, AAC",
             "FILE_SELECTED": "{{filename}}",
-            "REMOVE_FILE": "Remove"
+            "REMOVE_FILE": "Remove",
+            "CHOOSE_IMAGE_BUTTON": "Choose Image"
         },
         "FORM": {
             "LABELS": {

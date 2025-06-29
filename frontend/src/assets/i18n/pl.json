@@ -24,7 +24,7 @@
     },
     "LANDING": {
         "TITLE": "Witaj w SoundSphere",
-        "SUBTITLE": "Twoja osobista muzyczna przystań. Przesyłaj, organizuj i ciesz się swoją kolekcją muzyczną za pomocą intuicyjnego interfejsu.",
+        "SUBTITLE": "Twoja osobista muzyczna przystań. Przesyłaj, organizuj i ciesz się swoją kolekcją muzyczną za pomocą mojego intuicyjnego interfejsu.",
         "GET_STARTED_BUTTON": "Rozpocznij",
         "FEATURES": {
             "AUDIO_PLAYER": {
@@ -40,8 +40,8 @@
                 "DESCRIPTION": "Łatwo przesyłaj i rozszerzaj swoją bibliotekę muzyczną"
             },
             "TEAM": {
-                "TITLE": "Zespół",
-                "DESCRIPTION": "Poznaj pasjonatów stojących za SoundSphere"
+                "TITLE": "Autor Projektu",
+                "DESCRIPTION": "Poznaj studenta stojącego za SoundSphere"
             }
         }
     },
@@ -89,8 +89,8 @@
         "LAST_UPDATED": "Ostatnia aktualizacja: 26 października 2024",
         "SECTIONS": {
             "INFORMATION_COLLECT": {
-                "TITLE": "1. Jakie Informacje Zbieramy",
-                "DESCRIPTION": "Zbieramy następujące informacje:",
+                "TITLE": "1. Jakie Informacje Zbieram",
+                "DESCRIPTION": "Zbieram następujące informacje:",
                 "ITEMS": [
                     "Informacje o koncie (nazwa użytkownika, email)",
                     "Dane dotyczące użytkowania (historia odsłuchów, playlisty)",
@@ -98,26 +98,26 @@
                 ]
             },
             "INFORMATION_USE": {
-                "TITLE": "2. Jak Wykorzystujemy Twoje Informacje",
-                "DESCRIPTION": "Wykorzystujemy Twoje dane, aby:",
+                "TITLE": "2. Jak Wykorzystuję Twoje Informacje",
+                "DESCRIPTION": "Wykorzystuję Twoje dane, aby:",
                 "ITEMS": [
-                    "Świadczyć i ulepszać nasze usługi",
+                    "Świadczyć i ulepszać moją usługę",
                     "Personalizować Twoje doświadczenie",
                     "Komunikować się z Tobą w sprawach związanych z Twoim kontem",
-                    "Analizować wzorce użytkowania naszych usług"
+                    "Analizować wzorce użytkowania mojej usługi"
                 ]
             },
             "INFORMATION_SHARING": {
                 "TITLE": "3. Udostępnianie Informacji",
-                "DESCRIPTION": "Nie sprzedajemy Twoich danych osobowych. Możemy udostępniać informacje:",
+                "DESCRIPTION": "Nie sprzedaję Twoich danych osobowych. Mogę udostępniać informacje:",
                 "ITEMS": [
-                    "Dostawcom usług wspierającym funkcjonowanie naszej platformy",
+                    "Dostawcom usług wspierającym funkcjonowanie mojej platformy",
                     "Organom ścigania, gdy jest to wymagane przez prawo"
                 ]
             },
             "DATA_SECURITY": {
                 "TITLE": "4. Bezpieczeństwo Danych",
-                "DESCRIPTION": "Wdrażamy odpowiednie środki bezpieczeństwa w celu ochrony Twoich danych. Jednakże, jako że jest to projekt studencki, nie możemy zagwarantować całkowitego bezpieczeństwa."
+                "DESCRIPTION": "Wdrażam odpowiednie środki bezpieczeństwa w celu ochrony Twoich danych. Jednakże, jako że jest to projekt studencki, nie mogę zagwarantować całkowitego bezpieczeństwa."
             },
             "USER_RIGHTS": {
                 "TITLE": "5. Twoje Prawa",
@@ -130,8 +130,8 @@
                 ]
             },
             "CONTACT": {
-                "TITLE": "6. Kontakt z Nami",
-                "DESCRIPTION": "W przypadku pytań dotyczących prywatności prosimy o kontakt pod adresem privacy@soundsphere.edu"
+                "TITLE": "6. Kontakt ze Mną",
+                "DESCRIPTION": "W przypadku pytań dotyczących prywatności proszę o kontakt pod adresem privacy@soundsphere.edu"
             }
         },
         "RETURN_TO_REGISTRATION": "Powrót do Rejestracji"
@@ -142,11 +142,11 @@
         "SECTIONS": {
             "INTRODUCTION": {
                 "TITLE": "1. Wprowadzenie",
-                "CONTENT": "Witamy w SoundSphere. Korzystając z naszego serwisu, akceptujesz niniejszy regulamin. SoundSphere to edukacyjny projekt stworzony przez studentów."
+                "CONTENT": "Witamy w SoundSphere. Korzystając z mojego serwisu, akceptujesz niniejszy regulamin. SoundSphere to edukacyjny projekt stworzony przez studenta."
             },
             "SERVICE_DESCRIPTION": {
                 "TITLE": "2. Opis Usługi",
-                "CONTENT": "SoundSphere to platforma do strumieniowego przesyłania muzyki stworzona w celach edukacyjnych. Umożliwiamy użytkownikom odtwarzanie muzyki, tworzenie playlist i zarządzanie biblioteką muzyczną."
+                "CONTENT": "SoundSphere to platforma do strumieniowego przesyłania muzyki stworzona w celach edukacyjnych. Umożliwiam użytkownikom odtwarzanie muzyki, tworzenie playlist i zarządzanie biblioteką muzyczną."
             },
             "USER_ACCOUNTS": {
                 "TITLE": "3. Konta Użytkowników",
@@ -173,7 +173,7 @@
             },
             "LIABILITY": {
                 "TITLE": "6. Ograniczenie Odpowiedzialności",
-                "CONTENT": "SoundSphere to projekt studencki i jest udostępniany \"tak jak jest\" bez żadnych gwarancji. Nie ponosimy odpowiedzialności za jakiekolwiek szkody wynikające z korzystania z serwisu."
+                "CONTENT": "SoundSphere to projekt studencki i jest udostępniany \"tak jak jest\" bez żadnych gwarancji. Nie ponoszę odpowiedzialności za jakiekolwiek szkody wynikające z korzystania z serwisu."
             }
         },
         "LINKS": {
@@ -197,7 +197,8 @@
             "CHOOSE_FILE_BUTTON": "Wybierz Plik z Piosenką",
             "SUPPORTED_FORMATS": "Obsługiwane formaty: MP3, WAV, AAC",
             "FILE_SELECTED": "{{filename}}",
-            "REMOVE_FILE": "Usuń"
+            "REMOVE_FILE": "Usuń",
+            "CHOOSE_IMAGE_BUTTON": "Wybierz Zdjęcie"
         },
         "FORM": {
             "LABELS": {
