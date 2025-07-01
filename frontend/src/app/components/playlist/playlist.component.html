@@ -6,7 +6,7 @@
       [(ngModel)]="newPlaylistName"
       (keyup.enter)="createPlaylist()"
       class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-2 rounded-l-lg focus:outline-none flex-grow shadow-md"
-      placeholder="New playlist name"
+      [placeholder]="'PLAYLISTS.NEW_PLAYLIST.PLACEHOLDER' | translate"
       [disabled]="loading">
     <button 
       (click)="createPlaylist()"
