@@ -16,9 +16,10 @@ interface PasswordErrors {
 interface PasswordChecks {
   length: boolean;
   hasNumber: boolean;
-  hasLetter: boolean;
+  hasUppercase: boolean;
   minLength: boolean;
 }
+
 interface UsernameValidation {
   isValid: boolean;
   message: string;
@@ -49,7 +50,6 @@ export class SettingsComponent implements OnInit {
   
   successMessage: string = '';
   errorMessage: string = '';
-
   showCurrentPassword = false;
   showNewPassword = false;
   showConfirmPassword = false;
@@ -59,14 +59,12 @@ export class SettingsComponent implements OnInit {
     newPassword: '',
     confirmPassword: ''
   };
-
   passwordChecks: PasswordChecks = {
     length: false,
     hasNumber: false,
-    hasLetter: false,
+    hasUppercase: false,
     minLength: false
   };
-
   private usernameCheck = new Subject<string>();
   usernameValidation: UsernameValidation = {
     isValid: true,
@@ -138,7 +136,6 @@ export class SettingsComponent implements OnInit {
       };
       return;
     }
-
     // Reset validation if empty
     if (!username.trim()) {
       this.usernameValidation = {
@@ -148,7 +145,6 @@ export class SettingsComponent implements OnInit {
       };
       return;
     }
-
     // Check username length
     if (username.length < 3) {
       this.usernameValidation = {
@@ -158,7 +154,6 @@ export class SettingsComponent implements OnInit {
       };
       return;
     }
-
     // Check for valid characters
     if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
       this.usernameValidation = {
@@ -168,7 +163,6 @@ export class SettingsComponent implements OnInit {
       };
       return;
     }
-
     this.usernameValidation.status = 'checking';
     this.usernameCheck.next(username);
   }
@@ -181,7 +175,6 @@ export class SettingsComponent implements OnInit {
           { headers: this.getHeaders() }
         )
       );
-
       this.usernameValidation = {
         isValid: response.available,
         message: response.available ? 'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.SUCCESS' : 'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.ERROR.TAKEN',
@@ -201,21 +194,17 @@ export class SettingsComponent implements OnInit {
       this.errorMessage = 'SETTINGS.PROFILE_SETTINGS.USERNAME.VALIDATION.ERROR.EMPTY';
       return;
     }
-
     if (this.username === this.originalUsername) {
       this.successMessage = 'SETTINGS.PROFILE_SETTINGS.NO_CHANGES';
       setTimeout(() => this.successMessage = '', 3000);
       return;
     }
-
     if (!this.usernameValidation.isValid) {
       this.errorMessage = this.usernameValidation.message;
       return;
     }
-
     this.isUpdating = true;
     this.errorMessage = '';
-
     try {
       const response = await firstValueFrom(
         this.http.put<{user: any}>(
@@ -253,30 +242,26 @@ export class SettingsComponent implements OnInit {
       newPassword: '',
       confirmPassword: ''
     };
-
     // Validate current password
     if (!this.currentPassword) {
       this.passwordErrors.currentPassword = 'SETTINGS.PASSWORD_CHANGE.CURRENT_PASSWORD.ERROR';
     }
-
     // Validate new password
     if (this.newPassword) {
       this.passwordChecks = {
         length: this.newPassword.length >= 6,
         minLength: this.newPassword.length >= 8,
         hasNumber: /\d/.test(this.newPassword),
-        hasLetter: /[a-zA-Z]/.test(this.newPassword)
+        hasUppercase: /[A-Z]/.test(this.newPassword)
       };
-
       if (!this.passwordChecks.minLength) {
         this.passwordErrors.newPassword = 'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.MIN_LENGTH';
       } else if (!this.passwordChecks.hasNumber) {
         this.passwordErrors.newPassword = 'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.HAS_NUMBER';
-      } else if (!this.passwordChecks.hasLetter) {
-        this.passwordErrors.newPassword = 'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.HAS_LETTER';
+      } else if (!this.passwordChecks.hasUppercase) {
+        this.passwordErrors.newPassword = 'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.HAS_UPPERCASE';
       }
     }
-
     // Validate password confirmation
     if (this.newPassword && this.confirmPassword && this.newPassword !== this.confirmPassword) {
       this.passwordErrors.confirmPassword = 'SETTINGS.PASSWORD_CHANGE.CONFIRM_PASSWORD.ERROR';
@@ -293,19 +278,16 @@ export class SettingsComponent implements OnInit {
       !!this.confirmPassword &&
       this.passwordChecks.minLength &&
       this.passwordChecks.hasNumber &&
-      this.passwordChecks.hasLetter
+      this.passwordChecks.hasUppercase
     );
   }
-
 
   async updatePassword() {
     if (!this.isPasswordValid()) {
       return;
     }
-
     this.isUpdatingPassword = true;
     this.errorMessage = '';
-
     try {
       await firstValueFrom(
         this.http.put(
@@ -317,7 +299,6 @@ export class SettingsComponent implements OnInit {
           { headers: this.getHeaders() }
         )
       );
-
       this.successMessage = 'SETTINGS.PASSWORD_CHANGE.UPDATE_BUTTON.SUCCESS';
       this.currentPassword = '';
       this.newPassword = '';
@@ -326,7 +307,7 @@ export class SettingsComponent implements OnInit {
       this.passwordChecks = {
         length: false,
         hasNumber: false,
-        hasLetter: false,
+        hasUppercase: false,
         minLength: false
       };
       this.passwordErrors = {
@@ -349,7 +330,6 @@ export class SettingsComponent implements OnInit {
   async savePreferences() {
     this.isSavingPreferences = true;
     this.errorMessage = '';
-
     try {
       await firstValueFrom(
         this.http.put(
@@ -361,7 +341,6 @@ export class SettingsComponent implements OnInit {
           { headers: this.getHeaders() }
         )
       );
-
       this.successMessage = 'SETTINGS.ACCOUNT_PREFERENCES.SAVE_BUTTON.SUCCESS';
       setTimeout(() => this.successMessage = '', 3000);
     } catch (error: any) {
@@ -375,10 +354,8 @@ export class SettingsComponent implements OnInit {
     if (!confirm(this.translateService.instant('SETTINGS.DELETE_ACCOUNT.WARNING', { defaultValue: 'Are you sure you want to delete your account? This action cannot be undone.' }))) {
       return;
     }
-
     this.isDeleting = true;
     this.errorMessage = '';
-
     try {
       await firstValueFrom(
         this.http.delete(
@@ -386,7 +363,6 @@ export class SettingsComponent implements OnInit {
           { headers: this.getHeaders() }
         )
       );
-
       await this.authService.logout();
     } catch (error: any) {
       this.isDeleting = false;

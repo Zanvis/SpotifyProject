@@ -274,12 +274,14 @@
         "PASSWORD_REQUIREMENTS": {
             "TITLE": "Hasło musi:",
             "LENGTH": "Mieć co najmniej 8 znaków",
-            "NUMBER": "Zawierać co najmniej jedną cyfrę"
+            "NUMBER": "Zawierać co najmniej jedną cyfrę",
+            "UPPERCASE": "Zawierać przynajmniej jedną wielką literę"
         },
         "PASSWORD_ERRORS": {
             "REQUIRED": "Hasło jest wymagane",
             "MIN_LENGTH": "Hasło musi mieć co najmniej 8 znaków",
-            "NO_NUMBER": "Hasło musi zawierać co najmniej jedną cyfrę"
+            "NO_NUMBER": "Hasło musi zawierać co najmniej jedną cyfrę",
+            "NO_UPPERCASE": "Hasło musi zawierać przynajmniej jedną wielką literę"
         },
         "TERMS": {
             "AGREEMENT": "Zgadzam się z",
@@ -439,7 +441,7 @@
                 "TITLE": "Wymagania dotyczące hasła:",
                 "MIN_LENGTH": "Co najmniej 8 znaków",
                 "HAS_NUMBER": "Musi zawierać co najmniej jedną cyfrę",
-                "HAS_LETTER": "Musi zawierać co najmniej jedną literę"
+                "HAS_UPPERCASE": "Musi zawierać co najmniej jedną wielką literę"
             },
             "UPDATE_BUTTON": {
                 "IDLE": "Zaktualizuj hasło",

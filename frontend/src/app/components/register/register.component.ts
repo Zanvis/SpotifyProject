@@ -29,7 +29,7 @@ export class RegisterComponent {
       password: ['', [
         Validators.required, 
         Validators.minLength(8),
-        this.passwordNumberValidator()
+        this.passwordStrengthValidator()
       ]],
       confirmPassword: ['', [Validators.required]],
       terms: [false, [Validators.requiredTrue]]
@@ -38,10 +38,26 @@ export class RegisterComponent {
     } as AbstractControlOptions);
   }
 
-  passwordNumberValidator() {
+  passwordStrengthValidator() {
     return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null; // Nie sprawdzamy pustej wartości - to robi Validators.required
+      }
+
       const hasNumber = /\d/.test(control.value);
-      return hasNumber ? null : { noNumber: true };
+      const hasUppercase = /[A-Z]/.test(control.value);
+      
+      const errors: ValidationErrors = {};
+      
+      if (!hasNumber) {
+        errors['noNumber'] = true;
+      }
+      
+      if (!hasUppercase) {
+        errors['noUppercase'] = true;
+      }
+      
+      return Object.keys(errors).length > 0 ? errors : null;
     };
   }
 
@@ -73,6 +89,9 @@ export class RegisterComponent {
       }
       if (passwordControl.errors['noNumber']) {
         return 'REGISTER.PASSWORD_ERRORS.NO_NUMBER';
+      }
+      if (passwordControl.errors['noUppercase']) {
+        return 'REGISTER.PASSWORD_ERRORS.NO_UPPERCASE';
       }
     }
     return '';

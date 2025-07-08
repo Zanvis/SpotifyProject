@@ -163,8 +163,8 @@
             <li class="text-sm" [ngClass]="{'text-green-500 dark:text-green-400': passwordChecks.hasNumber, 'text-gray-600 dark:text-gray-400': !passwordChecks.hasNumber}">
               {{'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.HAS_NUMBER' | translate}}
             </li>
-            <li class="text-sm" [ngClass]="{'text-green-500 dark:text-green-400': passwordChecks.hasLetter, 'text-gray-600 dark:text-gray-400': !passwordChecks.hasLetter}">
-              {{'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.HAS_LETTER' | translate}}
+            <li class="text-sm" [ngClass]="{'text-green-500 dark:text-green-400': passwordChecks.hasUppercase, 'text-gray-600 dark:text-gray-400': !passwordChecks.hasUppercase}">
+              {{'SETTINGS.PASSWORD_CHANGE.PASSWORD_REQUIREMENTS.HAS_UPPERCASE' | translate}}
             </li>
           </ul>
         </div>

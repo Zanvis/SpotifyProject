@@ -274,12 +274,14 @@
         "PASSWORD_REQUIREMENTS": {
             "TITLE": "Password must:",
             "LENGTH": "Be at least 8 characters long",
-            "NUMBER": "Contain at least one number"
+            "NUMBER": "Contain at least one number",
+            "UPPERCASE": "Contain at least one uppercase letter"
         },
         "PASSWORD_ERRORS": {
             "REQUIRED": "Password is required",
             "MIN_LENGTH": "Password must be at least 8 characters",
-            "NO_NUMBER": "Password must contain at least one number"
+            "NO_NUMBER": "Password must contain at least one number",
+            "NO_UPPERCASE": "Password must contain at least one uppercase letter"
         },
         "TERMS": {
             "AGREEMENT": "I agree to the",
@@ -439,7 +441,7 @@
                 "TITLE": "Password requirements:",
                 "MIN_LENGTH": "At least 8 characters long",
                 "HAS_NUMBER": "Must contain at least one number",
-                "HAS_LETTER": "Must contain at least one letter"
+                "HAS_UPPERCASE": "Must contain at least one uppercase letter"
             },
             "UPDATE_BUTTON": {
                 "IDLE": "Update Password",
