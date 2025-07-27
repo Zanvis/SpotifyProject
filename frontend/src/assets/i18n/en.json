@@ -258,7 +258,8 @@
             "SIGN_IN": "Sign in",
             "SIGNING_IN": "Signing in..."
         },
-        "ERROR": "An error occurred during sign in"
+        "ERROR": "An error occurred during sign in",
+        "ERROR_INVALID_CREDENTIALS": "Invalid email or password"
     },
     "REGISTER": {
         "TITLE": "Create your account",

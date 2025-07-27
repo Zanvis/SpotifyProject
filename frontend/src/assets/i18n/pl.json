@@ -258,7 +258,8 @@
             "SIGN_IN": "Zaloguj się",
             "SIGNING_IN": "Logowanie..."
         },
-        "ERROR": "Wystąpił błąd podczas logowania"
+        "ERROR": "Wystąpił błąd podczas logowania",
+        "ERROR_INVALID_CREDENTIALS": "Nieprawidłowy e-mail lub hasło"
     },
     "REGISTER": {
         "TITLE": "Utwórz swoje konto",
